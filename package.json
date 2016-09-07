@@ -1,0 +1,13 @@
+{
+  "name": "generator-bam",
+  "version": "0.1.0",
+  "description": "",
+  "files": [
+    "generators/eslint",
+    "generators/jest"
+  ],
+  "keywords": ["yeoman-generator"],
+  "dependencies": {
+    "yeoman-generator": "^0.24.1"
+  }
+}

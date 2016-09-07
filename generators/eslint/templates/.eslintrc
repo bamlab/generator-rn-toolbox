@@ -1,0 +1,42 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "React": true,
+    "__DEV__": true,
+    "__dirname": true,
+    "describe": true,
+    "expect": true,
+    "it": true,
+    "xit": true,
+    "beforeEach": true,
+    "jest": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "strict": [2, "global"],
+    "no-var": 0,
+    "func-names": 0,
+    "one-var": 0,
+    "boolean-value": 0,
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "max-len": ["error", 120, 2, {"ignoreUrls": true}],
+    "import/no-unresolved": 0,
+    "no-underscore-dangle": 0,
+    "no-constant-condition": 0,
+    "react/sort-comp": 0,
+    "no-duplicate-imports": 0
+  }
+}
