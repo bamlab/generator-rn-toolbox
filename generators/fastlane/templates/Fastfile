@@ -1,0 +1,33 @@
+fastlane_version "1.100.0"
+
+default_platform :ios
+
+platform :ios do
+  lane :deploy do |options|
+    produce(
+      app_identifier: ENV['APP_IDENTIFIER'],
+      skip_itc: true,
+    )
+    match(type: "development", app_identifier: "*")
+    match
+    gym(
+      use_legacy_build_api: true
+    )
+    hockey(
+      notify: '0',
+      ipa: ENV['DELIVER_IPA_PATH']
+    )
+  end
+end
+
+platform :android do
+  lane :deploy do |options|
+    gradle(task: 'clean', flavor: '', build_type: '')
+    gradle
+    apk_path =  "./android/app/build/outputs/apk/app-#{ENV['FL_GRADLE_FLAVOR']}-release.apk"
+    hockey(
+      notify: '0',
+      apk: apk_path
+    )
+  end
+end

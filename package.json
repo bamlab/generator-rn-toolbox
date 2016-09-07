@@ -4,7 +4,8 @@
   "description": "",
   "files": [
     "generators/eslint",
-    "generators/jest"
+    "generators/jest",
+    "generators/fastlane"
   ],
   "keywords": ["yeoman-generator"],
   "dependencies": {
