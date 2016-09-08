@@ -8,6 +8,10 @@
     "generators/fastlane"
   ],
   "keywords": ["yeoman-generator"],
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/bamlab/generator-rn-toolbox"
+  },
   "dependencies": {
     "yeoman-generator": "^0.24.1"
   }
