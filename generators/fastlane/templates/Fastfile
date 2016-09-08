@@ -8,8 +8,7 @@ platform :ios do
       app_identifier: ENV['APP_IDENTIFIER'],
       skip_itc: true,
     )
-    match(type: "development", app_identifier: "*")
-    match
+    match(type: "enterprise", app_identifier: ENV['APP_IDENTIFIER'])
     gym(
       use_legacy_build_api: true
     )
@@ -23,8 +22,8 @@ end
 platform :android do
   lane :deploy do |options|
     gradle(task: 'clean', flavor: '', build_type: '')
-    gradle
-    apk_path =  "./android/app/build/outputs/apk/app-#{ENV['FL_GRADLE_FLAVOR']}-release.apk"
+    gradle(task: "assembleRelease")
+    apk_path =  "./android/app/build/outputs/apk/app-release.apk"
     hockey(
       notify: '0',
       apk: apk_path

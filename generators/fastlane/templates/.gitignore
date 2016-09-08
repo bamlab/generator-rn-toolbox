@@ -1,0 +1,4 @@
+<%= content %>
+# Fastlane
+dist
+fastlane/report.xml
