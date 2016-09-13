@@ -76,7 +76,7 @@ module.exports = generators.Base.extend({
   _extendGradle: function() {
     var config = this.fs.read(this.destinationPath('android/app/build.gradle'));
     // Change the app id
-    config = config.replace(/applicationId ".*"/, 'applicationId "testinf.bam"');
+    config = config.replace(/applicationId ".*"/, 'applicationId System.getenv("APP_IDENTIFIER")');
     // Add the release signingConfig
     config = config.replace(/(buildTypes {\n\s*release {(?:\n.*)+?)(\n\s*})/m, '$1\n            signingConfig signingConfigs.release$2');
     // Add the signingConfig
