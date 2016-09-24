@@ -1,10 +1,11 @@
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
-  installEslint: function() {
+  install: function() {
     this.npmInstall([
       'babel-core',
       'babel-eslint',
+      'babel-preset-react-native',
       'eslint',
       'eslint-config-airbnb',
       'eslint-plugin-import',
@@ -13,14 +14,23 @@ module.exports = generators.Base.extend({
     ], { 'saveDev': true, 'saveExact': true });
   },
 
-  copyEslintTemplates: function() {
+  writing: function() {
     this.fs.copyTpl(
       this.templatePath('.eslintrc'),
       this.destinationPath('.eslintrc')
     );
     this.fs.copyTpl(
+      this.templatePath('.babelrc'),
+      this.destinationPath('.babelrc')
+    );
+    this.fs.copyTpl(
       this.templatePath('.eslintignore'),
       this.destinationPath('.eslintignore')
     );
+  },
+
+  end: function() {
+    this.config.set('eslint', true);
+    this.config.save();
   }
 });
