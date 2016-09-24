@@ -1,5 +1,0 @@
-scheme "<%= appName %>"
-
-project ENV['PROJECT_PATH']
-
-output_directory "./dist"

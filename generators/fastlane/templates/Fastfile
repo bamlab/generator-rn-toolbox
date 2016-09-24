@@ -1,28 +1,39 @@
-fastlane_version "1.100.0"
-
-default_platform :ios
+fastlane_version "1.104.0"
 
 platform :ios do
-  lane :deploy do |options|
-    produce(
-      app_identifier: ENV['APP_IDENTIFIER'],
-      skip_itc: true,
-    )
-    match(type: "enterprise", app_identifier: ENV['APP_IDENTIFIER'])
+  lane :build do |options|
+    cocoapods(podfile: "./ios/Podfile")
+    match(type: "development")
+    match()
     gym(
-      use_legacy_build_api: true
+      configuration: "Release",
+      use_legacy_build_api: true,
+      silent: true
     )
-    hockey(
-      notify: '0',
-      ipa: ENV['DELIVER_IPA_PATH']
+  end
+
+  lane :deploy_hockey do |options|
+    build
+    hockey(notify: '0')
+  end
+
+  lane :deploy_testflight do |options|
+    build
+    pilot(
+      team_id: ENV['PILOT_TEAM_ID'],
+      distribute_external: false,
+      skip_waiting_for_build_processing: true
     )
   end
 end
 
 platform :android do
-  lane :deploy do |options|
-    gradle(task: 'clean', flavor: '', build_type: '')
+  lane :build do |options|
     gradle(task: "assembleRelease")
+  end
+
+  lane :deploy_hockey do |options|
+    build
     apk_path =  "./android/app/build/outputs/apk/app-release.apk"
     hockey(
       notify: '0',

@@ -1,8 +1,8 @@
     signingConfigs {
         release {
-            storeFile file(System.getenv("GRADLE_KEYSTORE_PATH"))
+            storeFile file(String.valueOf(System.getenv("GRADLE_KEYSTORE")))
             storePassword System.getenv("GRADLE_KEYSTORE_PASSWORD")
             keyAlias System.getenv("GRADLE_KEYSTORE_ALIAS")
-            keyPassword System.getenv("GRADLE_KEYSTORE_PASSWORD")
+            keyPassword System.getenv("GRADLE_KEYSTORE_ALIAS_PASSWORD")
         }
     }

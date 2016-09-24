@@ -2,3 +2,4 @@
 # Fastlane
 dist
 fastlane/report.xml
+fastlane/.env.local

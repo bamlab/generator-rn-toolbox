@@ -4,15 +4,51 @@ module.exports = generators.Base.extend({
   prompting: function() {
     return this.prompt([{
       type    : 'input',
-      name    : 'appId',
-      message : 'Your app id',
-      default : 'tech.bam.example.staging',
+      name    : 'stagingAppId',
+      message : 'Your app id for staging',
+      default : 'com.mycompany.app.staging',
+    },
+    {
+      type    : 'input',
+      name    : 'prodAppId',
+      message : 'Your app id for prod',
+      default : 'com.mycompany.app',
     },
     {
       type    : 'input',
       name    : 'appName',
       message : 'Your react native app directory name',
       default : 'example',
+    },
+    {
+      type    : 'input',
+      name    : 'matchGit',
+      message : 'Your git repo for match',
+      default : '',
+    },
+    {
+      type    : 'input',
+      name    : 'appleId',
+      message : 'Your apple id',
+      default : 'dev@mycompany.com',
+    },
+    {
+      type    : 'input',
+      name    : 'stagingAppleTeamId',
+      message : 'The developer.apple.com team id for staging certificates',
+      default : 'XXXXXXXXXX',
+    },
+    {
+      type    : 'input',
+      name    : 'prodAppleTeamId',
+      message : 'The developer.apple.com team id for prod certificates',
+      default : 'XXXXXXXXXX',
+    },
+    {
+      type    : 'input',
+      name    : 'itunesTeamId',
+      message : 'The itunesconnect.apple.com team id',
+      default : 'XXXXXXXX',
     },
     {
       type    : 'input',
@@ -25,10 +61,8 @@ module.exports = generators.Base.extend({
       name    : 'hockeyAppToken',
       message : 'A valid HockeyApp token'
     }]).then(function (answers) {
-      this.log('app id', answers.appId);
       this.answers = answers;
       this.answers.lowerCaseAppName = answers.appName.toLowerCase();
-      this.log('HockeyApp token', answers.hockeyAppToken);
     }.bind(this));
   },
   install: function () {
@@ -41,8 +75,18 @@ module.exports = generators.Base.extend({
       this.answers
     );
     this.fs.copyTpl(
-      this.templatePath('.env'),
-      this.destinationPath('fastlane/.env'),
+      this.templatePath('.env.local'),
+      this.destinationPath('fastlane/.env.local'),
+      this.answers
+    );
+    this.fs.copyTpl(
+      this.templatePath('.env.staging'),
+      this.destinationPath('fastlane/.env.staging'),
+      this.answers
+    );
+    this.fs.copyTpl(
+      this.templatePath('.env.prod'),
+      this.destinationPath('fastlane/.env.prod'),
       this.answers
     );
     this.fs.copyTpl(
@@ -50,17 +94,12 @@ module.exports = generators.Base.extend({
       this.destinationPath('fastlane/Fastfile')
     );
     this.fs.copyTpl(
-      this.templatePath('Gymfile'),
-      this.destinationPath('fastlane/Gymfile'),
-      this.answers
-    );
-    this.fs.copyTpl(
-      this.templatePath('Matchfile'),
-      this.destinationPath('fastlane/Matchfile')
-    );
-    this.fs.copyTpl(
       this.templatePath('Appfile'),
       this.destinationPath('fastlane/Appfile')
+    );
+    this.fs.copyTpl(
+      this.templatePath('Gemfile'),
+      this.destinationPath('Gemfile')
     );
     this._extendGitignore();
     this._extendGradle();
@@ -76,12 +115,32 @@ module.exports = generators.Base.extend({
   _extendGradle: function() {
     var config = this.fs.read(this.destinationPath('android/app/build.gradle'));
     // Change the app id
-    config = config.replace(/applicationId ".*"/, 'applicationId System.getenv("APP_IDENTIFIER")');
+    config = config.replace(
+      /applicationId ".*"/,
+      'applicationId System.getenv("GRADLE_APP_IDENTIFIER")'
+    );
     // Add the release signingConfig
-    config = config.replace(/(buildTypes {\n\s*release {(?:\n.*)+?)(\n\s*})/m, '$1\n            signingConfig signingConfigs.release$2');
+    config = config.replace(
+      /(buildTypes {\n\s*release {(?:\n.*)+?)(\n\s*})/m,
+      '$1\n            signingConfig signingConfigs.release$2'
+    );
     // Add the signingConfig
     var gradleSigningTemplate = this.fs.read(this.templatePath('gradleSigning'));
-    config = config.replace(/(})(\n\s*buildTypes)/m, "$1\n" + gradleSigningTemplate + "$2");
+    config = config.replace(
+      /(})(\n\s*buildTypes)/m,
+      "$1\n" + gradleSigningTemplate + "$2"
+    );
+    // Add the default params
+    config = config.replace(
+      /\nandroid {\n/m,
+      "\ndef appId = System.getenv(\"GRADLE_APP_IDENTIFIER\") ?: '" + this.answers.stagingAppId + ".debug'\ndef appName = System.getenv(\"GRADLE_APP_NAME\") ?: '" + this.answers.appName + " Debug'\n\nandroid {\n"
+    );
+    // Add the appName var
+    config = config.replace(
+      /(buildTypes {)(\s*release {\n)/m,
+      '$1\n        debug {\n            resValue "string", "app_name", appName\n        }$2            resValue "string", "app_name", appName\n'
+    );
+    // Output the file
     this.fs.write(this.destinationPath('android/app/build.gradle'), config);
   },
   _createKeystore: function() {

@@ -1,3 +1,0 @@
-git_url ENV['MATCH_GIT_URL']
-app_identifier ENV['APP_IDENTIFIER']
-type ENV['TYPE']
