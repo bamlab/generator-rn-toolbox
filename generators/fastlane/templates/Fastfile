@@ -2,7 +2,9 @@ fastlane_version "1.104.0"
 
 platform :ios do
   lane :build do |options|
-    cocoapods(podfile: "./ios/Podfile")
+    # Activate next line if you use Cocoapods
+    # cocoapods(podfile: "./ios/Podfile")
+    produce(skip_itc: true)
     match(type: "development")
     match()
     gym(
@@ -14,7 +16,10 @@ platform :ios do
 
   lane :deploy_hockey do |options|
     build
-    hockey(notify: '0')
+    hockey(
+      notify: '0',
+      ipa: ENV['HOCKEY_IPA']
+    )
   end
 
   lane :deploy_testflight do |options|

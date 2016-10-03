@@ -67,6 +67,7 @@ module.exports = generators.Base.extend({
   },
   install: function () {
     this._createKeystore();
+    // this.spawnCommand('bundle install'); TO BE FIXED
   },
   writing: function () {
     this.fs.copyTpl(
@@ -75,8 +76,8 @@ module.exports = generators.Base.extend({
       this.answers
     );
     this.fs.copyTpl(
-      this.templatePath('.env.local'),
-      this.destinationPath('fastlane/.env.local'),
+      this.templatePath('.env'),
+      this.destinationPath('fastlane/.env'),
       this.answers
     );
     this.fs.copyTpl(
@@ -100,6 +101,10 @@ module.exports = generators.Base.extend({
     this.fs.copyTpl(
       this.templatePath('Gemfile'),
       this.destinationPath('Gemfile')
+    );
+    this.fs.copyTpl(
+      this.templatePath('strings.xml'),
+      this.destinationPath('android/app/src/main/res/values/strings.xml')
     );
     this._extendGitignore();
     this._extendGradle();
