@@ -1,6 +1,0 @@
-json_key_file "android/service_account.json"
-
-package_name ENV['APP_ID']
-app_identifier ENV['APP_ID']
-team_id ENV['TEAM_ID']
-apple_id ENV['APPLE_ID']

@@ -1,48 +1,100 @@
+require 'dotenv'
 fastlane_version "1.104.0"
 
 platform :ios do
+  lane :setup do |options|
+    produce(
+      team_id: ENV['IOS_TEAM_ID'],
+      app_identifier: ENV['IOS_APP_ID'],
+      app_name: ENV['IOS_APP_NAME'],
+      username: ENV['IOS_USER_ID'],
+      skip_itc: true
+    )
+    match(
+      team_id: ENV['IOS_TEAM_ID'],
+      app_identifier: ENV['IOS_APP_ID'],
+      username: ENV['IOS_USER_ID'],
+      type: 'development'
+    )
+    match(
+      team_id: ENV['IOS_TEAM_ID'],
+      app_identifier: ENV['IOS_APP_ID'],
+      username: ENV['IOS_USER_ID'],
+      type: ENV['IOS_EXPORT_TYPE']
+    )
+  end
+
   lane :build do |options|
-    # Activate next line if you use Cocoapods
-    # cocoapods(podfile: "./ios/Podfile")
-    produce(skip_itc: true)
-    match(type: "development")
-    match()
+    update_info_plist(
+      xcodeproj: ENV['IOS_PROJECT_PATH'],
+      display_name: ENV['IOS_APP_NAME'],
+      app_identifier: ENV['IOS_APP_ID'],
+    )
+    profile_env_name = "sigh_#{ENV['IOS_APP_ID']}_#{ENV['IOS_EXPORT_TYPE']}_profile-name"
     gym(
-      configuration: "Release",
-      use_legacy_build_api: true,
-      silent: true
+      silent: true,
+      export_method: ENV['IOS_EXPORT_TYPE'],
+      project: ENV['IOS_PROJECT_PATH'],
+      xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{ENV[profile_env_name]}' DEVELOPMENT_TEAM='#{ENV['IOS_TEAM_ID']}'"
     )
   end
 
   lane :deploy_hockey do |options|
-    build
     hockey(
       notify: '0',
-      ipa: ENV['HOCKEY_IPA']
+      ipa: ENV['IOS_IPA_PATH']
     )
   end
 
   lane :deploy_testflight do |options|
-    build
     pilot(
-      team_id: ENV['PILOT_TEAM_ID'],
+      team_id: ENV['IOS_ITC_TEAM_ID'],
+      dev_portal_team_id: ENV['IOS_TEAM_ID'],
+      app_identifier: ENV['IOS_APP_ID'],
+      username: ENV['IOS_USER_ID'],
       distribute_external: false,
       skip_waiting_for_build_processing: true
     )
+  end
+
+  lane :deploy_staging do |options|
+    Dotenv.load('.env', '.env.staging')
+    setup
+    build
+    deploy_hockey
+  end
+
+  lane :deploy_prod do |options|
+    Dotenv.load('.env', '.env.prod')
+    setup
+    build
+    deploy_testflight
   end
 end
 
 platform :android do
   lane :build do |options|
-    gradle(task: "assembleRelease")
+    gradle(
+      task: "assembleRelease",
+      project_dir: ENV['ANDROID_PROJECT_DIR']
+    )
   end
 
   lane :deploy_hockey do |options|
-    build
-    apk_path =  "./android/app/build/outputs/apk/app-release.apk"
     hockey(
       notify: '0',
-      apk: apk_path
+      apk: ENV['ANDROID_APK_PATH']
     )
+  end
+
+  lane :deploy_staging do |options|
+    Dotenv.load('.env', '.env.staging')
+    build
+    hockey
+  end
+
+  lane :deploy_prod do |options|
+    Dotenv.load('.env', '.env.prod')
+    build
   end
 end
