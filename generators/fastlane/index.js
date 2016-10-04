@@ -134,7 +134,7 @@ module.exports = generators.Base.extend({
     // Add the default params
     config = config.replace(
       /\nandroid {\n/m,
-      "\ndef appId = System.getenv(\"GRADLE_APP_IDENTIFIER\") ?: '" + this.answers.stagingAppId + ".debug'\ndef appName = System.getenv(\"GRADLE_APP_NAME\") ?: '" + this.answers.appName + " Debug'\n\nandroid {\n"
+      "\ndef appId = System.getenv(\"GRADLE_APP_IDENTIFIER\") ?: 'com." + this.answers.lowerCaseAppName + ".debug'\ndef appName = System.getenv(\"GRADLE_APP_NAME\") ?: '" + this.answers.appName + " Debug'\n\nandroid {\n"
     );
     // Add the appName var
     config = config.replace(
