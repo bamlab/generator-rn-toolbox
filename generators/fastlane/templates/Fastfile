@@ -1,7 +1,11 @@
 require 'dotenv'
-fastlane_version "1.104.0"
+fastlane_version "1.105.0"
 
 platform :ios do
+  error do |lane, exception, options|
+    restore_file(path: "ios/${ENV['IOS_PLIST_PATH']}")
+  end
+
   lane :setup do |options|
     produce(
       team_id: ENV['IOS_TEAM_ID'],
@@ -25,10 +29,12 @@ platform :ios do
   end
 
   lane :build do |options|
+    backup_file(path: "ios/${ENV['IOS_PLIST_PATH']}")
     update_info_plist(
       xcodeproj: ENV['IOS_PROJECT_PATH'],
       display_name: ENV['IOS_APP_NAME'],
       app_identifier: ENV['IOS_APP_ID'],
+      plist_path: ENV['IOS_PLIST_PATH'],
     )
     profile_env_name = "sigh_#{ENV['IOS_APP_ID']}_#{ENV['IOS_EXPORT_TYPE']}_profile-name"
     gym(
@@ -37,6 +43,7 @@ platform :ios do
       project: ENV['IOS_PROJECT_PATH'],
       xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{ENV[profile_env_name]}' DEVELOPMENT_TEAM='#{ENV['IOS_TEAM_ID']}'"
     )
+    restore_file(path: "ios/${ENV['IOS_PLIST_PATH']}")
   end
 
   lane :deploy_hockey do |options|
