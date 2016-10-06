@@ -21,22 +21,22 @@ It is also recommended to do a separate commit after running each of these steps
 
 ### Creating your react app
 
-Use the `react init <ProjectName> && cd <ProjectName>` command to instanctiate your React Native Project.
+Use the `react-native init <ProjectName> && cd <ProjectName>` command to instantiate your React Native Project.
 
 ### Adding eslint
 
-*Eslint ensures a constistent coding style. For React Native newcomers it will also help you in your path to learn it.*
+*Eslint ensures a consistent coding style. For React Native newcomers it will also help you in your path to learn it.*
 
 Use `yo rn-toolbox:eslint` to setup airbnb react native eslint
 
 ### Adding fastlane
 
-*Fastlane is an amazing tool which allows you easily build, sign and deploy both your iOS and Android applications.*
+*Fastlane is an amazing tool which allows you to easily build, sign and deploy both your iOS and Android applications.*
 
 The following config is based on using HockeyApp with an Enterprise certificate for staging deployment.
 
-***IMPORTANT:*** In order to use this generator, upon instanciating the project open the `.xcproject` file and change the following config:
-- `open ios/<ProjectName>.xcproject`
+***IMPORTANT:*** In order to use this generator, upon instantiating the project open the `.xcodeproj` file and change the following config:
+- `open ios/<ProjectName>.xcodeproj`
 - Click the project file and uncheck ***Automatically manage signing***
 - Go to ***Build Settings*** select ***All*** and scroll to ***Signing***
 - For ***Code Signing Identity/Debug*** select ***iOS Developer***
@@ -46,7 +46,7 @@ The following config is based on using HockeyApp with an Enterprise certificate 
 
 ***IMPORTANT:*** AppStore deployment will require app icons to be setup
 
-Then use `yo rn-toolbox:fastlane` to setup fastlane for one line deploy to Hockey App and one line prod builds
+Then use `yo rn-toolbox:fastlane` to setup fastlane for one line deploy to Hockey App and one line prod builds.
 You should then run `bundle install`
 
 - To deploy iOS for staging run `bundle exec ios fastlane deploy_staging`
