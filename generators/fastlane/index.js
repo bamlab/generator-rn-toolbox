@@ -91,6 +91,10 @@ module.exports = generators.Base.extend({
       this.answers
     );
     this.fs.copyTpl(
+      this.templatePath('Appfile'),
+      this.destinationPath('fastlane/Appfile')
+    );
+    this.fs.copyTpl(
       this.templatePath('Fastfile'),
       this.destinationPath('fastlane/Fastfile')
     );

@@ -8,22 +8,13 @@ platform :ios do
 
   lane :setup do |options|
     produce(
-      team_id: ENV['IOS_TEAM_ID'],
-      app_identifier: ENV['IOS_APP_ID'],
       app_name: ENV['IOS_APP_NAME'],
-      username: ENV['IOS_USER_ID'],
       skip_itc: true
     )
     match(
-      team_id: ENV['IOS_TEAM_ID'],
-      app_identifier: ENV['IOS_APP_ID'],
-      username: ENV['IOS_USER_ID'],
       type: 'development'
     )
     match(
-      team_id: ENV['IOS_TEAM_ID'],
-      app_identifier: ENV['IOS_APP_ID'],
-      username: ENV['IOS_USER_ID'],
       type: ENV['IOS_EXPORT_TYPE']
     )
   end
@@ -55,10 +46,6 @@ platform :ios do
 
   lane :deploy_testflight do |options|
     pilot(
-      team_id: ENV['IOS_ITC_TEAM_ID'],
-      dev_portal_team_id: ENV['IOS_TEAM_ID'],
-      app_identifier: ENV['IOS_APP_ID'],
-      username: ENV['IOS_USER_ID'],
       distribute_external: false,
       skip_waiting_for_build_processing: true
     )
