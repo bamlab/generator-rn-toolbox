@@ -3,7 +3,7 @@ fastlane_version "1.105.0"
 
 platform :ios do
   error do |lane, exception, options|
-    restore_file(path: "ios/${ENV['IOS_PLIST_PATH']}")
+    restore_file(path: "ios/#{ENV['IOS_PLIST_PATH']}")
   end
 
   lane :setup do |options|
@@ -29,7 +29,7 @@ platform :ios do
   end
 
   lane :build do |options|
-    backup_file(path: "ios/${ENV['IOS_PLIST_PATH']}")
+    backup_file(path: "ios/#{ENV['IOS_PLIST_PATH']}")
     update_info_plist(
       xcodeproj: ENV['IOS_PROJECT_PATH'],
       display_name: ENV['IOS_APP_NAME'],
@@ -43,7 +43,7 @@ platform :ios do
       project: ENV['IOS_PROJECT_PATH'],
       xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{ENV[profile_env_name]}' DEVELOPMENT_TEAM='#{ENV['IOS_TEAM_ID']}'"
     )
-    restore_file(path: "ios/${ENV['IOS_PLIST_PATH']}")
+    restore_file(path: "ios/#{ENV['IOS_PLIST_PATH']}")
   end
 
   lane :deploy_hockey do |options|
