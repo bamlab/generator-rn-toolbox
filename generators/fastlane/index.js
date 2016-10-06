@@ -17,8 +17,14 @@ module.exports = generators.Base.extend({
     {
       type    : 'input',
       name    : 'appName',
+      message : 'Your app name',
+      default : 'My Awesome App',
+    },
+    {
+      type    : 'input',
+      name    : 'projectName',
       message : 'Your react native app directory name',
-      default : 'example',
+      default : 'MyAwesomeApp',
     },
     {
       type    : 'input',
@@ -62,7 +68,7 @@ module.exports = generators.Base.extend({
       message : 'A valid HockeyApp token'
     }]).then(function (answers) {
       this.answers = answers;
-      this.answers.lowerCaseAppName = answers.appName.toLowerCase();
+      this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
     }.bind(this));
   },
   install: function () {
@@ -138,7 +144,7 @@ module.exports = generators.Base.extend({
     // Add the default params
     config = config.replace(
       /\nandroid {\n/m,
-      "\ndef appId = System.getenv(\"GRADLE_APP_IDENTIFIER\") ?: 'com." + this.answers.lowerCaseAppName + ".debug'\ndef appName = System.getenv(\"GRADLE_APP_NAME\") ?: '" + this.answers.appName + " Debug'\n\nandroid {\n"
+      "\ndef appId = System.getenv(\"GRADLE_APP_IDENTIFIER\") ?: 'com." + this.answers.lowerCaseProjectName + ".debug'\ndef appName = System.getenv(\"GRADLE_APP_NAME\") ?: '" + this.answers.appName + " Debug'\n\nandroid {\n"
     );
     // Add the appName var
     config = config.replace(
@@ -149,14 +155,14 @@ module.exports = generators.Base.extend({
     this.fs.write(this.destinationPath('android/app/build.gradle'), config);
   },
   _createKeystore: function() {
-    var path = 'android/app/' + this.answers.lowerCaseAppName + '.keystore';
+    var path = 'android/app/' + this.answers.lowerCaseProjectName + '.keystore';
     if(!this.fs.exists(this.destinationPath(path))) {
       this.spawnCommand('keytool', [
         '-genkey',
         '-v',
         '-dname', 'OU=BAM',
         '-keystore', path,
-        '-alias', this.answers.lowerCaseAppName,
+        '-alias', this.answers.lowerCaseProjectName,
         '-keyalg', 'RSA',
         '-keysize', '2048',
         '-validity', '10000',
