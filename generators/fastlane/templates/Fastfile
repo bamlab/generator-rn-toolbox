@@ -19,6 +19,10 @@ platform :ios do
     )
   end
 
+  lane :setup_push do
+    pem
+  end
+
   lane :build do |options|
     backup_file(path: "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}")
     xcodeproj = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcodeproj"
