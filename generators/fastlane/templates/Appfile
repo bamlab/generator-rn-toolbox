@@ -1,0 +1,5 @@
+# See https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Appfile.md
+app_identifier ENV['IOS_APP_ID']
+apple_id ENV['IOS_USER_ID']
+team_id ENV['IOS_TEAM_ID']
+itc_team_id ENV['IOS_ITC_TEAM_ID']

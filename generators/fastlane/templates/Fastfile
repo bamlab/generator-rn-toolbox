@@ -3,47 +3,49 @@ fastlane_version "1.105.0"
 
 platform :ios do
   error do |lane, exception, options|
-    restore_file(path: "ios/#{ENV['IOS_PLIST_PATH']}")
+    restore_file(path: "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}")
   end
 
   lane :setup do |options|
     produce(
-      team_id: ENV['IOS_TEAM_ID'],
-      app_identifier: ENV['IOS_APP_ID'],
       app_name: ENV['IOS_APP_NAME'],
-      username: ENV['IOS_USER_ID'],
       skip_itc: true
     )
     match(
-      team_id: ENV['IOS_TEAM_ID'],
-      app_identifier: ENV['IOS_APP_ID'],
-      username: ENV['IOS_USER_ID'],
       type: 'development'
     )
     match(
-      team_id: ENV['IOS_TEAM_ID'],
-      app_identifier: ENV['IOS_APP_ID'],
-      username: ENV['IOS_USER_ID'],
       type: ENV['IOS_EXPORT_TYPE']
     )
   end
 
+  lane :setup_push do
+    pem
+  end
+
   lane :build do |options|
-    backup_file(path: "ios/#{ENV['IOS_PLIST_PATH']}")
+    backup_file(path: "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}")
+    xcodeproj = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcodeproj"
+    xcworkspace = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcworkspace"
     update_info_plist(
-      xcodeproj: ENV['IOS_PROJECT_PATH'],
+      xcodeproj: xcodeproj,
       display_name: ENV['IOS_APP_NAME'],
       app_identifier: ENV['IOS_APP_ID'],
       plist_path: ENV['IOS_PLIST_PATH'],
     )
     profile_env_name = "sigh_#{ENV['IOS_APP_ID']}_#{ENV['IOS_EXPORT_TYPE']}_profile-name"
-    gym(
+    gymOptions = ({
       silent: true,
       export_method: ENV['IOS_EXPORT_TYPE'],
       project: ENV['IOS_PROJECT_PATH'],
       xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{ENV[profile_env_name]}' DEVELOPMENT_TEAM='#{ENV['IOS_TEAM_ID']}'"
+    }).merge(
+      File.directory?("../#{xcworkspace}") ?
+        {workspace: xcworkspace} :
+        {project: xcodeproj}
     )
-    restore_file(path: "ios/#{ENV['IOS_PLIST_PATH']}")
+    gym(gymOptions)
+    restore_file(path: "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}")
   end
 
   lane :deploy_hockey do |options|
@@ -55,10 +57,6 @@ platform :ios do
 
   lane :deploy_testflight do |options|
     pilot(
-      team_id: ENV['IOS_ITC_TEAM_ID'],
-      dev_portal_team_id: ENV['IOS_TEAM_ID'],
-      app_identifier: ENV['IOS_APP_ID'],
-      username: ENV['IOS_USER_ID'],
       distribute_external: false,
       skip_waiting_for_build_processing: true
     )
