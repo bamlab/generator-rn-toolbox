@@ -2,10 +2,11 @@
 Yeoman generators to kickstart your react-native v0.33 - 0.34 projects. It requires XCode 8.
 
 ## Warning
-As of now, the way those generators are configured is heavily biased and based on our own company needs.
+As of now, the way those generators are configured is heavily opiniated and based on our own company needs.
 
 ## Main features
 - Eslint setup
+- Base project setup
 - Fastlane setup for multiple environments
   - (Almost) No manual setup
   - Multiple Ids + Name
@@ -28,6 +29,21 @@ Use the `react-native init <ProjectName> && cd <ProjectName>` command to instant
 *Eslint ensures a consistent coding style. For React Native newcomers it will also help you in your path to learn it.*
 
 Use `yo rn-toolbox:eslint` to setup airbnb react native eslint
+
+### Base Project setup
+
+*Tired of the same empty initial app? Start with a real React Native Project*
+
+Use `yo rn-toolbox:base` to replace the base project
+
+**Features**
+- Centralized App.js
+- [react-native-router-flux](https://github.com/aksonov/react-native-router-flux) 2 pages setup
+- Custom header
+- Custom header logo
+- Custom button
+- Centralized app style
+- Page container
 
 ### Adding fastlane
 

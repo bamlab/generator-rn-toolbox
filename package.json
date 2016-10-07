@@ -4,8 +4,8 @@
   "description": "",
   "files": [
     "generators/eslint",
-    "generators/jest",
-    "generators/fastlane"
+    "generators/fastlane",
+    "generators/base"
   ],
   "keywords": ["yeoman-generator"],
   "repository" : {
