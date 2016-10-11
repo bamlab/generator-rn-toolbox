@@ -65,7 +65,7 @@ The following config is based on using HockeyApp with an Enterprise certificate 
 Then use `yo rn-toolbox:fastlane` to setup fastlane for one line deploy to Hockey App and one line prod builds.
 You should then run `bundle install`
 
-- To deploy iOS for staging run `bundle exec ios fastlane deploy_staging`
+- To deploy iOS for staging run `bundle exec fastlane ios deploy_staging`
 - To deploy iOS for prod run `bundle exec fastlane ios deploy_prod`
 - To deploy Android for staging run `bundle exec fastlane android deploy_staging`
 - To build Android for prod `bundle exec fastlane android deploy_prod`
