@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Page = (props) => (
+const Page = props => (
   <View
     style={[styles.page, {
       paddingTop: props.noNavBar ? 0 : appStyle.navbar.height,
