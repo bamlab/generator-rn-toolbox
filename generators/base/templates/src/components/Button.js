@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Button = (props) => (
+const Button = props => (
   <TouchableOpacity onPress={props.onPress} style={styles.container}>
     <View style={styles.button}>
       <Text style={[styles.text]}>{props.children.toUpperCase()}</Text>
