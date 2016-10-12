@@ -7,7 +7,7 @@
     "generators/fastlane",
     "generators/base"
   ],
-  "keywords": ["yeoman-generator"],
+  "keywords": ["yeoman-generator", "react-native", "generator", "react", "native", "toolbox", "fastlane", "eslint", "boilerplate", "environments"],
   "repository" : {
     "type" : "git",
     "url" : "https://github.com/bamlab/generator-rn-toolbox"

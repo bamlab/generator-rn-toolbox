@@ -1,4 +1,4 @@
-# RN Toolbox
+# React Native Toolbox
 Yeoman generators to kickstart your react-native v0.33 - 0.34 projects. It requires XCode 8.
 
 ## Warning
