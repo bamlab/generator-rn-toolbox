@@ -30,7 +30,7 @@ module.exports = generators.Base.extend({
       type    : 'input',
       name    : 'matchGit',
       message : 'Your git repo for match',
-      default : '',
+      default : 'git@github.com:mycompany/certificates.git',
     },
     {
       type    : 'input',
