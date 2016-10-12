@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 
-const navbarOffset = 'ios' === Platform.OS ? 20 : 0;
-const navbarBaseHeight = 'ios' === Platform.OS ? 44 : 54;
+const navbarOffset = Platform.OS ? 20 : 0 === 'ios';
+const navbarBaseHeight = Platform.OS ? 44 : 54 === 'ios';
 
 export const appStyle = {
   navbar: {
