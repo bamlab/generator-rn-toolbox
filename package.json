@@ -5,14 +5,28 @@
   "files": [
     "generators/eslint",
     "generators/fastlane",
-    "generators/base"
+    "generators/base",
+    "generators/assets"
   ],
-  "keywords": ["yeoman-generator", "react-native", "generator", "react", "native", "toolbox", "fastlane", "eslint", "boilerplate", "environments"],
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/bamlab/generator-rn-toolbox"
+  "keywords": [
+    "yeoman-generator",
+    "react-native",
+    "generator",
+    "react",
+    "native",
+    "toolbox",
+    "fastlane",
+    "eslint",
+    "boilerplate",
+    "environments"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bamlab/generator-rn-toolbox"
   },
   "dependencies": {
+    "fs-extra": "^0.30.0",
+    "gm": "^1.23.0",
     "yeoman-generator": "^0.24.1"
   },
   "devDependencies": {
