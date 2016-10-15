@@ -27,6 +27,11 @@ module.exports = generators.Base.extend({
       this.templatePath('.eslintignore'),
       this.destinationPath('.eslintignore')
     );
+    this.fs.extendJSON('package.json', {
+      scripts: {
+        lint: 'eslint . --quiet',
+      }
+    }, null, 2);
   },
 
   end: function() {

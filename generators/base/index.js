@@ -20,6 +20,7 @@ class BaseGenerator extends Base {
   }
 
   writing() {
+    this.fs.delete(this.destinationPath('__tests__'));
     this.fs.copyTpl(
       this.templatePath('**/*.js'),
       this.destinationPath(''),
@@ -29,6 +30,11 @@ class BaseGenerator extends Base {
       this.templatePath('src/assets/*'),
       this.destinationPath('src/assets')
     );
+  }
+
+  end() {
+    this.config.set('base', true);
+    this.config.save();
   }
 }
 
