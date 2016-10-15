@@ -9,6 +9,7 @@ Yeoman generators to kickstart your react-native v0.33 - 0.34 projects.
 - [Base project setup](generators/base/README.md)
 - [Fastlane setup for multiple environments](generators/fastlane/README.md)
 - [Icons and Splashscreen generation](generators/assets/README.md)
+- [Bitrise setup for continuous deployment](generators/bitrise/README.md)
 
 ## Usage
 
@@ -25,4 +26,3 @@ It is also recommended to do a separate commit after running each of these steps
 - Android prod deployment
 - Cocoapods compatibility
 - Jest setup
-- Continuous deployment setup (via bitrise)
