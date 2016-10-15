@@ -1,17 +1,6 @@
 const Base = require('yeoman-generator').Base;
 
 class JestGenerator extends Base {
-  install() {
-    this.npmInstall([
-      'jest',
-      'babel-jest',
-      'jest-react-native',
-      'babel-preset-react-native',
-      'react-test-renderer',
-      'npm-run-all'
-    ], { 'saveDev': true, 'saveExact': true });
-  }
-
   writing() {
     this.fs.copyTpl(
       this.templatePath('FileStub.js'),
@@ -39,6 +28,12 @@ class JestGenerator extends Base {
         },
       }
     }, null, 2)
+  }
+
+  install() {
+    this.npmInstall([
+      'npm-run-all'
+    ], { 'saveDev': true, 'saveExact': true });
   }
 
   end() {

@@ -1,12 +1,13 @@
 # React Native Toolbox
 
-Yeoman generators to kickstart your react-native v0.33 - 0.34 projects.
+Yeoman generators to kickstart your react-native v0.35 projects.
 
 *As of now, the way those generators are configured is heavily opinionated and based on our own company needs.*
 
 ## Features
 - [Eslint setup](generators/eslint/README.md)
 - [Base project setup](generators/base/README.md)
+- [Jest setup](generators/jest/README.md)
 - [Fastlane setup for multiple environments](generators/fastlane/README.md)
 - [Icons and Splashscreen generation](generators/assets/README.md)
 - [Bitrise setup for continuous deployment](generators/bitrise/README.md)
