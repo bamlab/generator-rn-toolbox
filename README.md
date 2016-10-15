@@ -8,6 +8,7 @@ Yeoman generators to kickstart your react-native v0.33 - 0.34 projects.
 - [Eslint setup](generators/eslint/README.md)
 - [Base project setup](generators/base/README.md)
 - [Fastlane setup for multiple environments](generators/fastlane/README.md)
+- [Icons and Splashscreen generation](generators/assets/README.md)
 
 ## Usage
 
