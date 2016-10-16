@@ -1,22 +1,25 @@
+const Base = require('yeoman-generator').Base;
 var generators = require('yeoman-generator');
 
-module.exports = generators.Base.extend({
-  prompting: function() {
+class BaseGenerator extends Base {
+  prompting() {
     return this.prompt([{
       type    : 'input',
       name    : 'appName',
       message : 'Your react native app directory name',
       default : 'example',
-    }]).then(function (answers) {
+    }]).then((answers) => {
       this.answers = answers;
-    }.bind(this));
-  },
-  install: function () {
+    });
+  }
+
+  install() {
     this.npmInstall([
       'react-native-router-flux',
     ], { saveExact: true });
-  },
-  writing: function () {
+  }
+
+  writing() {
     this.fs.copyTpl(
       this.templatePath('**/*.js'),
       this.destinationPath(''),
@@ -26,5 +29,7 @@ module.exports = generators.Base.extend({
       this.templatePath('src/assets/*'),
       this.destinationPath('src/assets')
     );
-  },
-});
+  }
+}
+
+module.exports = BaseGenerator;

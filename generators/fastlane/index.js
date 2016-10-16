@@ -1,7 +1,7 @@
-var generators = require('yeoman-generator');
+const Base = require('yeoman-generator').Base;
 
-module.exports = generators.Base.extend({
-  prompting: function() {
+class FastlaneGenerator extends Base {
+  prompting() {
     return this.prompt([{
       type    : 'input',
       name    : 'stagingAppId',
@@ -66,43 +66,22 @@ module.exports = generators.Base.extend({
       type    : 'input',
       name    : 'hockeyAppToken',
       message : 'A valid HockeyApp token'
-    }]).then(function (answers) {
+    }]).then((answers) => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
-    }.bind(this));
-  },
-  install: function () {
+    });
+  }
+
+  install() {
     this._createKeystore();
     // this.spawnCommand('bundle install'); TO BE FIXED
-  },
-  writing: function () {
+  }
+
+  writing() {
     this.fs.copyTpl(
-      this.templatePath('.env.dist'),
-      this.destinationPath('fastlane/.env.dist'),
+      this.templatePath('fastlane/*'),
+      this.destinationPath('fastlane'),
       this.answers
-    );
-    this.fs.copyTpl(
-      this.templatePath('.env'),
-      this.destinationPath('fastlane/.env'),
-      this.answers
-    );
-    this.fs.copyTpl(
-      this.templatePath('.env.staging'),
-      this.destinationPath('fastlane/.env.staging'),
-      this.answers
-    );
-    this.fs.copyTpl(
-      this.templatePath('.env.prod'),
-      this.destinationPath('fastlane/.env.prod'),
-      this.answers
-    );
-    this.fs.copyTpl(
-      this.templatePath('Appfile'),
-      this.destinationPath('fastlane/Appfile')
-    );
-    this.fs.copyTpl(
-      this.templatePath('Fastfile'),
-      this.destinationPath('fastlane/Fastfile')
     );
     this.fs.copyTpl(
       this.templatePath('Gemfile'),
@@ -114,16 +93,18 @@ module.exports = generators.Base.extend({
     );
     this._extendGitignore();
     this._extendGradle();
-  },
-  _extendGitignore: function() {
+  }
+
+  _extendGitignore() {
     var content = this.fs.read(this.destinationPath('.gitignore'))
     this.fs.copyTpl(
       this.templatePath('gitignore'),
       this.destinationPath('.gitignore'),
       { content: content }
     );
-  },
-  _extendGradle: function() {
+  }
+
+  _extendGradle() {
     var config = this.fs.read(this.destinationPath('android/app/build.gradle'));
     // Change the app id
     config = config.replace(
@@ -153,8 +134,9 @@ module.exports = generators.Base.extend({
     );
     // Output the file
     this.fs.write(this.destinationPath('android/app/build.gradle'), config);
-  },
-  _createKeystore: function() {
+  }
+
+  _createKeystore() {
     var path = 'android/app/' + this.answers.lowerCaseProjectName + '.keystore';
     if(!this.fs.exists(this.destinationPath(path))) {
       this.spawnCommand('keytool', [
@@ -170,5 +152,7 @@ module.exports = generators.Base.extend({
         '-keypass', this.answers.keystorePassword,
       ]);
     }
-  },
-});
+  }
+}
+
+module.exports = FastlaneGenerator;
