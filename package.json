@@ -1,13 +1,14 @@
 {
   "name": "generator-rn-toolbox",
   "version": "0.4.1",
-  "description": "",
+  "description": "React-Native generators to kickstart your project",
   "files": [
     "generators/eslint",
     "generators/fastlane",
     "generators/base",
     "generators/assets",
-    "generators/bitrise"
+    "generators/bitrise",
+    "generators/jest"
   ],
   "keywords": [
     "yeoman-generator",
