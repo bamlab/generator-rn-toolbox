@@ -79,32 +79,9 @@ class FastlaneGenerator extends Base {
 
   writing() {
     this.fs.copyTpl(
-      this.templatePath('.env.dist'),
-      this.destinationPath('fastlane/.env.dist'),
+      this.templatePath('fastlane/*'),
+      this.destinationPath('fastlane'),
       this.answers
-    );
-    this.fs.copyTpl(
-      this.templatePath('.env'),
-      this.destinationPath('fastlane/.env'),
-      this.answers
-    );
-    this.fs.copyTpl(
-      this.templatePath('.env.staging'),
-      this.destinationPath('fastlane/.env.staging'),
-      this.answers
-    );
-    this.fs.copyTpl(
-      this.templatePath('.env.prod'),
-      this.destinationPath('fastlane/.env.prod'),
-      this.answers
-    );
-    this.fs.copyTpl(
-      this.templatePath('Appfile'),
-      this.destinationPath('fastlane/Appfile')
-    );
-    this.fs.copyTpl(
-      this.templatePath('Fastfile'),
-      this.destinationPath('fastlane/Fastfile')
     );
     this.fs.copyTpl(
       this.templatePath('Gemfile'),
