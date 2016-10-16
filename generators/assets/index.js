@@ -29,12 +29,20 @@ class ResourcesGenerator extends Base {
     });
   }
 
-  checkOSToBuildFor() {
+  writing() {
+    this._checkOSToBuildFor();
+    this._setupIosIcons();
+    this._setupAndroidIcons();
+    this._setupIosSplashScreen();
+    this._setupAndroidSplashScreen();
+  }
+
+  _checkOSToBuildFor() {
     this.android = this.options.android || !this.options.ios;
     this.ios = this.options.ios || !this.options.android;
   }
 
-  setupIosIcons() {
+  _setupIosIcons() {
     if (!this.ios || !this.options.icon) return;
 
     const iosIconFolder = `ios/${this.answers.projectName}/Images.xcassets/AppIcon.appiconset`;
@@ -50,12 +58,12 @@ class ResourcesGenerator extends Base {
     );
   }
 
-  setupAndroidIcons() {
+  _setupAndroidIcons() {
     if (!this.android || !this.options.icon) return;
     imageGenerator.generateAndroidIcons(this.options.icon);
   }
 
-  setupIosSplashScreen() {
+  _setupIosSplashScreen() {
     if (!this.ios || !this.options.splash) return;
 
     const iosSplashFolder = `ios/${this.answers.projectName}/Images.xcassets/LaunchImage.launchimage`;
@@ -71,7 +79,7 @@ class ResourcesGenerator extends Base {
     );
   }
 
-  setupAndroidSplashScreen() {
+  _setupAndroidSplashScreen() {
     if (!this.android || !this.options.splash) return;
     imageGenerator.generateAndroidSplashScreen(this.options.splash);
   }
