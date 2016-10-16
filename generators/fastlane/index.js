@@ -153,6 +153,11 @@ class FastlaneGenerator extends Base {
       ]);
     }
   }
+
+  end() {
+    this.config.set('fastlane', true);
+    this.config.save();
+  }
 }
 
 module.exports = FastlaneGenerator;

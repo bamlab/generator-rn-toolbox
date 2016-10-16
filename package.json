@@ -6,7 +6,8 @@
     "generators/eslint",
     "generators/fastlane",
     "generators/base",
-    "generators/assets"
+    "generators/assets",
+    "generators/bitrise"
   ],
   "keywords": [
     "yeoman-generator",
