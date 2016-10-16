@@ -1,6 +1,6 @@
 {
   "name": "generator-rn-toolbox",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "React-Native generators to kickstart your project",
   "files": [
     "generators/eslint",
