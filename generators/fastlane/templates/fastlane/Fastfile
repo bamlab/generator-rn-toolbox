@@ -40,7 +40,7 @@ platform :ios do
       project: ENV['IOS_PROJECT_PATH'],
       xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{ENV[profile_env_name]}' DEVELOPMENT_TEAM='#{ENV['IOS_TEAM_ID']}'"
     }).merge(
-      File.directory?("../#{xcworkspace}") ?
+      File.directory?("./#{xcworkspace}") ?
         {workspace: xcworkspace} :
         {project: xcodeproj}
     )
