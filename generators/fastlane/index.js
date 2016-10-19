@@ -80,6 +80,10 @@ class FastlaneGenerator extends Base {
   writing() {
     this.fs.copyTpl(
       this.templatePath('fastlane/*'),
+      this.destinationPath('fastlane')
+    );
+    this.fs.copyTpl(
+      this.templatePath('fastlane/.*'),
       this.destinationPath('fastlane'),
       this.answers
     );

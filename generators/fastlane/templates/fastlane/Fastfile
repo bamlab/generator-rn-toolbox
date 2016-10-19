@@ -37,7 +37,6 @@ platform :ios do
     gymOptions = ({
       silent: true,
       export_method: ENV['IOS_EXPORT_TYPE'],
-      project: ENV['IOS_PROJECT_PATH'],
       xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{ENV[profile_env_name]}' DEVELOPMENT_TEAM='#{ENV['IOS_TEAM_ID']}'"
     }).merge(
       File.directory?("../#{xcworkspace}") ?
