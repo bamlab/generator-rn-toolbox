@@ -88,7 +88,7 @@ workflows:
     - cache-push@0.9.3:
         inputs:
         - cache_paths: |-
-            ./$REACT_NATIVE_DIRECTORY/node_modules -> package.json
+            ./$REACT_NATIVE_DIRECTORY/node_modules -> ./$REACT_NATIVE_DIRECTORY/package.json
             $HOME/.nvm -> $HOME/.nvm/package.json
             $HOME/.gradle
             $GEM_HOME
