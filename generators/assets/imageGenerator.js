@@ -2,8 +2,18 @@ const gm = require('gm').subClass({ imageMagick: true });
 const fs = require('fs-extra');
 const path = require('path');
 
-const iosIconSizes = [20, 29, 40, 60];
-const iosMultipliers = [2, 3];
+/* eslint-disable no-multi-spaces */
+const iosIconSizes = [
+  { size: 20,  multipliers: [1, 2, 3] },
+  { size: 29,  multipliers: [1, 2, 3] },
+  { size: 40,  multipliers: [1, 2, 3] },
+  { size: 50,  multipliers: [1, 2] },
+  { size: 57,  multipliers: [1, 2] },
+  { size: 60,  multipliers: [2, 3] },
+  { size: 72,  multipliers: [1, 2] },
+  { size: 76,  multipliers: [1, 2] },
+  { size: 83.5, multipliers: [2] },
+];
 
 const androidIconSizes = [
   { value: 36,  density: 'ldpi' },
@@ -26,7 +36,7 @@ const androidSplashSizes = [
   { width: 480,   height: 800,   density: 'port-hdpi' },
   { width: 720,   height: 1280,  density: 'port-xhdpi' },
   { width: 960,   height: 1600,  density: 'port-xxhdpi' },
-  { width: 1280,  height: 1920,  density: 'port-xxxhdpi' }
+  { width: 1280,  height: 1920,  density: 'port-xxxhdpi' },
 ];
 
 const iosSplashSizes = [
@@ -40,6 +50,7 @@ const iosSplashSizes = [
   { name: 'Default-Portrait',          width: 768,   height: 1024 },
   { name: 'Default@2x',                width: 640,   height: 960 },
 ];
+/* eslint-enable no-multi-spaces */
 
 const resizeImage = (srcPath, destinationPath, width, givenHeight) => {
   const height = givenHeight || width;
@@ -75,11 +86,11 @@ const resizeImage = (srcPath, destinationPath, width, givenHeight) => {
 
 const generateIosIcons = (iconSource, iosIconFolder) =>
   Promise.all(iosIconSizes.map(size =>
-    Promise.all(iosMultipliers.map(multiplier =>
+    Promise.all(size.multipliers.map(multiplier =>
       resizeImage(
         iconSource,
-        `${iosIconFolder}/icon-${size}@${multiplier}x.png`,
-        size * multiplier
+        `${iosIconFolder}/icon-${size.size}@${multiplier}x.png`,
+        size.size * multiplier
       )
     ))
   ));
