@@ -12,12 +12,17 @@ Yeoman generators to kickstart your react-native v0.35 projects.
 - [Icons and Splashscreen generation](generators/assets/README.md)
 - [Bitrise setup for continuous deployment](generators/bitrise/README.md)
 
+## Requirements
+
+- [ ] You need `node 6` installed:
+- [ ] Ruby > `2.2.3`
+- [ ] Yeoman installed (`npm i -g yo`)
+
 ## Usage
 
 In React Native project, use any generator above.
 
 If starting from scratch, use the `react-native init <ProjectName> && cd <ProjectName>` command to instantiate your React Native Project.
-
 
 It is recommended to initiate the git repository right after instantiating the app and to do you first commit.
 
