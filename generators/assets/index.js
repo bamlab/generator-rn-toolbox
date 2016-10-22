@@ -30,11 +30,13 @@ class ResourcesGenerator extends Base {
   }
 
   writing() {
-    this._checkOSToBuildFor();
-    this._setupIosIcons();
-    this._setupAndroidIcons();
-    this._setupIosSplashScreen();
-    this._setupAndroidSplashScreen();
+    return Promise.all([
+      this._checkOSToBuildFor(),
+      this._setupIosIcons(),
+      this._setupAndroidIcons(),
+      this._setupIosSplashScreen(),
+      this._setupAndroidSplashScreen(),
+    ]);
   }
 
   _checkOSToBuildFor() {
@@ -43,7 +45,7 @@ class ResourcesGenerator extends Base {
   }
 
   _setupIosIcons() {
-    if (!this.ios || !this.options.icon) return;
+    if (!this.ios || !this.options.icon) return null;
 
     const iosIconFolder = `ios/${this.answers.projectName}/Images.xcassets/AppIcon.appiconset`;
 
@@ -52,19 +54,19 @@ class ResourcesGenerator extends Base {
       this.destinationPath(`${iosIconFolder}/Contents.json`)
     );
 
-    imageGenerator.generateIosIcons(
+    return imageGenerator.generateIosIcons(
       this.options.icon,
       iosIconFolder
     );
   }
 
   _setupAndroidIcons() {
-    if (!this.android || !this.options.icon) return;
-    imageGenerator.generateAndroidIcons(this.options.icon);
+    if (!this.android || !this.options.icon) return null;
+    return imageGenerator.generateAndroidIcons(this.options.icon);
   }
 
   _setupIosSplashScreen() {
-    if (!this.ios || !this.options.splash) return;
+    if (!this.ios || !this.options.splash) return null;
 
     const iosSplashFolder = `ios/${this.answers.projectName}/Images.xcassets/LaunchImage.launchimage`;
 
@@ -73,15 +75,15 @@ class ResourcesGenerator extends Base {
       `${iosSplashFolder}/Contents.json`
     );
 
-    imageGenerator.generateIosSplashScreen(
+    return imageGenerator.generateIosSplashScreen(
       this.options.splash,
       iosSplashFolder
     );
   }
 
   _setupAndroidSplashScreen() {
-    if (!this.android || !this.options.splash) return;
-    imageGenerator.generateAndroidSplashScreen(this.options.splash);
+    if (!this.android || !this.options.splash) return null;
+    return imageGenerator.generateAndroidSplashScreen(this.options.splash);
   }
 }
 
