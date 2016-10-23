@@ -5,7 +5,8 @@
 **Features**
 - (Almost) No manual setup
 - Multiple Ids + Name
-- Centralized environments config for both apps
+- Centralized Fastlane environments config for both apps
+- JS environment
 
 ***:warning: XCode 8 is required.***
 

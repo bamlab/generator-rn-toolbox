@@ -3,16 +3,10 @@ const Base = require('yeoman-generator').Base;
 class FastlaneGenerator extends Base {
   prompting() {
     return this.prompt([{
-      type    : 'input',
-      name    : 'stagingAppId',
-      message : 'Your app id for staging',
-      default : 'com.mycompany.app.staging',
-    },
-    {
-      type    : 'input',
-      name    : 'prodAppId',
-      message : 'Your app id for prod',
-      default : 'com.mycompany.app',
+      type    : 'companyName',
+      name    : 'companyName',
+      message : 'Your company name',
+      default : 'My Company',
     },
     {
       type    : 'input',
@@ -25,6 +19,18 @@ class FastlaneGenerator extends Base {
       name    : 'projectName',
       message : 'Your react native app directory name',
       default : 'MyAwesomeApp',
+    },
+    {
+      type    : 'input',
+      name    : 'stagingAppId',
+      message : 'Your app id for staging',
+      default : 'com.mycompany.app.staging',
+    },
+    {
+      type    : 'input',
+      name    : 'prodAppId',
+      message : 'Your app id for prod',
+      default : 'com.mycompany.app',
     },
     {
       type    : 'input',
@@ -65,7 +71,7 @@ class FastlaneGenerator extends Base {
     {
       type    : 'input',
       name    : 'hockeyAppToken',
-      message : 'A valid HockeyApp token'
+      message : 'A valid HockeyApp token',
     }]).then((answers) => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
@@ -74,13 +80,19 @@ class FastlaneGenerator extends Base {
 
   install() {
     this._createKeystore();
-    // this.spawnCommand('bundle install'); TO BE FIXED
+    this.spawnCommand('bundle', ['install'], {
+      cwd: this.destinationPath(),
+    });
   }
 
   writing() {
     this.fs.copyTpl(
       this.templatePath('fastlane/*'),
       this.destinationPath('fastlane')
+    );
+    this.fs.copyTpl(
+      this.templatePath('environment/*'),
+      this.destinationPath('environment')
     );
     this.fs.copyTpl(
       this.templatePath('fastlane/.*'),
@@ -100,16 +112,16 @@ class FastlaneGenerator extends Base {
   }
 
   _extendGitignore() {
-    var content = this.fs.read(this.destinationPath('.gitignore'))
+    const content = this.fs.read(this.destinationPath('.gitignore'));
     this.fs.copyTpl(
       this.templatePath('gitignore'),
       this.destinationPath('.gitignore'),
-      { content: content }
+      { content }
     );
   }
 
   _extendGradle() {
-    var config = this.fs.read(this.destinationPath('android/app/build.gradle'));
+    let config = this.fs.read(this.destinationPath('android/app/build.gradle'));
     // Change the app id
     config = config.replace(
       /applicationId ".*"/,
@@ -121,15 +133,15 @@ class FastlaneGenerator extends Base {
       '$1\n            signingConfig signingConfigs.release$2'
     );
     // Add the signingConfig
-    var gradleSigningTemplate = this.fs.read(this.templatePath('gradleSigning'));
+    const gradleSigningTemplate = this.fs.read(this.templatePath('gradleSigning'));
     config = config.replace(
       /(})(\n\s*buildTypes)/m,
-      "$1\n" + gradleSigningTemplate + "$2"
+      `$1\n${gradleSigningTemplate}$2`
     );
     // Add the default params
     config = config.replace(
       /\nandroid {\n/m,
-      "\ndef appId = System.getenv(\"GRADLE_APP_IDENTIFIER\") ?: 'com." + this.answers.lowerCaseProjectName + ".debug'\ndef appName = System.getenv(\"GRADLE_APP_NAME\") ?: '" + this.answers.appName + " Debug'\n\nandroid {\n"
+      `\ndef appId = System.getenv("GRADLE_APP_IDENTIFIER") ?: 'com.${this.answers.lowerCaseProjectName}.debug'\ndef appName = System.getenv("GRADLE_APP_NAME") ?: '${this.answers.appName} Debug'\n\nandroid {\n`
     );
     // Add the appName var
     config = config.replace(
@@ -141,12 +153,12 @@ class FastlaneGenerator extends Base {
   }
 
   _createKeystore() {
-    var path = 'android/app/' + this.answers.lowerCaseProjectName + '.keystore';
-    if(!this.fs.exists(this.destinationPath(path))) {
+    const path = `android/app/${this.answers.lowerCaseProjectName}.keystore`;
+    if (!this.fs.exists(this.destinationPath(path))) {
       this.spawnCommand('keytool', [
         '-genkey',
         '-v',
-        '-dname', 'OU=BAM',
+        '-dname', `OU=${this.answers.companyName}`,
         '-keystore', path,
         '-alias', this.answers.lowerCaseProjectName,
         '-keyalg', 'RSA',
