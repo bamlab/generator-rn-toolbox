@@ -109,6 +109,7 @@ class FastlaneGenerator extends Base {
     );
     this._extendGitignore();
     this._extendGradle();
+    this._activateManualSigning();
   }
 
   _extendGitignore() {
@@ -150,6 +151,30 @@ class FastlaneGenerator extends Base {
     );
     // Output the file
     this.fs.write(this.destinationPath('android/app/build.gradle'), config);
+  }
+
+  _activateManualSigning() {
+    let config = this.fs.read(this.destinationPath(`ios/${this.answers.projectName}.xcodeproj/project.pbxproj`));
+
+    // Manual signing
+    config = config.replace(
+      /(TargetAttributes = {(?:\n.*)+?TestTargetID = )(.+?)(;\n.*\n)(.+)/m,
+      '$1$2$3          $2 = {\n            ProvisioningStyle = Manual;\n          };\n$4'
+    );
+
+    // Distribution code signing Release
+    config = config.replace(
+      /(Release.*(?:\n.+){3}ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;)/m,
+      '$1\n        CODE_SIGN_IDENTITY = "iPhone Distribution";\n        DEVELOPMENT_TEAM = "";'
+    );
+
+    // Developer code signing Debug
+    config = config.replace(
+      /(Debug.*(?:\n.+){3}ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;)/m,
+      '$1\n        CODE_SIGN_IDENTITY = "iPhone Developer";\n        DEVELOPMENT_TEAM = "";'
+    );
+
+    this.fs.write(this.destinationPath(`ios/${this.answers.projectName}.xcodeproj/project.pbxproj`), config);
   }
 
   _createKeystore() {
