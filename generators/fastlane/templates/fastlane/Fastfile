@@ -1,5 +1,5 @@
 require 'dotenv'
-fastlane_version "1.105.0"
+fastlane_version "1.105.3"
 
 lane :set_js_env do |options|
   backup_file(path: 'environment/index.js')
