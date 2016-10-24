@@ -2,13 +2,17 @@
   "name": "generator-rn-toolbox",
   "version": "0.5.0",
   "description": "React-Native generators to kickstart your project",
+  "scripts": {
+    "test": "node test.js"
+  },
   "files": [
     "generators/eslint",
     "generators/fastlane",
     "generators/base",
     "generators/assets",
     "generators/bitrise",
-    "generators/jest"
+    "generators/jest",
+    "generators/test"
   ],
   "keywords": [
     "yeoman-generator",
@@ -32,8 +36,13 @@
     "yeoman-generator": "^0.24.1"
   },
   "devDependencies": {
+    "colors": "^1.1.2",
+    "cross-spawn": "^4.0.2",
     "eslint": "^3.8.0",
     "eslint-config-airbnb-base": "^8.0.0",
-    "eslint-plugin-import": "^1.16.0"
+    "eslint-plugin-import": "^1.16.0",
+    "jest": "^16.0.2",
+    "yeoman-environment": "^1.6.5",
+    "yeoman-test": "^1.5.1"
   }
 }
