@@ -5,20 +5,14 @@
 **Features**
 - (Almost) No manual setup
 - Multiple Ids + Name
-- Centralized environments config for both apps
+- Centralized Fastlane environments config for both apps
+- JS environment
 
 ***:warning: XCode 8 is required.***
 
 ## Usage
 
 The following config is based on using HockeyApp with an Enterprise certificate for staging deployment.
-
-***IMPORTANT:*** In order to use this generator, upon instantiating the project open the `.xcodeproj` file and change the following config:
-- `open ios/<ProjectName>.xcodeproj`
-- Click the project file and uncheck ***Automatically manage signing***
-- Go to ***Build Settings*** select ***All*** and scroll to ***Signing***
-- For ***Code Signing Identity/Debug*** select ***iOS Developer***
-- For ***Code Signing Identity/Release*** select ***iOS Distribution***
 
 ***IMPORTANT:*** Right now iOS iTunes Connect app creation has been disabled due to issues upon app creation and will necessitate manual creation.
 
