@@ -64,7 +64,6 @@ const resizeImage = (srcPath, destinationPath, width, givenHeight) => {
 
   return new Promise((resolve, reject) => {
     gm(`${srcPath}${srcPath.split('.').pop() === 'psd' ? '[0]' : ''}`)
-      .flatten()
       .resize(maxSize, maxSize)
       .gravity('center')
       .crop(
