@@ -20,9 +20,9 @@ Yeoman generators to kickstart your react-native v0.35 projects.
 
 ## Usage
 
-In React Native project, use any generator above.
+Retrieve all the generators with `npm install -g yo generator-rn-toolbox`. And then in a React Native project, use any above generator.
 
-If starting from scratch, use the `react-native init <ProjectName> && cd <ProjectName>` command to instantiate your React Native Project.
+If starting from scratch, use the `react-native init <ProjectName> && cd <ProjectName>` command to instantiate your React Native Project (for more [go see the official React Native getting started](https://facebook.github.io/react-native/docs/getting-started.html)).
 
 It is recommended to initiate the git repository right after instantiating the app and to do you first commit.
 
