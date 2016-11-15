@@ -1,11 +1,12 @@
 require 'dotenv'
 fastlane_version "1.108.0"
 
+# JS Environments
+
 lane :set_js_env do |options|
   backup_file(path: 'environment/index.js')
   sh "cp ../environment/index.#{ENV['ENV']}.js ../environment/index.js"
 end
-
 
 after_all do |lane, options|
   if File.exist?('../environment/index.js.back')
@@ -18,6 +19,8 @@ error do |lane, exception, options|
     restore_file(path: 'environment/index.js')
   end
 end
+
+# IOS
 
 platform :ios do
   error do |lane, exception, options|
@@ -95,6 +98,8 @@ platform :ios do
     deploy_testflight
   end
 end
+
+#  ANDROID
 
 platform :android do
   lane :build do |options|
