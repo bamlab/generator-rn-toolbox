@@ -1,4 +1,5 @@
 const Base = require('yeoman-generator').Base;
+const yarnInstall = require('yarn-install');
 
 class JestGenerator extends Base {
   writing() {
@@ -19,27 +20,21 @@ class JestGenerator extends Base {
     }
     this.fs.extendJSON('package.json', {
       scripts: {
-        unit: 'jest',
-        test: `run-p -c unit${this.config.get('eslint') ? ' lint' : ''}`,
+        'test:unit': 'jest',
+        test: `${this.config.get('eslint') ? 'npm run test:lint && ' : ''}npm run test:unit`,
       },
       jest: {
         moduleNameMapper: {
           '^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$': '<rootDir>/jest/FileStub.js',
         },
-      }
-    }, null, 2)
-  }
-
-  install() {
-    this.npmInstall([
-      'npm-run-all'
-    ], { 'saveDev': true, 'saveExact': true });
+      },
+    }, null, 2);
   }
 
   end() {
     this.config.set('jest', true);
     this.config.save();
   }
-};
+}
 
 module.exports = JestGenerator;

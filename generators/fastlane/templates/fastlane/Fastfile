@@ -1,26 +1,32 @@
 require 'dotenv'
-fastlane_version "1.105.3"
+fastlane_version "1.108.0"
+
+# JS Environments
 
 lane :set_js_env do |options|
   backup_file(path: 'environment/index.js')
   sh "cp ../environment/index.#{ENV['ENV']}.js ../environment/index.js"
 end
 
-
 after_all do |lane, options|
-  restore_file(path: 'environment/index.js')
-end
-
-error do |lane, exception, options|
-  if File.exist?('../environment/index.js')
+  if File.exist?('../environment/index.js.back')
     restore_file(path: 'environment/index.js')
   end
 end
 
+error do |lane, exception, options|
+  if File.exist?('../environment/index.js.back')
+    restore_file(path: 'environment/index.js')
+  end
+end
+
+# IOS
+
 platform :ios do
   error do |lane, exception, options|
-    if File.exist?("../#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}")
-      restore_file(path: "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}")
+    path = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}"
+    if File.exist?("../#{path}.back")
+      restore_file(path: path)
     end
   end
 
@@ -40,8 +46,9 @@ platform :ios do
   end
 
   lane :build do |options|
+    plist_full_path = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}"
     set_js_env
-    backup_file(path: "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}")
+    backup_file(path: plist_full_path)
     xcodeproj = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcodeproj"
     xcworkspace = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcworkspace"
     update_info_plist(
@@ -60,7 +67,7 @@ platform :ios do
         {project: xcodeproj}
     )
     gym(gymOptions)
-    restore_file(path: "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}")
+    restore_file(path: plist_full_path)
   end
 
   lane :deploy_hockey do |options|
@@ -91,6 +98,8 @@ platform :ios do
     deploy_testflight
   end
 end
+
+#  ANDROID
 
 platform :android do
   lane :build do |options|

@@ -5,7 +5,8 @@
   },
   "extends": "airbnb-base",
   "rules": {
-    "no-underscore-dangle": 0,
-    "key-spacing": 0
+    "class-methods-use-this": 0,
+    "key-spacing": 0,
+    "no-underscore-dangle": 0
   }
 }

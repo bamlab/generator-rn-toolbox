@@ -1,5 +1,5 @@
 const Base = require('yeoman-generator').Base;
-var generators = require('yeoman-generator');
+const yarnInstall = require('yarn-install');
 
 class BaseGenerator extends Base {
   prompting() {
@@ -14,9 +14,9 @@ class BaseGenerator extends Base {
   }
 
   install() {
-    this.npmInstall([
+    yarnInstall([
       'react-native-router-flux',
-    ], { saveExact: true });
+    ], { cwd: this.destinationRoot() });
   }
 
   writing() {

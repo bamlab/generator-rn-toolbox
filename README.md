@@ -1,6 +1,6 @@
 # React Native Toolbox
 
-Yeoman generators to kickstart your react-native v0.35 projects.
+Yeoman generators to kickstart your react-native v0.37+ projects.
 
 *As of now, the way those generators are configured is heavily opinionated and based on our own company needs.*
 
@@ -15,7 +15,7 @@ Yeoman generators to kickstart your react-native v0.35 projects.
 ## Requirements
 
 - [ ] You need `node 6` installed:
-- [ ] Ruby > `2.2.3`
+- [ ] Ruby > `2.2.3` with `bundler` installed
 - [ ] Yeoman installed (`npm i -g yo`)
 
 ## Usage

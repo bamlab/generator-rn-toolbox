@@ -14,7 +14,9 @@
 
 The following config is based on using HockeyApp with an Enterprise certificate for staging deployment.
 
-***IMPORTANT:*** Right now iOS iTunes Connect app creation has been disabled due to issues upon app creation and will necessitate manual creation.
+***IMPORTANT:***
+- Right now iOS iTunes Connect app creation has been disabled due to issues and will necessitate manual creation.
+- To setup the prod app id on Apple Developer before manually adding the iTunes connect app run `bundle exec fastlane ios setup --env prod`
 
 ***IMPORTANT:*** AppStore deployment will require app icons to be setup
 
