@@ -33,6 +33,7 @@
   "dependencies": {
     "fs-extra": "^0.30.0",
     "gm": "^1.23.0",
+    "yarn-install": "^0.2.1",
     "yeoman-generator": "^0.24.1"
   },
   "devDependencies": {

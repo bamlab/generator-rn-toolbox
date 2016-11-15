@@ -1,20 +1,24 @@
-var generators = require('yeoman-generator');
+const Base = require('yeoman-generator').Base;
+const yarnInstall = require('yarn-install');
 
-module.exports = generators.Base.extend({
-  install: function() {
-    this.npmInstall([
+class ESLintGenerator extends Base {
+  install() {
+    yarnInstall([
       'babel-core',
       'babel-eslint',
       'babel-preset-react-native',
       'eslint',
       'eslint-config-airbnb',
       'eslint-plugin-import',
-      'eslint-plugin-jsx-a11y',
+      'eslint-plugin-jsx-a11y@^2.0.0',
       'eslint-plugin-react',
-    ], { 'saveDev': true, 'saveExact': true });
-  },
+    ], {
+      dev: true,
+      cwd: this.destinationRoot(),
+    });
+  }
 
-  writing: function() {
+  writing() {
     this.fs.copyTpl(
       this.templatePath('.eslintrc'),
       this.destinationPath('.eslintrc')
@@ -28,14 +32,14 @@ module.exports = generators.Base.extend({
       this.destinationPath('.eslintignore')
     );
     this.fs.extendJSON('package.json', {
-      scripts: {
-        lint: 'eslint . --quiet',
-      }
+      scripts: { 'test:lint': 'eslint . --quiet' },
     }, null, 2);
-  },
+  }
 
-  end: function() {
+  end() {
     this.config.set('eslint', true);
     this.config.save();
   }
-});
+}
+
+module.exports = ESLintGenerator;
