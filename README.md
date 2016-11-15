@@ -14,7 +14,7 @@ Yeoman generators to kickstart your react-native v0.37+ projects.
 
 ## Requirements
 
-- [ ] You need `node 6` installed:
+- [ ] You need `node 6` installed
 - [ ] Ruby > `2.2.3` with `bundler` installed
 - [ ] Yeoman installed (`npm i -g yo`)
 
@@ -30,5 +30,3 @@ It is also recommended to do a separate commit after running each of these steps
 
 ## Upcoming features
 - Android prod deployment
-- Cocoapods compatibility
-- Jest setup
