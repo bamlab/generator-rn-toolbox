@@ -16,6 +16,9 @@ class ResourcesGenerator extends Base {
     this.option('iOS', {
       desc: 'Build for iOS',
     });
+    this.option('android-notification-icon', {
+      desc: 'Notification icon source',
+    });
   }
 
   prompting() {
@@ -34,6 +37,7 @@ class ResourcesGenerator extends Base {
       this._checkOSToBuildFor(),
       this._setupIosIcons(),
       this._setupAndroidIcons(),
+      this._setupAndroidNotificationIcons(),
       this._setupIosSplashScreen(),
       this._setupAndroidSplashScreen(),
     ]);
@@ -63,6 +67,11 @@ class ResourcesGenerator extends Base {
   _setupAndroidIcons() {
     if (!this.android || !this.options.icon) return null;
     return imageGenerator.generateAndroidIcons(this.options.icon);
+  }
+
+  _setupAndroidNotificationIcons() {
+    if (!this.options['android-notification-icon']) return null;
+    return imageGenerator.generateAndroidNotificationIcons(this.options['android-notification-icon']);
   }
 
   _setupIosSplashScreen() {

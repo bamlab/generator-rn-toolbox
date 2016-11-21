@@ -39,6 +39,16 @@ const androidSplashSizes = [
   { width: 1280,  height: 1920,  density: 'port-xxxhdpi' },
 ];
 
+// See http://iconhandbook.co.uk/reference/chart/android/
+const androidNotificationIconSizes = [
+  { value: 24, density: 'ldpi' },
+  { value: 24, density: 'mdpi' },
+  { value: 36, density: 'hdpi' },
+  { value: 48, density: 'xhdpi' },
+  { value: 72, density: 'xxhdpi' },
+  { value: 96, density: 'xxxhdpi' },
+];
+
 const iosSplashSizes = [
   { name: 'Default-568h@2x',           width: 640,   height: 1136 },
   { name: 'Default-667h@2x',           width: 750,   height: 1334 },
@@ -124,9 +134,20 @@ const generateAndroidSplashScreen = splashSource =>
     )
   );
 
+const generateAndroidNotificationIcons = iconSource =>
+  androidNotificationIconSizes.map(size =>
+    resizeImage(
+      iconSource,
+      `android/app/src/main/res/mipmap-${size.density}/ic_notification.png`,
+      size.value
+    )
+  );
+
+
 module.exports = {
   generateIosSplashScreen,
   generateAndroidIcons,
   generateIosIcons,
   generateAndroidSplashScreen,
+  generateAndroidNotificationIcons,
 };

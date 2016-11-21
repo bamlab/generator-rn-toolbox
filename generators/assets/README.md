@@ -21,7 +21,7 @@ Icons have been generated in different sizes and integrated in your project.
 
 ## Generate splashscreens
 
-You'll need an image for your splash with a size of more than **2208** (psd is supported).
+You'll need an image for your splash with a size of more than **2208** px (psd is supported).
 
 ### iOS
 
@@ -41,9 +41,18 @@ You're all set! :dancer:
 
 ***IMPORTANT:*** You will need to uninstall the app from device/emulator first before seeing the changes.
 
-## Android
+### Android
 
 :warning: The command is only generating splash assets for now on Android.
+
+## Generate Android notification icons
+
+When setting up push notifications on Android (with [React Native Push notification](https://github.com/zo0r/react-native-push-notification) for instance), you'll need a [status bar icon](https://developer.android.com/guide/practices/ui_guidelines/icon_design_status_bar.html).
+
+You'll need an image for your splash with a size of more than **96** px (psd is supported).
+```
+yo rn-toolbox:assets --android-notification-icon icon.png
+```
 
 ## Run the command only for a platform
 You can select the platform you want to generate assets for. For instance:
