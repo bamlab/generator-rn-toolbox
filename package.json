@@ -12,7 +12,7 @@
     "generators/assets",
     "generators/bitrise",
     "generators/jest",
-    "generators/test"
+    "generators/upgrade"
   ],
   "keywords": [
     "yeoman-generator",
@@ -31,13 +31,14 @@
     "url": "https://github.com/bamlab/generator-rn-toolbox"
   },
   "dependencies": {
+    "colors": "^1.1.2",
+    "download-file-sync": "^1.0.4",
     "fs-extra": "^0.30.0",
     "gm": "^1.23.0",
     "yarn-install": "^0.2.1",
     "yeoman-generator": "^0.24.1"
   },
   "devDependencies": {
-    "colors": "^1.1.2",
     "cross-spawn": "^4.0.2",
     "eslint": "^3.8.0",
     "eslint-config-airbnb-base": "^8.0.0",
