@@ -6,6 +6,10 @@ const versions = require('./versions.js');
 const baseAppName = 'RnDiffApp';
 const baseLowercaseAppName = 'rndiffapp';
 const patchFileName = 'upgrade-rn.patch';
+const patchTypes = {
+  APPLY: 'git apply (prefered)',
+  PATCH: 'patch',
+};
 
 class UpgradeGenerator extends Base {
 
@@ -44,6 +48,18 @@ class UpgradeGenerator extends Base {
     console.log(`Next version is ${this.data.rnNextVersion.id}`.green);
   }
 
+  prompting() {
+    return this.prompt([{
+      type    : 'list',
+      name    : 'patchType',
+      message : 'Choose your merge method',
+      choices : [patchTypes.APPLY, patchTypes.PATCH],
+      default : patchTypes.APPLY,
+    }]).then((answers) => {
+      this.data.patchType = answers.patchType;
+    });
+  }
+
   writing() {
     // Patch file
     console.log('Generating patch file'.green);
@@ -67,14 +83,20 @@ class UpgradeGenerator extends Base {
     this.spawnCommandSync('git', ['fetch', 'rn-diff'], { silent: true });
 
     console.log('Executing 3way merge'.green);
-    this.spawnCommandSync('git', ['apply', patchFileName, '--exclude=package.json', '-p', '2', '--3way']);
+    if (this.data.patchType === patchTypes.APPLY) {
+      this.spawnCommandSync('git', ['apply', patchFileName, '--exclude=package.json', '-p', '2', '--3way']);
+    } else {
+      this.spawnCommand('patch', ['-p2', '--forward', '<', patchFileName]);
+    }
   }
-
-  // 'git apply upgrade-rn.patch --exclude=package.json -p 2 --3way'
 
   end() {
     console.log('Cleaning up...'.green);
     this.fs.delete(this.destinationPath(patchFileName));
+    if (this.data.patchType === patchTypes.PATCH) {
+      this.fs.delete(this.destinationPath('package.json.orig'));
+      this.fs.delete(this.destinationPath('package.json.rej'));
+    }
     this.spawnCommandSync('git', ['remote', 'rm', 'rn-diff']);
     console.log(`React Native ${this.data.rnNextVersion.id} installed`.green);
   }

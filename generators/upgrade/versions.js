@@ -1,3 +1,8 @@
+/*
+* To add a new upgrade you need to add it in this array
+* You have to infer the npmList and packageExtensions from the new diff file
+*/
+
 module.exports = [
   {
     id: '0.23.0',

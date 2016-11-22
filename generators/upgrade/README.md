@@ -9,8 +9,14 @@ Thank you [ncuillery](https://github.com/ncuillery) for creating [those patches]
 - Automatic React Native version detection
 - Fetches and generates the patch
 - Installs new React Native version
-- Applies the patch using 3way merge
+- Applies the patch using 3way merge or patch
 
 ## Usage
+- Make sure to start from a clean repository
+- Make sure to commit after each upgrade.
+- Run `yo rn-toolbox:upgrade` once for each upgrade.
 
-Run `yo rn-toolbox:upgrade` once for each upgrade. Make sure to commit after each upgrade.
+## Troubleshooting
+- If the command fails using `git apply`
+  - Reset your git
+  - Use `patch` and resolve failing merges manually.
