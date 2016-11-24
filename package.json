@@ -1,6 +1,6 @@
 {
   "name": "generator-rn-toolbox",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "React-Native generators to kickstart your project",
   "scripts": {
     "test": "node test.js"
