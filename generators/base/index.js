@@ -3,11 +3,12 @@ const yarnInstall = require('yarn-install');
 
 class BaseGenerator extends Base {
   prompting() {
+    const config = this.fs.readJSON(this.destinationPath('package.json'));
     return this.prompt([{
       type    : 'input',
       name    : 'appName',
       message : 'Your react native app directory name',
-      default : 'example',
+      default : config.name,
     }]).then((answers) => {
       this.answers = answers;
     });

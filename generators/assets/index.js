@@ -22,11 +22,13 @@ class ResourcesGenerator extends Base {
   }
 
   prompting() {
+    const config = this.fs.readJSON(this.destinationPath('package.json'));
     return this.prompt([{
       type: 'input',
       name: 'projectName',
       message: 'Name of your react-native project',
       required: true,
+      default: config.name,
     }]).then((answers) => {
       this.answers = answers;
     });

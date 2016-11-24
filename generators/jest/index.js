@@ -1,5 +1,4 @@
 const Base = require('yeoman-generator').Base;
-const yarnInstall = require('yarn-install');
 
 class JestGenerator extends Base {
   writing() {

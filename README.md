@@ -11,6 +11,7 @@ Yeoman generators to kickstart your react-native v0.37+ projects.
 - [Fastlane setup for multiple environments](generators/fastlane/README.md)
 - [Icons and Splashscreen generation](generators/assets/README.md)
 - [Bitrise setup for continuous deployment](generators/bitrise/README.md)
+- [React Native upgrade](generators/upgrade/README.md)
 
 ## Requirements
 

@@ -20,15 +20,15 @@ class ESLintGenerator extends Base {
 
   writing() {
     this.fs.copyTpl(
-      this.templatePath('.eslintrc'),
+      this.templatePath('eslintrc'),
       this.destinationPath('.eslintrc')
     );
     this.fs.copyTpl(
-      this.templatePath('.babelrc'),
+      this.templatePath('babelrc'),
       this.destinationPath('.babelrc')
     );
     this.fs.copyTpl(
-      this.templatePath('.eslintignore'),
+      this.templatePath('eslintignore'),
       this.destinationPath('.eslintignore')
     );
     this.fs.extendJSON('package.json', {

@@ -2,6 +2,7 @@ const Base = require('yeoman-generator').Base;
 
 class FastlaneGenerator extends Base {
   prompting() {
+    const config = this.fs.readJSON(this.destinationPath('package.json'));
     return this.prompt([{
       type    : 'companyName',
       name    : 'companyName',
@@ -12,25 +13,25 @@ class FastlaneGenerator extends Base {
       type    : 'input',
       name    : 'appName',
       message : 'Your app name',
-      default : 'My Awesome App',
+      default : config.name,
     },
     {
       type    : 'input',
       name    : 'projectName',
       message : 'Your react native app directory name',
-      default : 'MyAwesomeApp',
+      default : config.name,
     },
     {
       type    : 'input',
       name    : 'stagingAppId',
       message : 'Your app id for staging',
-      default : 'com.mycompany.app.staging',
+      default : `com.${config.name.toLowerCase()}.staging`,
     },
     {
       type    : 'input',
       name    : 'prodAppId',
       message : 'Your app id for prod',
-      default : 'com.mycompany.app',
+      default : `com.${config.name.toLowerCase()}`,
     },
     {
       type    : 'input',
