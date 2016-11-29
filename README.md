@@ -5,6 +5,9 @@ Yeoman generators to kickstart your react-native v0.37+ projects.
 *As of now, the way those generators are configured is heavily opinionated and based on our own company needs.*
 
 ## Features
+
+In an existing React Native project, our generator contains sub-generators that will help you with:
+
 - [Eslint setup](generators/eslint/README.md)
 - [Base project setup](generators/base/README.md)
 - [Jest setup](generators/jest/README.md)
@@ -21,7 +24,12 @@ Yeoman generators to kickstart your react-native v0.37+ projects.
 
 ## Usage
 
-Retrieve all the generators with `npm install -g yo generator-rn-toolbox`. And then in a React Native project, use any above generator.
+Install the main `yeoman` generator:
+```
+npm install -g yo generator-rn-toolbox
+```
+
+Then follow the docs for any sub-generator listed above in the [features](https://github.com/bamlab/generator-rn-toolbox#features).
 
 If starting from scratch, use the `react-native init <ProjectName> && cd <ProjectName>` command to instantiate your React Native Project (for more [go see the official React Native getting started](https://facebook.github.io/react-native/docs/getting-started.html)).
 
