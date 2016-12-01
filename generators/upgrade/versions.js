@@ -108,5 +108,11 @@ module.exports = [
   }, {
     id: '0.37.0',
     npmList: ['react-native@0.37.0'],
+  }, {
+    id: '0.38.0',
+    npmList: [
+      'react@15.4.0-rc.4',
+      'react-native@0.38.0',
+    ],
   },
 ];
