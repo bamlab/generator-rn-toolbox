@@ -1,6 +1,6 @@
 # React Native Toolbox
 
-Yeoman generators to kickstart your react-native v0.37+ projects.
+Yeoman generators to kickstart your react-native v0.38+ projects.
 
 *As of now, the way those generators are configured is heavily opinionated and based on our own company needs.*
 
