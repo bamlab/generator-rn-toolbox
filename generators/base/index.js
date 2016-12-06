@@ -16,7 +16,8 @@ class BaseGenerator extends Base {
 
   install() {
     yarnInstall([
-      'react-native-router-flux',
+      'babel-preset-react-native-stage-0',
+      '@exponent/ex-navigation',
     ], { cwd: this.destinationRoot() });
   }
 
