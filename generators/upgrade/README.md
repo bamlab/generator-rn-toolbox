@@ -2,6 +2,8 @@
 
 *Tired of React Native upgrade screewing up your files use this generator for patch upgrades!*
 
+:warning: ***This generator is deprecated and won't be maintained anymore. We recommend using [react-native-git-upgrade](https://facebook.github.io/react-native/blog/2016/12/05/easier-upgrades.html) from now on.***
+
 **Disclaimer**
 Thank you [ncuillery](https://github.com/ncuillery) for creating [those patches](https://github.com/ncuillery/rn-diff)!
 
