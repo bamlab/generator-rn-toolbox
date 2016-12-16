@@ -14,7 +14,7 @@ In an existing React Native project, our generator contains sub-generators that 
 - [Fastlane setup for multiple environments](generators/fastlane/README.md)
 - [Icons and Splashscreen generation](generators/assets/README.md)
 - [Bitrise setup for continuous deployment](generators/bitrise/README.md)
-- [React Native upgrade](generators/upgrade/README.md)
+- [React Native upgrade](generators/upgrade/README.md) :warning: Use [react-native-git-upgrade](https://facebook.github.io/react-native/blog/2016/12/05/easier-upgrades.html) from now on
 
 ## Requirements
 
