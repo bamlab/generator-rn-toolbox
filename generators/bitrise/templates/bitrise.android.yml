@@ -1,0 +1,86 @@
+---
+format_version: 1.3.0
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+app:
+  envs:
+  - opts:
+      is_expand: true
+    FASTLANE_XCODE_LIST_TIMEOUT: '0'
+  - opts:
+      is_expand: true
+    MATCH_READONLY: 'true'
+  - opts:
+      is_expand: true
+    PRODUCE_SKIP_ITC: 'true'
+  - opts:
+      is_expand: true
+    PRODUCE_SKIP_DEVCENTER: 'true'
+  - opts:
+      is_expand: true
+    REACT_NATIVE_DIRECTORY: "./<%= reactNativeDirectory %>"
+trigger_map:
+- push_branch: staging
+  workflow: HockeyApp
+- push_branch: test-bitrise
+  workflow: HockeyApp
+workflows:
+  HockeyApp:
+    steps:
+    - script@1.1.3:
+        title: Set Gem home for cache purposes
+        inputs:
+        - content: |-
+            #!/bin/bash
+            pwd
+            set -ev
+            envman add --key GEM_HOME --value "$(gem environment gemdir)"
+    - activate-ssh-key@3.1.1:
+        title: Activate App SSH key
+        inputs:
+        - ssh_key_save_path: "$HOME/.ssh/steplib_ssh_step_id_rsa"
+    - git-clone@3.4.0: {}
+    - cache-pull@0.9.1:
+        is_always_run: true
+    - nvm@1.0.1: {}
+    - script@1.1.3:
+        title: Install Yarn
+        inputs:
+        - content: |-
+            #!/bin/bash
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo apt-get update && sudo apt-get install yarn
+    - yarn@0.0.3:
+        inputs:
+        - workdir: "$BITRISE_SOURCE_DIR/$REACT_NATIVE_DIRECTORY"
+        - command: ''
+        - args: ''
+    - script@1.1.3:
+        title: Install bundles
+        inputs:
+        - content: |-
+            #!/bin/bash
+            cd $REACT_NATIVE_DIRECTORY
+            bundle install
+    - script@1.1.3:
+        title: Deploy App to HockeyApp
+        inputs:
+        - content: |-
+            #!/bin/bash
+            cd $REACT_NATIVE_DIRECTORY
+            bundle exec fastlane android deploy_staging
+    - cache-push@0.9.3:
+        inputs:
+        - cache_paths: |-
+            ./$REACT_NATIVE_DIRECTORY/node_modules -> ./$REACT_NATIVE_DIRECTORY/yarn.lock
+            ./$REACT_NATIVE_DIRECTORY/android/.gradle
+            $HOME/.nvm -> $HOME/.nvm/package.json
+            $HOME/.gradle
+            $GEM_HOME
+            ./$REACT_NATIVE_DIRECTORY/ios/Pods -> ./$REACT_NATIVE_DIRECTORY/ios/Podfile.lock
+        - ignore_check_on_paths: |-
+            $HOME/.gradle/caches/*.lock
+            $HOME/.gradle/caches/*.bin
+            ./$REACT_NATIVE_DIRECTORY/android/.gradle/*.lock
+            ./$REACT_NATIVE_DIRECTORY/android/.gradle/*.bin
+    - deploy-to-bitrise-io@1.2.5: {}
