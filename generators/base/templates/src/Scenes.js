@@ -1,45 +1,16 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Scene, Router, ActionConst } from 'react-native-router-flux';
+import React, { Component } from 'react';
+import { NavigationProvider, StackNavigation } from '@exponent/ex-navigation';
 
-import * as Pages from '<%= appName %>/src/pages';
-import { LogoTitle } from '<%= appName %>/src/components';
-import backChevron from '<%= appName %>/src/assets/back_chevron.png';
+import Router from '<%= appName %>/src/Router.js';
 
-import appStyle from '<%= appName %>/src/appStyle';
-
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: appStyle.colors.primary,
-    borderBottomWidth: 0,
-  },
-  title: {
-    color: appStyle.colors.lightText,
-  },
-});
-
-const Scenes = () => (
-  <Router>
-    <Scene
-      key="root"
-      titleStyle={styles.title}
-      navigationBarStyle={styles.header}
-      backButtonImage={backChevron}
-    >
-      <Scene
-        key="home"
-        type={ActionConst.RESET}
-        component={Pages.Home}
-        renderTitle={LogoTitle}
-        initial
-      />
-      <Scene
-        key="infos"
-        component={Pages.Infos}
-        title="Infos"
-      />
-    </Scene>
-  </Router>
-);
+class Scenes extends Component {
+  render() {
+    return (
+      <NavigationProvider router={Router}>
+        <StackNavigation initialRoute={Router.getRoute('home')} />
+      </NavigationProvider>
+    );
+  }
+}
 
 export default Scenes;
