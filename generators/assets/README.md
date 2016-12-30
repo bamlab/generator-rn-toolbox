@@ -8,7 +8,7 @@ brew install imagemagick
 ```
 
 ## Generate icons
-You'll need an image for your icon with a size of more than **192px** (psd is supported).
+You'll need an image for your icon with a size of more than **192x192 px** (psd is supported).
 
 Then run:
 ```
@@ -21,7 +21,7 @@ Icons have been generated in different sizes and integrated in your project.
 
 ## Generate splashscreens
 
-You'll need an image for your splash with a size of more than **2208** px (psd is supported).
+You'll need an image for your splash with a size of more than **2208x2208 px** (psd is supported).
 
 ### iOS
 
@@ -49,7 +49,7 @@ You're all set! :dancer:
 
 When setting up push notifications on Android (with [React Native Push notification](https://github.com/zo0r/react-native-push-notification) for instance), you'll need a [status bar icon](https://developer.android.com/guide/practices/ui_guidelines/icon_design_status_bar.html).
 
-You'll need an image for your splash with a size of more than **96** px (psd is supported).
+You'll need an image for your splash with a size of more than **96x96 px** (psd is supported).
 ```
 yo rn-toolbox:assets --android-notification-icon icon.png
 ```
