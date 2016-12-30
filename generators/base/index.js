@@ -32,6 +32,10 @@ class BaseGenerator extends Base {
       this.templatePath('src/assets/*'),
       this.destinationPath('src/assets')
     );
+    this.fs.copyTpl(
+      this.templatePath('babelrc'),
+      this.destinationPath('.babelrc')
+    );
   }
 
   end() {

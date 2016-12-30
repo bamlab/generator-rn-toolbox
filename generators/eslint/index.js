@@ -24,10 +24,6 @@ class ESLintGenerator extends Base {
       this.destinationPath('.eslintrc')
     );
     this.fs.copyTpl(
-      this.templatePath('babelrc'),
-      this.destinationPath('.babelrc')
-    );
-    this.fs.copyTpl(
       this.templatePath('eslintignore'),
       this.destinationPath('.eslintignore')
     );
