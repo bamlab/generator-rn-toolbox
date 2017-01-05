@@ -12,6 +12,7 @@
     "generators/assets",
     "generators/bitrise",
     "generators/jest",
+    "generators/circle",
     "generators/upgrade"
   ],
   "keywords": [
