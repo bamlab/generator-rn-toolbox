@@ -73,6 +73,12 @@ class FastlaneGenerator extends Base {
       type    : 'input',
       name    : 'hockeyAppToken',
       message : 'A valid HockeyApp token',
+    },
+    {
+      type    : 'confirm',
+      name    : 'commitKeystore',
+      message : 'Commit keystore file',
+      default : true,
     }]).then((answers) => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
@@ -114,7 +120,11 @@ class FastlaneGenerator extends Base {
   }
 
   _extendGitignore() {
-    const content = this.fs.read(this.destinationPath('.gitignore'));
+    let content = this.fs.read(this.destinationPath('.gitignore'));
+    if(this.answers.commitKeystore) {
+      content = content.replace('*.keystore', '');
+    }
+
     this.fs.copyTpl(
       this.templatePath('gitignore'),
       this.destinationPath('.gitignore'),
