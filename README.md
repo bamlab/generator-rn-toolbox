@@ -11,6 +11,7 @@ In an existing React Native project, our generator contains sub-generators that 
 - [Eslint setup](generators/eslint/README.md)
 - [Base project setup](generators/base/README.md)
 - [Jest setup](generators/jest/README.md)
+- [CircleCI setup](generators/circleci/README.md)
 - [Fastlane setup for multiple environments](generators/fastlane/README.md)
 - [Icons and Splashscreen generation](generators/assets/README.md)
 - [Bitrise setup for continuous deployment](generators/bitrise/README.md)
