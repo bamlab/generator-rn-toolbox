@@ -8,19 +8,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: appStyle.dimensions.touchableHeight,
-    marginVertical: appStyle.margins.inner,
+    marginVertical: appStyle.grid.x1,
   },
   button: {
     alignSelf: 'stretch',
     justifyContent: 'center',
     height: appStyle.dimensions.visibleButtonHeight,
     backgroundColor: appStyle.colors.primary,
-    paddingHorizontal: appStyle.margins.inner,
+    paddingHorizontal: appStyle.grid.x1,
   },
   text: {
     textAlign: 'center',
     color: appStyle.colors.lightText,
-    fontSize: appStyle.font.fontSize.default,
+    fontSize: appStyle.font.size.default,
   },
 });
 

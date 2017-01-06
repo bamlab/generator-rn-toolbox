@@ -4,6 +4,7 @@ import { withNavigation } from '@exponent/ex-navigation';
 
 import Router from '<%= appName %>/src/Router.js';
 import { Page, Button } from '<%= appName %>/src/components';
+import appStyle from '<%= appName %>/src/appStyle';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,14 +13,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: appStyle.font.size.huge,
     textAlign: 'center',
-    margin: 10,
+    margin: appStyle.grid.x1,
   },
   instructions: {
     textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    color: appStyle.colors.darkGray,
+    marginBottom: appStyle.grid.x1,
   },
 });
 
