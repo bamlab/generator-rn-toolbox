@@ -1,5 +1,4 @@
 require 'dotenv'
-fastlane_version "1.108.0"
 
 # JS Environments
 
