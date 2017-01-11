@@ -20,9 +20,11 @@ In an existing React Native project, our generator contains sub-generators that 
 ## Requirements
 
 - [ ] You need `node 6` installed
-- [ ] Ruby > `2.2.3` with `bundler` installed
+- [ ] Ruby > `2.2.3` (and < `2.4`*) with `bundler` installed
 - [ ] Yeoman installed (`npm i -g yo`)
 - [ ] Yarn installed (`npm i -g yarn`)
+
+\* Some gem dependencies (see issue [#51](https://github.com/bamlab/generator-rn-toolbox/pull/51)) are not compatible with Ruby >= `2.4` (as of 2017-01-11).
 
 ## Usage
 
