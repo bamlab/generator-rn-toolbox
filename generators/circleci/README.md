@@ -4,6 +4,6 @@
 
 In order to make circleCI working on your app, you need to create a circle.yml file by running
 
-`yo rn-toolbox:circle`
+`yo rn-toolbox:circleci`
 
 Then you have to configure the branch on which you want to trigger circleCI webhook directly on GitHub :)
