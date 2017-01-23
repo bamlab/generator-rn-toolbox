@@ -1,6 +1,6 @@
 {
   "name": "generator-rn-toolbox",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "React-Native generators to kickstart your project",
   "scripts": {
     "test": "node test.js"
@@ -12,7 +12,7 @@
     "generators/assets",
     "generators/bitrise",
     "generators/jest",
-    "generators/circle",
+    "generators/circleci",
     "generators/upgrade"
   ],
   "keywords": [
