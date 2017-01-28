@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Base = require('yeoman-generator').Base;
 const imageGenerator = require('./imageGenerator');
 
@@ -35,8 +36,10 @@ class ResourcesGenerator extends Base {
   }
 
   writing() {
+    this._checkOSToBuildFor();
+    this._checkAssets();
+
     return Promise.all([
-      this._checkOSToBuildFor(),
       this._setupIosIcons(),
       this._setupAndroidIcons(),
       this._setupAndroidNotificationIcons(),
@@ -48,6 +51,21 @@ class ResourcesGenerator extends Base {
   _checkOSToBuildFor() {
     this.android = this.options.android || !this.options.ios;
     this.ios = this.options.ios || !this.options.android;
+  }
+
+  _checkAssets() {
+    this._checkAsset('icon');
+    this._checkAsset('splash');
+    this._checkAsset('android-notification-icon');
+  }
+
+  _checkAsset(optionName) {
+    const assetPath = this.options[optionName];
+
+    if (assetPath && !fs.existsSync(assetPath)) {
+      this.log.error(`${this.options[optionName]} could not be found`);
+      this.options[optionName] = null;
+    }
   }
 
   _setupIosIcons() {
