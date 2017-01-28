@@ -20,6 +20,9 @@ class ResourcesGenerator extends Base {
     this.option('android-notification-icon', {
       desc: 'Notification icon source',
     });
+    this.option('store', {
+      desc: 'Generate Stores assets',
+    });
   }
 
   prompting() {
@@ -45,6 +48,7 @@ class ResourcesGenerator extends Base {
       this._setupAndroidNotificationIcons(),
       this._setupIosSplashScreen(),
       this._setupAndroidSplashScreen(),
+      this._setupStoresAssets(),
     ]);
   }
 
@@ -113,6 +117,24 @@ class ResourcesGenerator extends Base {
   _setupAndroidSplashScreen() {
     if (!this.android || !this.options.splash) return null;
     return imageGenerator.generateAndroidSplashScreen(this.options.splash);
+  }
+
+  _setupStoresAssets() {
+    if (!this.options.store) return null;
+
+    const resizePromises = [];
+
+    if (this.android && this.options.icon) {
+      resizePromises.push(imageGenerator.generatePlayStoreIcon(this.options.icon));
+    }
+    if (this.ios && this.options.icon) {
+      resizePromises.push(imageGenerator.generateItunesIcon(this.options.icon));
+    }
+    if (this.android && this.options.splash) {
+      resizePromises.push(imageGenerator.generatePlayStoreImage(this.options.splash));
+    }
+
+    return Promise.all(resizePromises);
   }
 }
 
