@@ -45,11 +45,26 @@ You're all set! :dancer:
 
 :warning: The command is only generating splash assets for now on Android.
 
+## Generate Store assets
+
+You'll need to specify:
+  - an icon with a size of more than **512x512 px**  (psd is supported).
+  - a splash screen image for the play store image with a size of more than **1024x500 px** (psd is supported).
+
+```
+yo rn-toolbox:assets --icon icon.png --splash splash.psd --store
+```
+
+This will create 3 files at the root of your project:
+  - `itunes-icon.png`
+  - `play-store-icon.png`
+  - `play-store-image.png`
+
 ## Generate Android notification icons
 
 When setting up push notifications on Android (with [React Native Push notification](https://github.com/zo0r/react-native-push-notification) for instance), you'll need a [status bar icon](https://developer.android.com/guide/practices/ui_guidelines/icon_design_status_bar.html).
 
-You'll need an image for your splash with a size of more than **96x96 px** (psd is supported).
+You'll need an image for your icon with a size of more than **96x96 px** (psd is supported).
 ```
 yo rn-toolbox:assets --android-notification-icon icon.png
 ```

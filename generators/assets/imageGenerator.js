@@ -60,6 +60,18 @@ const iosSplashSizes = [
   { name: 'Default-Portrait',          width: 768,   height: 1024 },
   { name: 'Default@2x',                width: 640,   height: 960 },
 ];
+
+const itunesIconSize =
+  { name: 'itunes-icon.png', value: 500 }
+;
+
+const playStoreIconSize =
+  { name: 'play-store-icon.png', value: 512 }
+;
+
+const playStoreImageSize =
+  { name: 'play-store-image.png', width: 1024, height: 500 }
+;
 /* eslint-enable no-multi-spaces */
 
 const resizeImage = (srcPath, destinationPath, width, givenHeight) => {
@@ -143,6 +155,19 @@ const generateAndroidNotificationIcons = iconSource =>
     )
   );
 
+const generatePlayStoreIcon = iconSource =>
+  resizeImage(iconSource, playStoreIconSize.name, playStoreIconSize.value);
+
+const generateItunesIcon = iconSource =>
+  resizeImage(iconSource, itunesIconSize.name, itunesIconSize.value);
+
+const generatePlayStoreImage = iconSource =>
+  resizeImage(
+    iconSource,
+    playStoreImageSize.name,
+    playStoreImageSize.width,
+    playStoreImageSize.height
+  );
 
 module.exports = {
   generateIosSplashScreen,
@@ -150,4 +175,7 @@ module.exports = {
   generateIosIcons,
   generateAndroidSplashScreen,
   generateAndroidNotificationIcons,
+  generatePlayStoreIcon,
+  generateItunesIcon,
+  generatePlayStoreImage,
 };

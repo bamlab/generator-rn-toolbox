@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Base = require('yeoman-generator').Base;
 const imageGenerator = require('./imageGenerator');
 
@@ -19,6 +20,9 @@ class ResourcesGenerator extends Base {
     this.option('android-notification-icon', {
       desc: 'Notification icon source',
     });
+    this.option('store', {
+      desc: 'Generate Stores assets',
+    });
   }
 
   prompting() {
@@ -35,19 +39,37 @@ class ResourcesGenerator extends Base {
   }
 
   writing() {
+    this._checkOSToBuildFor();
+    this._checkAssets();
+
     return Promise.all([
-      this._checkOSToBuildFor(),
       this._setupIosIcons(),
       this._setupAndroidIcons(),
       this._setupAndroidNotificationIcons(),
       this._setupIosSplashScreen(),
       this._setupAndroidSplashScreen(),
+      this._setupStoresAssets(),
     ]);
   }
 
   _checkOSToBuildFor() {
     this.android = this.options.android || !this.options.ios;
     this.ios = this.options.ios || !this.options.android;
+  }
+
+  _checkAssets() {
+    this._checkAsset('icon');
+    this._checkAsset('splash');
+    this._checkAsset('android-notification-icon');
+  }
+
+  _checkAsset(optionName) {
+    const assetPath = this.options[optionName];
+
+    if (assetPath && !fs.existsSync(assetPath)) {
+      this.log.error(`${this.options[optionName]} could not be found`);
+      this.options[optionName] = null;
+    }
   }
 
   _setupIosIcons() {
@@ -95,6 +117,24 @@ class ResourcesGenerator extends Base {
   _setupAndroidSplashScreen() {
     if (!this.android || !this.options.splash) return null;
     return imageGenerator.generateAndroidSplashScreen(this.options.splash);
+  }
+
+  _setupStoresAssets() {
+    if (!this.options.store) return null;
+
+    const resizePromises = [];
+
+    if (this.android && this.options.icon) {
+      resizePromises.push(imageGenerator.generatePlayStoreIcon(this.options.icon));
+    }
+    if (this.ios && this.options.icon) {
+      resizePromises.push(imageGenerator.generateItunesIcon(this.options.icon));
+    }
+    if (this.android && this.options.splash) {
+      resizePromises.push(imageGenerator.generatePlayStoreImage(this.options.splash));
+    }
+
+    return Promise.all(resizePromises);
   }
 }
 
