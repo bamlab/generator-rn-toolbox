@@ -10,7 +10,7 @@ class ESLintGenerator extends Base {
       'eslint',
       'eslint-config-airbnb',
       'eslint-plugin-import',
-      'eslint-plugin-jsx-a11y@^2.0.0',
+      'eslint-plugin-jsx-a11y',
       'eslint-plugin-react',
     ], {
       dev: true,
