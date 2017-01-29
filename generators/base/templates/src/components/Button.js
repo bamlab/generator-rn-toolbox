@@ -38,4 +38,9 @@ Button.propTypes = {
   buttonType: PropTypes.string,
 };
 
+Button.defaultProps = {
+  children: null,
+  onPress: () => {},
+};
+
 export default Button;
