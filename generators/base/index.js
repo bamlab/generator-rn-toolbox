@@ -17,7 +17,7 @@ class BaseGenerator extends Base {
   install() {
     yarnInstall([
       'babel-preset-react-native-stage-0',
-      '@exponent/ex-navigation',
+      'react-navigation',
     ], { cwd: this.destinationRoot() });
   }
 
