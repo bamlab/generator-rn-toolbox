@@ -32,9 +32,9 @@ We recommend creating a bot/machine Github account for this. [See here](https://
 
 - You need to provide the following secret variables in order for the build to run successfuly
   - `MATCH_PASSWORD`
-  - `GRADLE_KEYSTORE_PASSWORD` (Android only, found in the *.env* file)
-  - `GRADLE_KEYSTORE_ALIAS_PASSWORD` (Android only, found in the *.env* file)
-  - `FL_HOCKEY_API_TOKEN` (found in the *.env* file)
+  - `GRADLE_KEYSTORE_PASSWORD` (Found in the *.env* file)
+  - `GRADLE_KEYSTORE_ALIAS_PASSWORD` (Found in the *.env* file)
+  - `FL_HOCKEY_API_TOKEN` (Found in the *.env* file)
 
 ## 3/ Enjoy :balloon:
 
