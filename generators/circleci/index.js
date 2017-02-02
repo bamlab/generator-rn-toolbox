@@ -6,11 +6,12 @@ class CircleGenerator extends Base {
       this.templatePath('circle.yml'),
       this.destinationPath('circle.yml')
     );
-  };
+  }
+
   end() {
     this.config.set('circle', true);
     this.config.save();
-  };
+  }
 }
 
 module.exports = CircleGenerator;
