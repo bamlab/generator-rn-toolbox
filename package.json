@@ -13,6 +13,7 @@
     "generators/bitrise",
     "generators/jest",
     "generators/circleci",
+    "generators/travisci",
     "generators/upgrade"
   ],
   "keywords": [
