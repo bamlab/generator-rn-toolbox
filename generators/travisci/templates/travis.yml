@@ -1,0 +1,5 @@
+language: node_js
+cache:
+  directories: 
+    - jest/tmp
+    - node_modules
