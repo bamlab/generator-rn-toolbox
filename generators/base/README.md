@@ -6,7 +6,7 @@ Use `yo rn-toolbox:base` to replace the base project
 
 **Features**
 - Centralized App.js
-- [ex-navigation](https://github.com/exponentjs/ex-navigation) 2 pages setup
+- [react-navigation](https://github.com/react-community/react-navigation) 2 pages setup
 - Custom header
 - Custom button
 - Centralized app style
