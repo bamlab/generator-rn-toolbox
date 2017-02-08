@@ -15,6 +15,7 @@
 The following config is based on using HockeyApp with an Enterprise certificate for staging deployment.
 
 ***IMPORTANT:***
+- If you plan on using continuous deployment for staging make sure to at least run `bundle exec fastlane ios setup --env staging` once
 - Right now iOS iTunes Connect app creation has been disabled due to issues and will necessitate manual creation.
 - To setup the prod app id on Apple Developer before manually adding the iTunes connect app run `bundle exec fastlane ios setup --env prod`
 
