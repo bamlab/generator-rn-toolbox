@@ -8,8 +8,8 @@ class JestGenerator extends Base {
     );
     if (this.config.get('base')) {
       this.fs.copyTpl(
-        this.templatePath('Button.js'),
-        this.destinationPath('src/components/__tests__/Button.js')
+        this.templatePath('Button.test.js'),
+        this.destinationPath('src/components/Button.test.js')
       );
     } else {
       this.fs.copyTpl(
