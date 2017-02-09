@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "<%= appName %>/*": "./*"
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

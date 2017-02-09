@@ -7,14 +7,16 @@
   },
   "files": [
     "generators/eslint",
-    "generators/fastlane",
     "generators/base",
-    "generators/assets",
-    "generators/bitrise",
     "generators/jest",
+    "generators/assets",
+    "generators/fastlane",
+    "generators/bitrise",
     "generators/circleci",
     "generators/travisci",
-    "generators/upgrade"
+    "generators/upgrade",
+    "generators/vscode",
+    "generators/wallaby"
   ],
   "keywords": [
     "yeoman-generator",
@@ -26,7 +28,14 @@
     "fastlane",
     "eslint",
     "boilerplate",
-    "environments"
+    "environments",
+    "circleci",
+    "bitrise",
+    "travisci",
+    "ci",
+    "wallabyjs",
+    "visual studio code",
+    "vscode"
   ],
   "repository": {
     "type": "git",

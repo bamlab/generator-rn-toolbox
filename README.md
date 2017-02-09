@@ -8,14 +8,19 @@ Yeoman generators to kickstart your react-native v0.38+ projects.
 
 In an existing React Native project, our generator contains sub-generators that will help you with:
 
-- [Eslint setup](generators/eslint/README.md)
-- [Base project setup](generators/base/README.md)
-- [Jest setup](generators/jest/README.md)
-- [CircleCI setup](generators/circleci/README.md)
-- [TravisCI setup](generators/travisci/README.md)
-- [Fastlane setup for multiple environments](generators/fastlane/README.md)
-- [Icons and Splashscreen generation](generators/assets/README.md)
-- [Bitrise setup for continuous deployment](generators/bitrise/README.md)
+- Setup
+  - [Eslint](generators/eslint/README.md) -- `yo rn-toolbox:eslint`
+  - [Base project](generators/base/README.md) -- `yo rn-toolbox:base`
+  - [Jest](generators/jest/README.md) -- `yo rn-toolbox:jest`
+  - [Fastlane for multiple environments](generators/fastlane/README.md) -- `yo rn-toolbox:fastlane`
+  - [Icons and Splashscreen generation](generators/assets/README.md) -- `yo rn-toolbox:assets [--icon | --splash] <path>`
+- Environment
+  - [Visual Studio Code](generators/vscode/README.md) -- `yo rn-toolbox:vscode`
+  - [Wallaby.js](generators/wallaby/README.md) -- `yo rn-toolbox:wallaby`
+- Continuous integration / deployment
+  - [TravisCI](generators/travisci/README.md) -- `yo rn-toolbox:travisci`
+  - [CircleCI](generators/circleci/README.md) -- `yo rn-toolbox:circleci`
+  - [Bitrise for continuous deployment](generators/bitrise/README.md) -- `yo rn-toolbox:bitrise`
 
 ## Requirements
 
