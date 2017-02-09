@@ -1,7 +1,11 @@
 const Base = require('yeoman-generator');
 const templateSettings = require('./templates/settings.json');
 
-class JestGenerator extends Base {
+class VSCodeGenerator extends Base {
+  initializing() {
+    this.composeWith('rn-toolbox:checkversion');
+  }
+
   prompting() {
     const config = this.fs.readJSON(this.destinationPath('package.json'));
     return this.prompt([{
@@ -28,4 +32,4 @@ class JestGenerator extends Base {
   }
 }
 
-module.exports = JestGenerator;
+module.exports = VSCodeGenerator;

@@ -1,6 +1,9 @@
 const Base = require('yeoman-generator');
 
-class BaseGenerator extends Base {
+class WallabyGenerator extends Base {
+  initializing() {
+    this.composeWith('rn-toolbox:checkversion');
+  }
   install() {
     this.yarnInstall([
       'babel-plugin-transform-async-to-generator',
@@ -27,4 +30,4 @@ class BaseGenerator extends Base {
   }
 }
 
-module.exports = BaseGenerator;
+module.exports = WallabyGenerator;

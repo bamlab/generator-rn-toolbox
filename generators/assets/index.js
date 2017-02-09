@@ -25,6 +25,10 @@ class ResourcesGenerator extends Base {
     });
   }
 
+  initializing() {
+    this.composeWith('rn-toolbox:checkversion');
+  }
+
   prompting() {
     const config = this.fs.readJSON(this.destinationPath('package.json'));
     return this.prompt([{

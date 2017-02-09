@@ -17,7 +17,8 @@
     "generators/travisci",
     "generators/upgrade",
     "generators/vscode",
-    "generators/wallaby"
+    "generators/wallaby",
+    "generators/checkversion"
   ],
   "keywords": [
     "yeoman-generator",
@@ -44,6 +45,7 @@
   },
   "dependencies": {
     "colors": "^1.1.2",
+    "compare-version": "^0.1.2",
     "download-file-sync": "^1.0.4",
     "fs-extra": "^0.30.0",
     "gm": "^1.23.0",
