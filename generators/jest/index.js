@@ -1,4 +1,4 @@
-const { Base } = require('yeoman-generator');
+const Base = require('yeoman-generator');
 
 class JestGenerator extends Base {
   writing() {

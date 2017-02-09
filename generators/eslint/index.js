@@ -1,9 +1,8 @@
-const { Base } = require('yeoman-generator');
-const yarnInstall = require('yarn-install');
+const Base = require('yeoman-generator');
 
 class ESLintGenerator extends Base {
   install() {
-    yarnInstall([
+    this.yarnInstall([
       'babel-core',
       'babel-eslint',
       'babel-preset-react-native',

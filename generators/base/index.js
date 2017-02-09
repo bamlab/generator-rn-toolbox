@@ -1,5 +1,4 @@
-const { Base } = require('yeoman-generator');
-const yarnInstall = require('yarn-install');
+const Base = require('yeoman-generator');
 
 class BaseGenerator extends Base {
   prompting() {
@@ -15,10 +14,10 @@ class BaseGenerator extends Base {
   }
 
   install() {
-    yarnInstall([
+    this.yarnInstall([
       'babel-preset-react-native-stage-0',
     ], { cwd: this.destinationRoot(), dev: true });
-    yarnInstall([
+    this.yarnInstall([
       '@exponent/ex-navigation',
     ], { cwd: this.destinationRoot() });
   }
@@ -29,10 +28,6 @@ class BaseGenerator extends Base {
       this.templatePath('**/*.js'),
       this.destinationPath(''),
       this.answers
-    );
-    this.fs.copy(
-      this.templatePath('src/assets/*'),
-      this.destinationPath('src/assets')
     );
     this.fs.copyTpl(
       this.templatePath('babelrc'),

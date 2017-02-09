@@ -1,4 +1,4 @@
-const { Base } = require('yeoman-generator');
+const Base = require('yeoman-generator');
 
 class FastlaneGenerator extends Base {
   prompting() {
@@ -121,7 +121,7 @@ class FastlaneGenerator extends Base {
 
   _extendGitignore() {
     let content = this.fs.read(this.destinationPath('.gitignore'));
-    if(this.answers.commitKeystore) {
+    if (this.answers.commitKeystore) {
       content = content.replace('*.keystore', '');
     }
 

@@ -1,4 +1,4 @@
-const { Base } = require('yeoman-generator');
+const Base = require('yeoman-generator');
 const templateSettings = require('./templates/settings.json');
 
 class JestGenerator extends Base {

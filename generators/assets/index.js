@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { Base } = require('yeoman-generator');
+const Base = require('yeoman-generator');
 const imageGenerator = require('./imageGenerator');
 
 class ResourcesGenerator extends Base {
@@ -53,8 +53,8 @@ class ResourcesGenerator extends Base {
   }
 
   _checkOSToBuildFor() {
-    this.android = this.options.android || !this.options.ios;
-    this.ios = this.options.ios || !this.options.android;
+    this.android = this.android || !this.ios;
+    this.ios = this.ios || !this.android;
   }
 
   _checkAssets() {
@@ -64,16 +64,16 @@ class ResourcesGenerator extends Base {
   }
 
   _checkAsset(optionName) {
-    const assetPath = this.options[optionName];
+    const assetPath = this[optionName];
 
     if (assetPath && !fs.existsSync(assetPath)) {
-      this.log.error(`${this.options[optionName]} could not be found`);
-      this.options[optionName] = null;
+      this.log.error(`${this[optionName]} could not be found`);
+      this[optionName] = null;
     }
   }
 
   _setupIosIcons() {
-    if (!this.ios || !this.options.icon) return null;
+    if (!this.ios || !this.icon) return null;
 
     const iosIconFolder = `ios/${this.answers.projectName}/Images.xcassets/AppIcon.appiconset`;
 
@@ -83,23 +83,23 @@ class ResourcesGenerator extends Base {
     );
 
     return imageGenerator.generateIosIcons(
-      this.options.icon,
+      this.icon,
       iosIconFolder
     );
   }
 
   _setupAndroidIcons() {
-    if (!this.android || !this.options.icon) return null;
-    return imageGenerator.generateAndroidIcons(this.options.icon);
+    if (!this.android || !this.icon) return null;
+    return imageGenerator.generateAndroidIcons(this.icon);
   }
 
   _setupAndroidNotificationIcons() {
-    if (!this.options['android-notification-icon']) return null;
-    return imageGenerator.generateAndroidNotificationIcons(this.options['android-notification-icon']);
+    if (!this['android-notification-icon']) return null;
+    return imageGenerator.generateAndroidNotificationIcons(this['android-notification-icon']);
   }
 
   _setupIosSplashScreen() {
-    if (!this.ios || !this.options.splash) return null;
+    if (!this.ios || !this.splash) return null;
 
     const iosSplashFolder = `ios/${this.answers.projectName}/Images.xcassets/LaunchImage.launchimage`;
 
@@ -109,29 +109,29 @@ class ResourcesGenerator extends Base {
     );
 
     return imageGenerator.generateIosSplashScreen(
-      this.options.splash,
+      this.splash,
       iosSplashFolder
     );
   }
 
   _setupAndroidSplashScreen() {
-    if (!this.android || !this.options.splash) return null;
-    return imageGenerator.generateAndroidSplashScreen(this.options.splash);
+    if (!this.android || !this.splash) return null;
+    return imageGenerator.generateAndroidSplashScreen(this.splash);
   }
 
   _setupStoresAssets() {
-    if (!this.options.store) return null;
+    if (!this.store) return null;
 
     const resizePromises = [];
 
-    if (this.android && this.options.icon) {
-      resizePromises.push(imageGenerator.generatePlayStoreIcon(this.options.icon));
+    if (this.android && this.icon) {
+      resizePromises.push(imageGenerator.generatePlayStoreIcon(this.icon));
     }
-    if (this.ios && this.options.icon) {
-      resizePromises.push(imageGenerator.generateItunesIcon(this.options.icon));
+    if (this.ios && this.icon) {
+      resizePromises.push(imageGenerator.generateItunesIcon(this.icon));
     }
-    if (this.android && this.options.splash) {
-      resizePromises.push(imageGenerator.generatePlayStoreImage(this.options.splash));
+    if (this.android && this.splash) {
+      resizePromises.push(imageGenerator.generatePlayStoreImage(this.splash));
     }
 
     return Promise.all(resizePromises);

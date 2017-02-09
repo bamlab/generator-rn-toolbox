@@ -1,4 +1,4 @@
-const { Base } = require('yeoman-generator');
+const Base = require('yeoman-generator');
 
 class CircleGenerator extends Base {
   writing() {

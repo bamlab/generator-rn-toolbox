@@ -1,9 +1,8 @@
-const { Base } = require('yeoman-generator');
-const yarnInstall = require('yarn-install');
+const Base = require('yeoman-generator');
 
 class BaseGenerator extends Base {
   install() {
-    yarnInstall([
+    this.yarnInstall([
       'babel-plugin-transform-async-to-generator',
       'babel-plugin-transform-flow-strip-types',
       'babel-plugin-transform-object-rest-spread',
