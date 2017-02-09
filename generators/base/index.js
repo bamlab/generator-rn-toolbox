@@ -1,4 +1,4 @@
-const Base = require('yeoman-generator').Base;
+const { Base } = require('yeoman-generator');
 const yarnInstall = require('yarn-install');
 
 class BaseGenerator extends Base {
@@ -17,6 +17,8 @@ class BaseGenerator extends Base {
   install() {
     yarnInstall([
       'babel-preset-react-native-stage-0',
+    ], { cwd: this.destinationRoot(), dev: true });
+    yarnInstall([
       '@exponent/ex-navigation',
     ], { cwd: this.destinationRoot() });
   }

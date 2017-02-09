@@ -1,4 +1,4 @@
-const Base = require('yeoman-generator').Base;
+const { Base } = require('yeoman-generator');
 const downloadFileSync = require('download-file-sync');
 require('colors');
 const versions = require('./versions.js');

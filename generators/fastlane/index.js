@@ -1,4 +1,4 @@
-const Base = require('yeoman-generator').Base;
+const { Base } = require('yeoman-generator');
 
 class FastlaneGenerator extends Base {
   prompting() {

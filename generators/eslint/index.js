@@ -1,4 +1,4 @@
-const Base = require('yeoman-generator').Base;
+const { Base } = require('yeoman-generator');
 const yarnInstall = require('yarn-install');
 
 class ESLintGenerator extends Base {

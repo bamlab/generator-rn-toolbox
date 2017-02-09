@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Base = require('yeoman-generator').Base;
+const { Base } = require('yeoman-generator');
 const imageGenerator = require('./imageGenerator');
 
 class ResourcesGenerator extends Base {
