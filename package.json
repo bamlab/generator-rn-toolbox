@@ -44,6 +44,7 @@
     "url": "https://github.com/bamlab/generator-rn-toolbox"
   },
   "dependencies": {
+    "color-js": "^1.0.4",
     "colors": "^1.1.2",
     "compare-version": "^0.1.2",
     "download-file-sync": "^1.0.4",

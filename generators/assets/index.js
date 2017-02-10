@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Base = require('yeoman-generator');
 const imageGenerator = require('./imageGenerator');
+const getPixelColor = require('./getPixelColor');
 
 class ResourcesGenerator extends Base {
   constructor(...args) {
@@ -124,7 +125,27 @@ class ResourcesGenerator extends Base {
 
   _setupAndroidSplashScreen() {
     if (!this.android || !this.options.splash) return null;
-    return imageGenerator.generateAndroidSplashScreen(this.options.splash);
+
+    const getTopLeftPixelColor = getPixelColor(this.options.splash, 1, 1);
+
+    return getTopLeftPixelColor.then((splashBackgroundColor) => {
+      this.fs.copyTpl(
+        this.templatePath('android/colors.xml'),
+        'android/app/src/main/res/values/colors.xml',
+        { splashBackgroundColor }
+      );
+      this.fs.copyTpl(
+        this.templatePath('android/launch_screen_bitmap.xml'),
+        'android/app/src/main/res/drawable/launch_screen_bitmap.xml'
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('android/styles.xml'),
+        'android/app/src/main/res/values/styles.xml'
+      );
+
+      return imageGenerator.generateAndroidSplashScreen(this.options.splash);
+    });
   }
 
   _setupStoresAssets() {

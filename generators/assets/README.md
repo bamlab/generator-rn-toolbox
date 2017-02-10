@@ -16,16 +16,16 @@ yo rn-toolbox:assets --icon icon.png
 ```
 Answer yes when asked about overwriting.
 
-That's it! :balloon:  
+That's it! :balloon:
 Icons have been generated in different sizes and integrated in your project.
 
 ## Generate splashscreens
 
-You'll need an image for your splash with a size of more than **2208x2208 px** (psd is supported).
+You'll need a **square** image for your splash with a size of more than **2208x2208 px** (psd is supported).
 
 ### iOS
 
-In XCode, click on your target.  
+In XCode, click on your target.
 Then, in the tab **general**,
 - click on *Use Asset Catalog** and then **migrate**
 - delete **LaunchScreen** in the input
@@ -43,7 +43,17 @@ You're all set! :dancer:
 
 ### Android
 
-:warning: The command is only generating splash assets for now on Android.
+The generator only supports a splash with a plain background color on Android.
+
+Run:
+```
+yo rn-toolbox:assets --splash splash.psd --android
+```
+
+You're done! :dancer:
+
+***IMPORTANT:*** You will need to uninstall the app from device/emulator first before seeing the changes.
+
 
 ## Generate Store assets
 
