@@ -86,7 +86,7 @@ class ResourcesGenerator extends Base {
     const iosIconFolder = `ios/${this.answers.projectName}/Images.xcassets/AppIcon.appiconset`;
 
     this.fs.copyTpl(
-      this.templatePath('AppIconsetContents.json'),
+      this.templatePath('ios/AppIconsetContents.json'),
       this.destinationPath(`${iosIconFolder}/Contents.json`)
     );
 
@@ -112,7 +112,7 @@ class ResourcesGenerator extends Base {
     const iosSplashFolder = `ios/${this.answers.projectName}/Images.xcassets/LaunchImage.launchimage`;
 
     this.fs.copyTpl(
-      this.templatePath('LaunchImageLaunchimageContents.json'),
+      this.templatePath('ios/LaunchImageLaunchimageContents.json'),
       `${iosSplashFolder}/Contents.json`
     );
 
