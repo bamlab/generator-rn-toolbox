@@ -117,6 +117,21 @@ class ResourcesGenerator extends Base {
       `${iosSplashFolder}/Contents.json`
     );
 
+    const pbxprojPath = this.destinationPath(`ios/${this.answers.projectName}.xcodeproj/project.pbxproj`);
+    this.fs.write(pbxprojPath, this.fs.read(pbxprojPath)
+      .replace(
+        /ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;/g,
+        `ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                               ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;`
+      )
+    );
+
+    const plistPath = this.destinationPath(`ios/${this.answers.projectName}/Info.plist`);
+    this.fs.write(plistPath, this.fs.read(plistPath)
+      .replace('<key>UILaunchStoryboardName</key>', '')
+      .replace('<string>LaunchScreen</string>', '')
+    );
+
     return imageGenerator.generateIosSplashScreen(
       this.options.splash,
       iosSplashFolder

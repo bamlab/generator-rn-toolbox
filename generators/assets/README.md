@@ -25,14 +25,7 @@ You'll need a **square** image for your splash with a size of more than **2208x2
 
 ### iOS
 
-In XCode, click on your target.
-Then, in the tab **general**,
-- click on *Use Asset Catalog** and then **migrate**
-- delete **LaunchScreen** in the input
-
-![Xcode](https://raw.githubusercontent.com/bamlab/generator-rn-toolbox/master/generators/assets/xcode.png)
-
-Then run:
+Run:
 ```
 yo rn-toolbox:assets --splash splash.psd --ios
 ```
