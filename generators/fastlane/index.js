@@ -63,9 +63,9 @@ class FastlaneGenerator extends Base {
     },
     {
       type    : 'input',
-      name    : 'itunesTeamId',
-      message : 'The itunesconnect.apple.com team id',
-      default : 'XXXXXXXX',
+      name    : 'itunesTeamName',
+      message : 'The itunesconnect.apple.com team name',
+      default : 'MyCompany',
     },
     {
       type    : 'input',
