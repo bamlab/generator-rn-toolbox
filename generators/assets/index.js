@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Base = require('yeoman-generator');
 const imageGenerator = require('./imageGenerator');
+const getPixelColor = require('./getPixelColor');
 
 class ResourcesGenerator extends Base {
   constructor(...args) {
@@ -86,7 +87,7 @@ class ResourcesGenerator extends Base {
     const iosIconFolder = `ios/${this.answers.projectName}/Images.xcassets/AppIcon.appiconset`;
 
     this.fs.copyTpl(
-      this.templatePath('AppIconsetContents.json'),
+      this.templatePath('ios/AppIconsetContents.json'),
       this.destinationPath(`${iosIconFolder}/Contents.json`)
     );
 
@@ -112,8 +113,23 @@ class ResourcesGenerator extends Base {
     const iosSplashFolder = `ios/${this.answers.projectName}/Images.xcassets/LaunchImage.launchimage`;
 
     this.fs.copyTpl(
-      this.templatePath('LaunchImageLaunchimageContents.json'),
+      this.templatePath('ios/LaunchImageLaunchimageContents.json'),
       `${iosSplashFolder}/Contents.json`
+    );
+
+    const pbxprojPath = this.destinationPath(`ios/${this.answers.projectName}.xcodeproj/project.pbxproj`);
+    this.fs.write(pbxprojPath, this.fs.read(pbxprojPath)
+      .replace(
+        /ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;/g,
+        `ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                               ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;`
+      )
+    );
+
+    const plistPath = this.destinationPath(`ios/${this.answers.projectName}/Info.plist`);
+    this.fs.write(plistPath, this.fs.read(plistPath)
+      .replace('<key>UILaunchStoryboardName</key>', '')
+      .replace('<string>LaunchScreen</string>', '')
     );
 
     return imageGenerator.generateIosSplashScreen(
@@ -124,7 +140,27 @@ class ResourcesGenerator extends Base {
 
   _setupAndroidSplashScreen() {
     if (!this.android || !this.options.splash) return null;
-    return imageGenerator.generateAndroidSplashScreen(this.options.splash);
+
+    const getTopLeftPixelColor = getPixelColor(this.options.splash, 1, 1);
+
+    return getTopLeftPixelColor.then((splashBackgroundColor) => {
+      this.fs.copyTpl(
+        this.templatePath('android/colors.xml'),
+        'android/app/src/main/res/values/colors.xml',
+        { splashBackgroundColor }
+      );
+      this.fs.copyTpl(
+        this.templatePath('android/launch_screen_bitmap.xml'),
+        'android/app/src/main/res/drawable/launch_screen_bitmap.xml'
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('android/styles.xml'),
+        'android/app/src/main/res/values/styles.xml'
+      );
+
+      return imageGenerator.generateAndroidSplashScreen(this.options.splash);
+    });
   }
 
   _setupStoresAssets() {
