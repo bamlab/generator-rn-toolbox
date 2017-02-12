@@ -113,5 +113,7 @@ workflows:
         - command: test
         - args: ''
 trigger_map:
+- pull_request_target_branch: staging
+  workflow: Test
 - push_branch: staging
   workflow: HockeyApp
