@@ -8,91 +8,17 @@ class FastlaneGenerator extends Base {
   prompting() {
     const config = this.fs.readJSON(this.destinationPath('package.json'));
     return this.prompt([{
-      type    : 'companyName',
-      name    : 'companyName',
-      message : 'Your company name',
-      default : 'My Company',
-    },
-    {
-      type    : 'input',
-      name    : 'appName',
-      message : 'Your app name',
-      default : config.name,
-    },
-    {
-      type    : 'input',
-      name    : 'projectName',
-      message : 'Your react native app directory name',
-      default : config.name,
-    },
-    {
-      type    : 'input',
-      name    : 'stagingAppId',
-      message : 'Your app id for staging',
-      default : `com.${config.name.toLowerCase()}.staging`,
-    },
-    {
-      type    : 'input',
-      name    : 'prodAppId',
-      message : 'Your app id for prod',
-      default : `com.${config.name.toLowerCase()}`,
-    },
-    {
-      type    : 'input',
-      name    : 'matchGit',
-      message : 'Your git repo for match',
-      default : 'git@github.com:mycompany/certificates.git',
-    },
-    {
-      type    : 'input',
-      name    : 'appleId',
-      message : 'Your apple id',
-      default : 'dev@mycompany.com',
-    },
-    {
-      type    : 'input',
-      name    : 'stagingAppleTeamId',
-      message : 'The developer.apple.com team id for staging certificates',
-      default : 'XXXXXXXXXX',
-    },
-    {
-      type    : 'input',
-      name    : 'prodAppleTeamId',
-      message : 'The developer.apple.com team id for prod certificates',
-      default : 'XXXXXXXXXX',
-    },
-    {
-      type    : 'input',
-      name    : 'itunesTeamName',
-      message : 'The itunesconnect.apple.com team name',
-      default : 'MyCompany',
-    },
-    {
-      type    : 'input',
-      name    : 'keystorePassword',
-      message : 'Your keystore password',
-      default : '*********',
-    },
-    {
-      type    : 'input',
-      name    : 'hockeyAppToken',
-      message : 'A valid HockeyApp token',
-    },
-    {
+      type: 'input',
+      name: 'projectName',
+      message: 'Please confirm the project name',
+      default: config.name,
+    }, {
       type    : 'confirm',
       name    : 'commitKeystore',
-      message : 'Commit keystore file',
+      message : 'Commit keystore files?',
       default : true,
     }]).then((answers) => {
       this.answers = answers;
-      this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
-    });
-  }
-
-  install() {
-    this._createKeystore();
-    this.spawnCommand('bundle', ['install'], {
-      cwd: this.destinationPath(),
     });
   }
 
@@ -106,11 +32,6 @@ class FastlaneGenerator extends Base {
       this.destinationPath('environment')
     );
     this.fs.copyTpl(
-      this.templatePath('fastlane/.*'),
-      this.destinationPath('fastlane'),
-      this.answers
-    );
-    this.fs.copyTpl(
       this.templatePath('Gemfile'),
       this.destinationPath('Gemfile')
     );
@@ -121,6 +42,12 @@ class FastlaneGenerator extends Base {
     this._extendGitignore();
     this._extendGradle();
     this._activateManualSigning();
+  }
+
+  install() {
+    this.spawnCommand('bundle', ['install'], {
+      cwd: this.destinationPath(),
+    });
   }
 
   _extendGitignore() {
@@ -173,8 +100,8 @@ class FastlaneGenerator extends Base {
 
     // Manual signing
     config = config.replace(
-      /(TargetAttributes = {(?:\n.*)+?TestTargetID = )(.+?)(;\n.*\n)(.+)/m,
-      '$1$2$3          $2 = {\n            ProvisioningStyle = Manual;\n          };\n$4'
+      'ProvisioningStyle = Automatic;',
+      'ProvisioningStyle = Manual;'
     );
 
     // Distribution code signing Release
@@ -190,24 +117,6 @@ class FastlaneGenerator extends Base {
     );
 
     this.fs.write(this.destinationPath(`ios/${this.answers.projectName}.xcodeproj/project.pbxproj`), config);
-  }
-
-  _createKeystore() {
-    const path = `android/app/${this.answers.lowerCaseProjectName}.keystore`;
-    if (!this.fs.exists(this.destinationPath(path))) {
-      this.spawnCommand('keytool', [
-        '-genkey',
-        '-v',
-        '-dname', `OU=${this.answers.companyName}`,
-        '-keystore', path,
-        '-alias', this.answers.lowerCaseProjectName,
-        '-keyalg', 'RSA',
-        '-keysize', '2048',
-        '-validity', '10000',
-        '-storepass', this.answers.keystorePassword,
-        '-keypass', this.answers.keystorePassword,
-      ]);
-    }
   }
 
   end() {

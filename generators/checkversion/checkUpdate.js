@@ -1,6 +1,6 @@
 const http = require('http');
 const compareVersion = require('compare-version');
-const packageSettings = require('./package.json');
+const packageSettings = require('../../package.json');
 
 function fetchVersion() {
   return new Promise((resolve, reject) => {

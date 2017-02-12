@@ -6,21 +6,6 @@
     "test": "node test.js",
     "lint": "eslint ."
   },
-  "files": [
-    "generators/eslint",
-    "generators/base",
-    "generators/jest",
-    "generators/assets",
-    "generators/fastlane",
-    "generators/bitrise",
-    "generators/circleci",
-    "generators/travisci",
-    "generators/upgrade",
-    "generators/vscode",
-    "generators/wallaby",
-    "generators/checkversion",
-    "checkUpdate.js"
-  ],
   "keywords": [
     "yeoman-generator",
     "react-native",
@@ -51,6 +36,7 @@
     "download-file-sync": "^1.0.4",
     "fs-extra": "^0.30.0",
     "gm": "^1.23.0",
+    "randomstring": "^1.1.5",
     "yeoman-generator": "^1.1.0"
   },
   "devDependencies": {
