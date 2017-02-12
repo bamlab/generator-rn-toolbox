@@ -18,7 +18,8 @@
     "generators/upgrade",
     "generators/vscode",
     "generators/wallaby",
-    "generators/checkversion"
+    "generators/checkversion",
+    "checkUpdate.js"
   ],
   "keywords": [
     "yeoman-generator",
