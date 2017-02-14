@@ -19,6 +19,7 @@ class FastlaneGenerator extends Base {
       default : true,
     }]).then((answers) => {
       this.answers = answers;
+      this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
     });
   }
 
@@ -65,11 +66,6 @@ class FastlaneGenerator extends Base {
 
   _extendGradle() {
     let config = this.fs.read(this.destinationPath('android/app/build.gradle'));
-    // Change the app id
-    config = config.replace(
-      /applicationId ".*"/,
-      'applicationId System.getenv("GRADLE_APP_IDENTIFIER")'
-    );
     // Add the release signingConfig
     config = config.replace(
       /(buildTypes {\n\s*release {(?:\n.*)+?)(\n\s*})/m,
@@ -81,15 +77,30 @@ class FastlaneGenerator extends Base {
       /(})(\n\s*buildTypes)/m,
       `$1\n${gradleSigningTemplate}$2`
     );
-    // Add the default params
-    config = config.replace(
-      /\nandroid {\n/m,
-      `\ndef appId = System.getenv("GRADLE_APP_IDENTIFIER") ?: 'com.${this.answers.lowerCaseProjectName}.debug'\ndef appName = System.getenv("GRADLE_APP_NAME") ?: '${this.answers.appName} Debug'\n\nandroid {\n`
-    );
     // Add the appName var
     config = config.replace(
       /(buildTypes {)(\s*release {\n)/m,
       '$1\n        debug {\n            resValue "string", "app_name", appName\n        }$2            resValue "string", "app_name", appName\n'
+    );
+    // Change the app id
+    config = config.replace(
+      /applicationId ".*"/,
+      'applicationId _applicationId'
+    );
+    // Replace the versionCode
+    config = config.replace(
+      /versionCode .*/,
+      'versionCode _versionCode'
+    );
+    // Replace the versionName
+    config = config.replace(
+      /versionName .*/,
+      'versionName _versionName'
+    );
+    // Add the default params
+    config = config.replace(
+      /\nandroid {\n/m,
+      `\ndef _applicationId = System.getenv("GRADLE_APP_IDENTIFIER") ?: 'com.${this.answers.lowerCaseProjectName}.debug'\ndef appName = System.getenv("GRADLE_APP_NAME") ?: '${this.answers.projectName} debug'\ndef _versionCode = (System.getenv("ANDROID_VERSION_CODE") ?: "1") as Integer\ndef _versionName = System.getenv("ANDROID_VERSION_NAME") ?: "1.0.0"\n\nandroid {\n`
     );
     // Output the file
     this.fs.write(this.destinationPath('android/app/build.gradle'), config);
@@ -100,20 +111,24 @@ class FastlaneGenerator extends Base {
 
     // Manual signing
     config = config.replace(
-      'ProvisioningStyle = Automatic;',
+      /ProvisioningStyle = Automatic;/g,
       'ProvisioningStyle = Manual;'
+    );
+    config = config.replace(
+      /(TargetAttributes = {(?:\n.*?)+?TestTargetID = )(.+?)(;\n.*\n)(.+)/m,
+      '$1$2$3          $2 = {\n            ProvisioningStyle = Manual;\n          };\n$4'
     );
 
     // Distribution code signing Release
     config = config.replace(
       /(Release.*(?:\n.+){3}ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;)/m,
-      '$1\n        CODE_SIGN_IDENTITY = "iPhone Distribution";\n        DEVELOPMENT_TEAM = "";'
+      '$1\n        CODE_SIGN_IDENTITY = "iPhone Distribution";\n        "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";\n        DEVELOPMENT_TEAM = "";'
     );
 
     // Developer code signing Debug
     config = config.replace(
       /(Debug.*(?:\n.+){3}ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;)/m,
-      '$1\n        CODE_SIGN_IDENTITY = "iPhone Developer";\n        DEVELOPMENT_TEAM = "";'
+      '$1\n        CODE_SIGN_IDENTITY = "iPhone Developer";\n        "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";\n        DEVELOPMENT_TEAM = "";'
     );
 
     this.fs.write(this.destinationPath(`ios/${this.answers.projectName}.xcodeproj/project.pbxproj`), config);
