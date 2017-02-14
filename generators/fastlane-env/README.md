@@ -24,3 +24,6 @@ bundle exec fastlane ios setup --env=<myenv>
 bundle exec fastlane ios deploy --env=<myenv>
 bundle exec fastlane android deploy --env=<myenv>
 ```
+
+## Centralizing environment variables
+You might want to share some environment variables accross multiple environments. In order to do so, simply create a `.env` file, remove the variable you want to share in all the environment files and add it in the `.env` one.
