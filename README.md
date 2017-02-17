@@ -12,7 +12,8 @@ In an existing React Native project, our generator contains sub-generators that 
   - [Eslint](generators/eslint/README.md) -- `yo rn-toolbox:eslint`
   - [Base project](generators/base/README.md) -- `yo rn-toolbox:base`
   - [Jest](generators/jest/README.md) -- `yo rn-toolbox:jest`
-  - [Fastlane for multiple environments](generators/fastlane/README.md) -- `yo rn-toolbox:fastlane`
+  - [Fastlane setup for multiple environments](generators/fastlane-setup/README.md) -- `yo rn-toolbox:fastlane-setup`
+  - [Fastlane environment instantiation](generators/fastlane-env/README.md) -- `yo rn-toolbox:fastlane-env`
   - [Icons and Splashscreen generation](generators/assets/README.md) -- `yo rn-toolbox:assets [--icon | --splash] <path>`
 - Environment
   - [Visual Studio Code](generators/vscode/README.md) -- `yo rn-toolbox:vscode`

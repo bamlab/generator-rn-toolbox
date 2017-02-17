@@ -63,14 +63,14 @@ workflows:
         inputs:
         - content: |-
             #!/bin/bash
-            bundle exec fastlane android deploy_staging
+            bundle exec fastlane android deploy --env=staging
         - working_dir: "$REACT_NATIVE_DIRECTORY"
     - script@1.1.3:
         title: Deploy iOS to Hockey App
         inputs:
         - content: |-
             #!/bin/bash
-            bundle exec fastlane ios deploy_staging
+            bundle exec fastlane ios deploy --env=staging
         - working_dir: "$REACT_NATIVE_DIRECTORY"
     - cache-push@0.9.4:
         inputs:
@@ -87,7 +87,6 @@ workflows:
             $HOME/.gradle/caches/*.bin
             ./$REACT_NATIVE_DIRECTORY/android/.gradle/*.lock
             ./$REACT_NATIVE_DIRECTORY/android/.gradle/*.bin
-    - deploy-to-bitrise-io@1.2.7: {}
   Test:
     steps:
     - activate-ssh-key@3.1.1:

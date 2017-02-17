@@ -1,6 +1,6 @@
 const Base = require('yeoman-generator');
 require('colors');
-const checkVersion = require('../../checkUpdate');
+const checkVersion = require('./checkUpdate');
 
 class CheckVersionGenerator extends Base {
   initializing() {

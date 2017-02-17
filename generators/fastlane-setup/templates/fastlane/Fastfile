@@ -7,6 +7,10 @@ lane :set_js_env do |options|
   sh "cp ../environment/index.#{ENV['ENV']}.js ../environment/index.js"
 end
 
+before_all do |lane, options|
+  Dotenv.load(".env.#{ENV['ENV']}.secret")
+end
+
 after_all do |lane, options|
   if File.exist?('../environment/index.js.back')
     restore_file(path: 'environment/index.js')
@@ -52,9 +56,13 @@ platform :ios do
     xcworkspace = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcworkspace"
     update_info_plist(
       xcodeproj: xcodeproj,
-      display_name: ENV['IOS_APP_NAME'],
-      app_identifier: ENV['IOS_APP_ID'],
       plist_path: ENV['IOS_PLIST_PATH'],
+      block: lambda { |plist|
+        plist['CFBundleIdentifier'] = ENV['IOS_APP_ID']
+        plist['CFBundleName'] = ENV['IOS_APP_NAME']
+        plist['CFBundleShortVersionString'] = ENV['IOS_VERSION']
+        plist['CFBundleVersion'] = ENV['IOS_VERSION_BUILD_NUMBER']
+      },
     )
     profile_env_name = "sigh_#{ENV['IOS_APP_ID']}_#{ENV['MATCH_TYPE']}_profile-name"
     gymOptions = ({
@@ -76,25 +84,17 @@ platform :ios do
     )
   end
 
-  lane :deploy_testflight do |options|
-    pilot(
-      distribute_external: false,
-      skip_waiting_for_build_processing: true
-    )
-  end
-
-  lane :deploy_staging do |options|
-    Dotenv.load('.env', '.env.staging')
+  lane :deploy do |options|
     setup
     build
-    deploy_hockey
-  end
-
-  lane :deploy_prod do |options|
-    Dotenv.load('.env', '.env.prod')
-    setup
-    build
-    deploy_testflight
+    if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
+      deploy_hockey
+    else
+      pilot(
+        distribute_external: false,
+        skip_waiting_for_build_processing: true
+      )
+    end
   end
 end
 
@@ -116,14 +116,10 @@ platform :android do
     )
   end
 
-  lane :deploy_staging do |options|
-    Dotenv.load('.env', '.env.staging')
+  lane :deploy do |options|
     build
-    hockey
-  end
-
-  lane :deploy_prod do |options|
-    Dotenv.load('.env', '.env.prod')
-    build
+    if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
+      deploy_hockey
+    end
   end
 end
