@@ -60,6 +60,7 @@ platform :ios do
       block: lambda { |plist|
         plist['CFBundleIdentifier'] = ENV['IOS_APP_ID']
         plist['CFBundleName'] = ENV['IOS_APP_NAME']
+        plist['CFBundleDisplayName'] = ENV['IOS_APP_NAME']
         plist['CFBundleShortVersionString'] = ENV['IOS_VERSION']
         plist['CFBundleVersion'] = ENV['IOS_VERSION_BUILD_NUMBER']
       },
