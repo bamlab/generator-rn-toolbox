@@ -1,7 +1,10 @@
-const Base = require('yeoman-generator').Base;
-const yarnInstall = require('yarn-install');
+const Base = require('yeoman-generator');
 
 class ESLintGenerator extends Base {
+  initializing() {
+    this.composeWith('rn-toolbox:checkversion');
+  }
+
   install() {
     yarnInstall([
       'babel-core@6.23.1',

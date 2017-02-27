@@ -29,8 +29,8 @@ Page.propTypes = {
   backgroundColor: PropTypes.string,
 };
 
-
 Page.defaultProps = {
+  children: null,
   noMargin: false,
   noNavBar: false,
   backgroundColor: appStyle.colors.color,

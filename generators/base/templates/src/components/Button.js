@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+// @flow
+
+import React, { PureComponent } from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 
 import appStyle from '<%= appName %>/src/appStyle';
@@ -24,13 +26,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const Button = props => (
-  <TouchableOpacity onPress={props.onPress} style={styles.container}>
-    <View style={styles.button}>
-      <Text style={[styles.text]}>{props.children.toUpperCase()}</Text>
-    </View>
-  </TouchableOpacity>
-);
+class Button extends PureComponent {
+  static defaultProps: PropsTypes = {
+    children: null,
+    onPress: () => {},
+  };
+
+  props: PropsTypes;
+  render() {
+    return (
+      <TouchableOpacity onPress={this.props.onPress} style={styles.container}>
+        <View style={styles.button}>
+          <Text style={[styles.text]}>{this.props.children.toUpperCase()}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
 
 Button.propTypes = {
   children: PropTypes.string.isRequired,

@@ -1,0 +1,40 @@
+### GLOBAL ###
+ENV='<%= environmentName %>'
+DEPLOYMENT_PLATFORM='<%= deploymentPlatform %>'
+
+### IOS ###
+IOS_PROJECT_PATH='ios'
+IOS_APP_NAME='<%= appName %>'
+IOS_VERSION='1.0.0'
+IOS_VERSION_BUILD_NUMBER='1'
+IOS_PROJECT_NAME='<%= projectName %>'
+IOS_APP_ID='<%= appId %>'
+IOS_TEAM_ID='<%= appleTeamId %>'
+IOS_USER_ID='<%= appleId %>'
+IOS_PLIST_PATH='<%= projectName %>/Info.plist'
+<% if (deploymentPlatform === 'appstore') { %>IOS_ITC_TEAM_NAME=''<% } %>
+
+### IOS MATCH ###
+MATCH_GIT_URL='<%= matchGit %>'
+MATCH_GIT_BRANCH='<%= matchBranch %>'
+MATCH_TYPE='<%= certificateType %>'
+<% if (certificateType === 'enterprise') { %>MATCH_FORCE_ENTERPRISE='1'<% } %>
+
+### IOS GYM ###
+GYM_SCHEME='<%= projectName %>'
+GYM_OUTPUT_DIRECTORY='dist'
+GYM_OUTPUT_NAME='app.ipa'
+
+### IOS HOCKEY APP ###
+IOS_IPA_PATH='./dist/app.ipa'
+
+### ANDROID PROJECT ###
+ANDROID_PROJECT_DIR='android'
+ANDROID_APK_PATH='android/app/build/outputs/apk/app-release.apk'
+ANDROID_VERSION_CODE='1'
+ANDROID_VERSION_NAME='1.0.0'
+GRADLE_APP_IDENTIFIER='<%= appId %>'
+GRADLE_APP_NAME='<%= appName %> Staging'
+GRADLE_KEYSTORE='<%= lowerCaseProjectName %>.<%= environmentName %>.keystore'
+GRADLE_KEYSTORE_ALIAS='<%= lowerCaseProjectName %>'
+

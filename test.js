@@ -64,7 +64,7 @@ function installFastlane() {
 
 function installBitrise() {
   console.log('## Installing Bitrise ##'.cyan);
-  return helpers.run(path.join(__dirname, 'generators/jest'))
+  return helpers.run(path.join(__dirname, 'generators/bitrise'))
   .cd(path.join(__dirname, appName))
   .withOptions({ skipInstall: false })
   .withPrompts({ reactNativeDirectory: '.' })

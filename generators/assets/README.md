@@ -16,23 +16,16 @@ yo rn-toolbox:assets --icon icon.png
 ```
 Answer yes when asked about overwriting.
 
-That's it! :balloon:  
+That's it! :balloon:
 Icons have been generated in different sizes and integrated in your project.
 
 ## Generate splashscreens
 
-You'll need an image for your splash with a size of more than **2208x2208 px** (psd is supported).
+You'll need a **square** image for your splash with a size of more than **2208x2208 px** (psd is supported).
 
 ### iOS
 
-In XCode, click on your target.  
-Then, in the tab **general**,
-- click on *Use Asset Catalog** and then **migrate**
-- delete **LaunchScreen** in the input
-
-![Xcode](https://raw.githubusercontent.com/bamlab/generator-rn-toolbox/master/generators/assets/xcode.png)
-
-Then run:
+Run:
 ```
 yo rn-toolbox:assets --splash splash.psd --ios
 ```
@@ -43,13 +36,38 @@ You're all set! :dancer:
 
 ### Android
 
-:warning: The command is only generating splash assets for now on Android.
+The generator only supports a splash with a plain background color on Android.
+
+Run:
+```
+yo rn-toolbox:assets --splash splash.psd --android
+```
+
+You're done! :dancer:
+
+***IMPORTANT:*** You will need to uninstall the app from device/emulator first before seeing the changes.
+
+
+## Generate Store assets
+
+You'll need to specify:
+  - an icon with a size of more than **512x512 px**  (psd is supported).
+  - a splash screen image for the play store image with a size of more than **1024x500 px** (psd is supported).
+
+```
+yo rn-toolbox:assets --icon icon.png --splash splash.psd --store
+```
+
+This will create 3 files at the root of your project:
+  - `itunes-icon.png`
+  - `play-store-icon.png`
+  - `play-store-image.png`
 
 ## Generate Android notification icons
 
 When setting up push notifications on Android (with [React Native Push notification](https://github.com/zo0r/react-native-push-notification) for instance), you'll need a [status bar icon](https://developer.android.com/guide/practices/ui_guidelines/icon_design_status_bar.html).
 
-You'll need an image for your splash with a size of more than **96x96 px** (psd is supported).
+You'll need an image for your icon with a size of more than **96x96 px** (psd is supported).
 ```
 yo rn-toolbox:assets --android-notification-icon icon.png
 ```

@@ -1,6 +1,7 @@
 const Base = require('yeoman-generator');
+const templateSettings = require('./templates/settings.json');
 
-class BaseGenerator extends Base {
+class VSCodeGenerator extends Base {
   initializing() {
     this.composeWith('rn-toolbox:checkversion');
   }
@@ -16,31 +17,19 @@ class BaseGenerator extends Base {
       this.answers = answers;
     });
   }
-
-  install() {
-    this.yarnInstall([
-      'babel-preset-react-native-stage-0',
-      'react-navigation',
-    ], { cwd: this.destinationRoot() });
-  }
-
   writing() {
-    this.fs.delete(this.destinationPath('__tests__'));
     this.fs.copyTpl(
-      this.templatePath('**/*.js'),
-      this.destinationPath(''),
+      this.templatePath('jsconfig.json'),
+      this.destinationPath('jsconfig.json'),
       this.answers
     );
-    this.fs.copyTpl(
-      this.templatePath('babelrc'),
-      this.destinationPath('.babelrc')
-    );
+    this.fs.extendJSON(this.destinationPath('.vscode/settings.json'), templateSettings);
   }
 
   end() {
-    this.config.set('base', true);
+    this.config.set('vscode', true);
     this.config.save();
   }
 }
 
-module.exports = BaseGenerator;
+module.exports = VSCodeGenerator;
