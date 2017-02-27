@@ -6,7 +6,7 @@ class ESLintGenerator extends Base {
   }
 
   install() {
-    yarnInstall([
+    this.yarnInstall([
       'babel-core@6.23.1',
       'babel-eslint@7.1.1',
       'babel-preset-react-native@1.9.1',
