@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "6"
+install:
+  # Install React Native, Yarn and Yoeman:
+  - npm install -g react-native-cli yarn yo
+  - npm link
+  # Create a new project and apply generators:
+  - react-native init GeneratorTest
+  - cd GeneratorTest
+  - echo y | yo rn-toolbox:eslint
+  - echo y | yo rn-toolbox:jest
+  - echo GeneratorTest | yo rn-toolbox:base --force
