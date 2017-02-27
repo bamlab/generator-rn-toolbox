@@ -33,9 +33,12 @@ const Button = props => (
 );
 
 Button.propTypes = {
-  children: PropTypes.string,
+  children: PropTypes.string.isRequired,
   onPress: PropTypes.func,
-  buttonType: PropTypes.string,
+};
+
+Button.defaultProps = {
+  onPress: () => {},
 };
 
 export default Button;

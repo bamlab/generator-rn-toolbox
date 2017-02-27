@@ -26,7 +26,7 @@ type PropsType = {
 };
 
 class Infos extends Component {
-  static navigationOptions  = {
+  static navigationOptions = {
     title: 'Infos',
   };
   props: PropsType;
