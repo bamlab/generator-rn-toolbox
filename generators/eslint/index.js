@@ -7,14 +7,14 @@ class ESLintGenerator extends Base {
 
   install() {
     this.yarnInstall([
-      'babel-core',
-      'babel-eslint',
-      'babel-preset-react-native',
-      'eslint',
-      'eslint-config-airbnb',
-      'eslint-plugin-import',
-      'eslint-plugin-jsx-a11y@3.0.*',
-      'eslint-plugin-react',
+      'babel-core@6.23.1',
+      'babel-eslint@7.1.1',
+      'babel-preset-react-native@1.9.1',
+      'eslint@3.15.0',
+      'eslint-config-airbnb@14.1.0',
+      'eslint-plugin-import@2.2.0',
+      'eslint-plugin-jsx-a11y@3.0.2',
+      'eslint-plugin-react@6.10.0',
     ], {
       dev: true,
       cwd: this.destinationRoot(),

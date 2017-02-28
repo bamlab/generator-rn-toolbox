@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { withNavigation } from '@exponent/ex-navigation';
 
-import Router from '<%= appName %>/src/Router.js';
 import { Page, Button } from '<%= appName %>/src/components';
 import appStyle from '<%= appName %>/src/appStyle';
 
@@ -25,22 +23,18 @@ const styles = StyleSheet.create({
 });
 
 type PropsType = {
-  navigator: any,
+  navigation: any,
 };
 
-@withNavigation
 class Home extends Component {
-  static route = {
-    navigationBar: {
-      title: 'Home',
-    },
-  }
+  static navigationOptions = {
+    title: 'Home',
+  };
+  props: PropsType;
 
   _goToInfos = () => {
-    this.props.navigator.push(Router.getRoute('infos'));
+    this.props.navigation.navigate('infos');
   }
-
-  props: PropsType;
 
   render() {
     return (
@@ -50,18 +44,17 @@ class Home extends Component {
             Welcome to React Native!
           </Text>
           <Text style={styles.instructions}>
-            This is page the home
+            This is the Home page
           </Text>
           <Text style={styles.instructions}>
             Double tap R on your keyboard to reload,{'\n'}
             Shake or press menu button for dev menu
           </Text>
-          <Button onPress={this._goToInfos}>Go to the Info page</Button>
+          <Button onPress={this._goToInfos}>Go to the Infos page</Button>
         </View>
       </Page>
     );
   }
 }
-
 
 export default Home;

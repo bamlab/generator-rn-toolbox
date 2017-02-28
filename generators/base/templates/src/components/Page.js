@@ -23,7 +23,7 @@ const Page = props => (
 );
 
 Page.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   noMargin: PropTypes.bool,
   noNavBar: PropTypes.bool,
   backgroundColor: PropTypes.string,

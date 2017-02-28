@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 
 import appStyle from '<%= appName %>/src/appStyle';
@@ -27,12 +27,6 @@ const styles = StyleSheet.create({
 });
 
 class Button extends PureComponent {
-  static defaultProps: PropsTypes = {
-    children: null,
-    onPress: () => {},
-  };
-
-  props: PropsTypes;
   render() {
     return (
       <TouchableOpacity onPress={this.props.onPress} style={styles.container}>
@@ -44,9 +38,13 @@ class Button extends PureComponent {
   }
 }
 
-type PropsTypes = {
-  children: string,
-  onPress: () => void,
+Button.propTypes = {
+  children: PropTypes.string.isRequired,
+  onPress: PropTypes.func,
+};
+
+Button.defaultProps = {
+  onPress: () => {},
 };
 
 export default Button;

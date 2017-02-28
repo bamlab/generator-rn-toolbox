@@ -1,6 +1,14 @@
-import React from 'react';
-import Scenes from './Scenes';
+import { StackNavigator } from 'react-navigation';
 
-const App = () => (<Scenes />);
+import * as Pages from '<%= appName %>/src/pages';
 
-export default App;
+export default StackNavigator({
+  home: {
+    screen: Pages.Home,
+  },
+  infos: {
+    screen: Pages.Infos,
+  },
+}, {
+  initialRouteName: 'home',
+});

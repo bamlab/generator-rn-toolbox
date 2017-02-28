@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { withNavigation } from '@exponent/ex-navigation';
 import { Page } from '<%= appName %>/src/components';
 import appStyle from '<%= appName %>/src/appStyle';
 
@@ -23,15 +22,12 @@ const styles = StyleSheet.create({
 });
 
 type PropsType = {
-  navigator: any,
+  navigation: any,
 };
 
-@withNavigation
 class Infos extends Component {
-  static route = {
-    navigationBar: {
-      title: 'Infos',
-    },
+  static navigationOptions = {
+    title: 'Infos',
   };
   props: PropsType;
 
@@ -40,7 +36,7 @@ class Infos extends Component {
       <Page>
         <View style={styles.container}>
           <Text style={styles.welcome}>
-            This is the Infos Page
+            This is the Infos page
           </Text>
           <Text style={styles.instructions}>
             It means you have a working router
