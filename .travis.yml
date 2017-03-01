@@ -1,9 +1,12 @@
 language: node_js
 node_js:
   - "6"
+branches:
+  only: 
+    - master
 install:
   # Install React Native, Yarn and Yoeman:
-  - npm install -g react-native-cli yarn yo
+  - npm install -g react-native-cli yo
   - npm link
   # Create a new project and apply generators:
   - react-native init GeneratorTest
