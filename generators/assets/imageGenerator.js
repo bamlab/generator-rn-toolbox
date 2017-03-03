@@ -79,7 +79,7 @@ const resizeImage = (srcPath, destinationPath, width, givenHeight) => {
 
   const directory = path.dirname(destinationPath);
   if (!fs.existsSync(directory)) {
-    fs.mkdirSync(directory);
+    fs.mkdirpSync(directory);
   }
 
   const maxSize = Math.max(width, height);
@@ -117,11 +117,11 @@ const generateIosIcons = (iconSource, iosIconFolder) =>
   ));
 
 
-const generateAndroidIcons = iconSource =>
+const generateAndroidIcons = (iconSource, outputPath) =>
   Promise.all(androidIconSizes.map(size =>
     resizeImage(
       iconSource,
-      `android/app/src/main/res/mipmap-${size.density}/ic_launcher.png`,
+      `${outputPath}/android/app/src/main/res/mipmap-${size.density}/ic_launcher.png`,
       size.value
     )
   ));
@@ -136,21 +136,21 @@ const generateIosSplashScreen = (splashSource, iosSplashFolder) =>
     )
   ));
 
-const generateAndroidSplashScreen = splashSource =>
+const generateAndroidSplashScreen = (splashSource, outputPath) =>
   androidSplashSizes.map(size =>
     resizeImage(
       splashSource,
-      `android/app/src/main/res/drawable-${size.density}/launch_screen.png`,
+      `${outputPath}/android/app/src/main/res/drawable-${size.density}/launch_screen.png`,
       size.width,
       size.height
     )
   );
 
-const generateAndroidNotificationIcons = iconSource =>
+const generateAndroidNotificationIcons = (iconSource, outputPath) =>
   androidNotificationIconSizes.map(size =>
     resizeImage(
       iconSource,
-      `android/app/src/main/res/mipmap-${size.density}/ic_notification.png`,
+      `${outputPath}/android/app/src/main/res/mipmap-${size.density}/ic_notification.png`,
       size.value
     )
   );
