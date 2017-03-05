@@ -12,7 +12,7 @@ brew install imagemagick
 ```
 
 ## Generate icons
-You'll need an image for your icon with a size of more than **192x192 px** (psd is supported).
+You'll need a **square** image for your icon with a size of more than **192x192 px** (psd is supported).
 
 Then run:
 ```
