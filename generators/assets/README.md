@@ -1,6 +1,10 @@
 # Assets setup
 
-You need `imagemagick` installed to use this generator.
+## Requirements
+
+- You need node >= 6 installed (using [NVM](https://github.com/creationix/nvm) is recommended)
+- Install the generator `npm install -g yo generator-rn-toolbox`
+- You need `imagemagick` installed to use this generator.
 
 On a mac, you can install it with `brew`:
 ```
