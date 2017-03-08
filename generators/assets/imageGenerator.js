@@ -117,11 +117,11 @@ const generateIosIcons = (iconSource, iosIconFolder) =>
   ));
 
 
-const generateAndroidIcons = (iconSource, outputPath) =>
+const generateAndroidIcons = iconSource =>
   Promise.all(androidIconSizes.map(size =>
     resizeImage(
       iconSource,
-      `${outputPath}/android/app/src/main/res/mipmap-${size.density}/ic_launcher.png`,
+      `android/app/src/main/res/mipmap-${size.density}/ic_launcher.png`,
       size.value
     )
   ));
@@ -136,21 +136,21 @@ const generateIosSplashScreen = (splashSource, iosSplashFolder) =>
     )
   ));
 
-const generateAndroidSplashScreen = (splashSource, outputPath) =>
+const generateAndroidSplashScreen = splashSource =>
   androidSplashSizes.map(size =>
     resizeImage(
       splashSource,
-      `${outputPath}/android/app/src/main/res/drawable-${size.density}/launch_screen.png`,
+      `android/app/src/main/res/drawable-${size.density}/launch_screen.png`,
       size.width,
       size.height
     )
   );
 
-const generateAndroidNotificationIcons = (iconSource, outputPath) =>
+const generateAndroidNotificationIcons = iconSource =>
   androidNotificationIconSizes.map(size =>
     resizeImage(
       iconSource,
-      `${outputPath}/android/app/src/main/res/mipmap-${size.density}/ic_notification.png`,
+      `android/app/src/main/res/mipmap-${size.density}/ic_notification.png`,
       size.value
     )
   );
