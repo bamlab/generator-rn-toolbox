@@ -28,9 +28,9 @@ class ResourcesGenerator extends Base {
     this.option('store', {
       desc: 'Generate Stores assets',
     });
-    this.option('outputPath', {
+    this.option('projectName', {
       type: asset => asset,
-      desc: 'Override output path',
+      desc: 'Name of your react-native project',
     });
   }
 
@@ -40,6 +40,12 @@ class ResourcesGenerator extends Base {
 
   prompting() {
     const config = this.fs.readJSON(this.destinationPath('package.json'));
+
+    if (this.options.projectName) {
+      this.projectName = this.options.projectName;
+      return Promise.resolve();
+    }
+
     return this.prompt([{
       type: 'input',
       name: 'projectName',
@@ -47,7 +53,7 @@ class ResourcesGenerator extends Base {
       required: true,
       default: config.name,
     }]).then((answers) => {
-      this.answers = answers;
+      this.projectName = answers.projectName;
     });
   }
 
@@ -88,7 +94,7 @@ class ResourcesGenerator extends Base {
   _setupIosIcons() {
     if (!this.ios || !this.options.icon) return null;
 
-    const iosIconFolder = `${this.options.outputPath}/ios/${this.answers.projectName}/Images.xcassets/AppIcon.appiconset`;
+    const iosIconFolder = `ios/${this.projectName}/Images.xcassets/AppIcon.appiconset`;
 
     this.fs.copyTpl(
       this.templatePath('ios/AppIconsetContents.json'),
@@ -100,26 +106,25 @@ class ResourcesGenerator extends Base {
 
   _setupAndroidIcons() {
     if (!this.android || !this.options.icon) return null;
-    return imageGenerator.generateAndroidIcons(this.options.icon, this.options.outputPath);
+    return imageGenerator.generateAndroidIcons(this.options.icon);
   }
 
   _setupAndroidNotificationIcons() {
     if (!this.options['android-notification-icon']) return null;
     return imageGenerator.generateAndroidNotificationIcons(
-      this.options['android-notification-icon'],
-      this.options.outputPath
+      this.options['android-notification-icon']
     );
   }
 
   _setupIosSplashScreen() {
     if (!this.ios || !this.options.splash) return null;
 
-    const iosSplashFolder = `${this.options.outputPath}/ios/${this.answers.projectName}/Images.xcassets/LaunchImage.launchimage`;
+    const iosSplashFolder = `$ios/${this.projectName}/Images.xcassets/LaunchImage.launchimage`;
 
     this.fs.copyTpl(this.templatePath('ios/LaunchImageLaunchimageContents.json'), `${iosSplashFolder}/Contents.json`);
 
     const pbxprojPath = this.destinationPath(
-      `${this.options.outputPath}/ios/${this.answers.projectName}.xcodeproj/project.pbxproj`
+      `ios/${this.projectName}.xcodeproj/project.pbxproj`
     );
     this.fs.write(
       pbxprojPath,
@@ -130,7 +135,7 @@ class ResourcesGenerator extends Base {
       )
     );
 
-    const plistPath = this.destinationPath(`${this.options.outputPath}/ios/${this.answers.projectName}/Info.plist`);
+    const plistPath = this.destinationPath(`ios/${this.projectName}/Info.plist`);
     this.fs.write(
       plistPath,
       this.fs
@@ -147,23 +152,23 @@ class ResourcesGenerator extends Base {
 
     const getTopLeftPixelColor = getPixelColor(this.options.splash, 1, 1);
 
-    return getTopLeftPixelColor.then(splashBackgroundColor => {
+    return getTopLeftPixelColor.then((splashBackgroundColor) => {
       this.fs.copyTpl(
         this.templatePath('android/colors.xml'),
-        `${this.options.outputPath}/android/app/src/main/res/values/colors.xml`,
+        'android/app/src/main/res/values/colors.xml',
         { splashBackgroundColor }
       );
       this.fs.copyTpl(
         this.templatePath('android/launch_screen_bitmap.xml'),
-        `${this.options.outputPath}/android/app/src/main/res/drawable/launch_screen_bitmap.xml`
+        'android/app/src/main/res/drawable/launch_screen_bitmap.xml'
       );
 
       this.fs.copyTpl(
         this.templatePath('android/styles.xml'),
-        `${this.options.outputPath}/android/app/src/main/res/values/styles.xml`
+        'android/app/src/main/res/values/styles.xml'
       );
 
-      return imageGenerator.generateAndroidSplashScreen(this.options.splash, this.options.outputPath);
+      return imageGenerator.generateAndroidSplashScreen(this.options.splash);
     });
   }
 
