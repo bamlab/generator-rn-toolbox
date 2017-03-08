@@ -2,6 +2,7 @@ const fs = require('fs');
 const Base = require('yeoman-generator');
 const imageGenerator = require('./imageGenerator');
 const getPixelColor = require('./getPixelColor');
+require('colors');
 
 class ResourcesGenerator extends Base {
   constructor(...args) {
@@ -39,11 +40,16 @@ class ResourcesGenerator extends Base {
   }
 
   prompting() {
-    const config = this.fs.readJSON(this.destinationPath('package.json'));
-
     if (this.options.projectName) {
       this.projectName = this.options.projectName;
       return Promise.resolve();
+    }
+
+    const config = this.fs.readJSON(this.destinationPath('package.json'));
+
+    if (!config) {
+      this.log.error('Could not read \'package.json\' from current directory. Are you inside a React Native project?'.red);
+      process.exit(1);
     }
 
     return this.prompt([{
