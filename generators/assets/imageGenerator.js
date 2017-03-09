@@ -1,6 +1,10 @@
 const gm = require('gm').subClass({ imageMagick: true });
 const fs = require('fs-extra');
 const path = require('path');
+const Promise = require('bluebird');
+require('colors');
+
+Promise.promisifyAll(gm.prototype);
 
 /* eslint-disable no-multi-spaces */
 const iosIconSizes = [
@@ -74,7 +78,28 @@ const playStoreImageSize =
 ;
 /* eslint-enable no-multi-spaces */
 
-const resizeImage = (srcPath, destinationPath, width, givenHeight) => {
+const getResizedImageGraphic = (sourcePath, width, height) => {
+  const maxSize = Math.max(width, height);
+
+  return gm(path.normalize(sourcePath)).resize(maxSize, maxSize)
+    .gravity('center')
+    .crop(
+      width,
+      height,
+      height > width ? ((height - width) / 2) : 0,
+      width > height ? ((width - height) / 2) : 0
+    );
+};
+
+const checkImageIsSquare = sourcePath =>
+  gm(path.normalize(sourcePath)).sizeAsync().then((size) => {
+    if (size.width !== size.height) {
+      console.log('Please use a square image'.red);
+      process.exit(1);
+    }
+  });
+
+const generateResizedAssets = (sourcePath, destinationPath, width, givenHeight) => {
   const height = givenHeight || width;
 
   const directory = path.dirname(destinationPath);
@@ -82,33 +107,19 @@ const resizeImage = (srcPath, destinationPath, width, givenHeight) => {
     fs.mkdirpSync(directory);
   }
 
-  const maxSize = Math.max(width, height);
+  const psdSafeSourcePath = `${sourcePath}${sourcePath.split('.').pop() === 'psd' ? '[0]' : ''}`;
 
-  return new Promise((resolve, reject) => {
-    gm(`${srcPath}${srcPath.split('.').pop() === 'psd' ? '[0]' : ''}`)
-      .resize(maxSize, maxSize)
-      .gravity('center')
-      .crop(
-        width,
-        height,
-        height > width ? ((height - width) / 2) : 0,
-        width > height ? ((width - height) / 2) : 0
-      )
-      .write(destinationPath, (err) => {
-        if (err) {
-          console.log(err);
-          return reject(err);
-        }
-        console.log(`Wrote ${destinationPath}`);
-        return resolve();
-      });
-  });
+  return checkImageIsSquare(psdSafeSourcePath)
+    .then(() => getResizedImageGraphic(psdSafeSourcePath, width, height)
+      .writeAsync(path.normalize(destinationPath))
+      .then(() => console.log(`Wrote ${destinationPath}`))
+    );
 };
 
 const generateIosIcons = (iconSource, iosIconFolder) =>
   Promise.all(iosIconSizes.map(size =>
     Promise.all(size.multipliers.map(multiplier =>
-      resizeImage(
+      generateResizedAssets(
         iconSource,
         `${iosIconFolder}/icon-${size.size}@${multiplier}x.png`,
         size.size * multiplier
@@ -119,7 +130,7 @@ const generateIosIcons = (iconSource, iosIconFolder) =>
 
 const generateAndroidIcons = iconSource =>
   Promise.all(androidIconSizes.map(size =>
-    resizeImage(
+    generateResizedAssets(
       iconSource,
       `android/app/src/main/res/mipmap-${size.density}/ic_launcher.png`,
       size.value
@@ -128,7 +139,7 @@ const generateAndroidIcons = iconSource =>
 
 const generateIosSplashScreen = (splashSource, iosSplashFolder) =>
   Promise.all(iosSplashSizes.map(size =>
-    resizeImage(
+    generateResizedAssets(
       splashSource,
       `${iosSplashFolder}/${size.name}.png`,
       size.width,
@@ -138,7 +149,7 @@ const generateIosSplashScreen = (splashSource, iosSplashFolder) =>
 
 const generateAndroidSplashScreen = splashSource =>
   androidSplashSizes.map(size =>
-    resizeImage(
+    generateResizedAssets(
       splashSource,
       `android/app/src/main/res/drawable-${size.density}/launch_screen.png`,
       size.width,
@@ -148,7 +159,7 @@ const generateAndroidSplashScreen = splashSource =>
 
 const generateAndroidNotificationIcons = iconSource =>
   androidNotificationIconSizes.map(size =>
-    resizeImage(
+    generateResizedAssets(
       iconSource,
       `android/app/src/main/res/mipmap-${size.density}/ic_notification.png`,
       size.value
@@ -156,13 +167,13 @@ const generateAndroidNotificationIcons = iconSource =>
   );
 
 const generatePlayStoreIcon = iconSource =>
-  resizeImage(iconSource, playStoreIconSize.name, playStoreIconSize.value);
+  generateResizedAssets(iconSource, playStoreIconSize.name, playStoreIconSize.value);
 
 const generateItunesIcon = iconSource =>
-  resizeImage(iconSource, itunesIconSize.name, itunesIconSize.value);
+  generateResizedAssets(iconSource, itunesIconSize.name, itunesIconSize.value);
 
 const generatePlayStoreImage = iconSource =>
-  resizeImage(
+  generateResizedAssets(
     iconSource,
     playStoreImageSize.name,
     playStoreImageSize.width,
