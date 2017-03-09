@@ -67,7 +67,10 @@ function installBitrise() {
   return helpers.run(path.join(__dirname, 'generators/bitrise'))
   .cd(path.join(__dirname, appName))
   .withOptions({ skipInstall: false })
-  .withPrompts({ reactNativeDirectory: '.' })
+  .withPrompts({
+    reactNativeDirectory: '.',
+    androidProdAppId: 'tech.bam.rntest'
+  })
   .toPromise();
 }
 
