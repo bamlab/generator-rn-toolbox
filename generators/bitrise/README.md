@@ -44,34 +44,36 @@ We recommend creating a bot/machine Github account for this. [See here](https://
 
 If you want to deploy to Android Beta:
 
-1) head over to the [Google Play Developers Console](https://play.google.com/apps/publish)
-2) go to Settings > API Access
+1. head over to the [Google Play Developers Console](https://play.google.com/apps/publish)
+2. go to Settings > API Access
 
 If you already have a `Services accounts` section with an e-mail and a link to see the authorizations, 
 skip to **9**. Else:
-3) if needed, accept the terms and conditions
-4) if needed, click the `Create a project` button
-5) under `Services accounts`, click `Authorize access`
-6) check :
-    * Visibility
-    * Edit store listing, pricing & distribution
-    * Manage Production APKs
-    * Manage Alpha & Beta APKs
-    * Manage Alpha & Beta users
-7) submit
-8) come back to Settings > API Access
-9) under `Services accounts`, click `Show in Google Developers Console`.
-10) click `Create credentials` and `Service account key`.
-11) select `Compute Engine default service account` and JSON
-12) once you validate, your API key should be downloaded on your computer
+
+3. if needed, accept the terms and conditions
+4. if needed, click the `Create a project` button
+5. under `Services accounts`, click `Authorize access`
+6. check :
+  * Visibility
+  * Edit store listing, pricing & distribution
+  * Manage Production APKs
+  * Manage Alpha & Beta APKs
+  * Manage Alpha & Beta users
+7. submit
+8. come back to Settings > API Access
+9. under `Services accounts`, click `Show in Google Developers Console`.
+10. click `Create credentials` and `Service account key`.
+11. select `Compute Engine default service account` and JSON
+12. once you validate, your API key should be downloaded on your computer
 
 Now that you have your API key:
-13) head over to Bitrise, edit your workflow, and go to the `Code signing & Files` section
-14) at the bottom of the page, click `Add another File`
-15) select `Generic file`
-16) enter the unique id `GOOGLE_KEY`
-17) upload the JSON key
-18) save the workflow
+
+13. head over to Bitrise, edit your workflow, and go to the `Code signing & Files` section
+14. at the bottom of the page, click `Add another File`
+15. select `Generic file`
+16. enter the unique id `GOOGLE_KEY`
+17. upload the JSON key
+18. save the workflow
 
 ## 3/ Enjoy :balloon:
 
