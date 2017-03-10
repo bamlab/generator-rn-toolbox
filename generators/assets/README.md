@@ -86,3 +86,11 @@ yo rn-toolbox:assets --splash splash.psd --ios
 ## Hide Splashscreen from JS code
 
 You can use [react-native-splash-screen](https://github.com/crazycodeboy/react-native-splash-screen) for iOS.
+
+## Troubleshooting
+
+- Getting `Error: Command failed: Invalid Parameter - -resize` on **Windows**
+
+Reinstalling ImageMagick with the legacy tools should do the trick: 
+
+![image](https://cloud.githubusercontent.com/assets/4534323/23771735/8f9b8896-0518-11e7-92c0-950dbdef8af0.png)
