@@ -1,11 +1,12 @@
 {
   "name": "generator-rn-toolbox",
-  "version": "2.0.7",
+  "version": "0.0.0-managed-by-semantic-release",
   "description": "React-Native generators to kickstart your project",
   "scripts": {
     "test": "node test.js",
     "lint": "eslint .",
-    "commitmsg": "validate-commit-msg"
+    "commitmsg": "validate-commit-msg",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [
     "yeoman-generator",
@@ -50,6 +51,7 @@
     "jest": "^18.1.0",
     "validate-commit-msg": "^2.11.2",
     "yeoman-environment": "^1.6.6",
-    "yeoman-test": "^1.6.0"
+    "yeoman-test": "^1.6.0",
+    "semantic-release": "^6.3.2"
   }
 }
