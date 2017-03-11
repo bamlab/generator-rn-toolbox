@@ -15,6 +15,10 @@ class BitriseGenerator extends Base {
       message: 'Path to the react native project relative to the root of the repository',
       required: true,
       default: '.',
+    }, {
+      type: 'input',
+      name: 'androidProdAppId',
+      message: 'If you want to upload to Android Beta, enter your applicationId (ie. com.android.test).'
     }]).then((answers) => {
       this.answers = answers;
     });
