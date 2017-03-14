@@ -38,9 +38,6 @@ platform :ios do
       app_name: ENV['IOS_APP_NAME'],
       skip_itc: true
     )
-    match(
-      type: 'development'
-    )
     match()
   end
 
