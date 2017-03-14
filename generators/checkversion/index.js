@@ -7,6 +7,9 @@ class CheckVersionGenerator extends Base {
     return checkVersion()
       .then((isUpdated) => {
         if (!isUpdated) this.log.error('You do not have the latest version of this generator\nIt is recommended to update it using \'npm i -g generator-rn-toolbox\''.bgRed.white.bold);
+      })
+      .catch(() => {
+        this.log.error('Unable to check for updates please check your network'.bgRed.white.bold);
       });
   }
 }

@@ -15,7 +15,13 @@ function fetchVersion() {
 
       response.on('data', (d) => { body += d; });
 
-      response.on('end', () => { resolve(JSON.parse(body)); });
+      response.on('end', () => {
+        try {
+          resolve(JSON.parse(body));
+        } catch (err) {
+          reject('ERROR_ON_FETCH');
+        }
+      });
     });
   });
 }
