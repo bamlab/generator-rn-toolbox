@@ -125,7 +125,7 @@ class ResourcesGenerator extends Base {
   _setupIosSplashScreen() {
     if (!this.ios || !this.options.splash) return null;
 
-    const iosSplashFolder = `$ios/${this.projectName}/Images.xcassets/LaunchImage.launchimage`;
+    const iosSplashFolder = `ios/${this.projectName}/Images.xcassets/LaunchImage.launchimage`;
 
     this.fs.copyTpl(this.templatePath('ios/LaunchImageLaunchimageContents.json'), `${iosSplashFolder}/Contents.json`);
 
@@ -137,7 +137,7 @@ class ResourcesGenerator extends Base {
       this.fs.read(pbxprojPath).replace(
         /ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;/g,
         `ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-                               ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;`
+        ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;`
       )
     );
 
