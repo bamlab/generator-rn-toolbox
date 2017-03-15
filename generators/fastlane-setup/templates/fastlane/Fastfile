@@ -38,7 +38,7 @@ platform :ios do
       app_name: ENV['IOS_APP_NAME'],
       skip_itc: true
     )
-    match()
+    match(shallow_clone: true)
   end
 
   lane :setup_push do
