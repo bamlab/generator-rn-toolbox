@@ -1,7 +1,5 @@
 # React Native Toolbox [![Build Status](https://travis-ci.org/bamlab/generator-rn-toolbox.svg?branch=master)](https://travis-ci.org/bamlab/generator-rn-toolbox) [![NPM downloads](https://img.shields.io/npm/dm/generator-rn-toolbox.svg)](https://www.npmjs.com/package/generator-rn-toolbox)
 
-https://img.shields.io/npm/dm/generator-rn-toolbox.svg
-
 Yeoman generators to kickstart your react-native v0.38+ projects.
 
 *As of now, the way those generators are configured is heavily opinionated and based on our own company needs.*
