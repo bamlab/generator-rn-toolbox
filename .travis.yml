@@ -2,10 +2,11 @@ language: node_js
 node_js:
   - "6"
 branches:
-  only: 
+  only:
     - master
 install:
   # Install React Native, Yarn and Yoeman:
+  - npm install
   - npm install -g react-native-cli yo
   - npm link
   # Create a new project and apply generators:
@@ -14,3 +15,11 @@ install:
   - echo y | yo rn-toolbox:eslint
   - echo y | yo rn-toolbox:jest
   - echo GeneratorTest | yo rn-toolbox:base --force
+  - cd ..
+before_script:
+  - npm prune
+after_success:
+  - npm run semantic-release
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
