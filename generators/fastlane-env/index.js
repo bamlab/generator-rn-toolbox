@@ -39,6 +39,11 @@ class FastlaneEnvGenerator extends Base {
       default: 'myenv',
     }, {
       type: 'input',
+      name: 'githubBranch',
+      message: 'The name of environment Github branch',
+      default: 'staging',
+    }, {
+      type: 'input',
       name: 'companyName',
       message: 'The name of the company which will be publishing this application',
       default: 'My Company',
