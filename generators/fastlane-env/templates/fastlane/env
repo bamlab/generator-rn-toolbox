@@ -12,7 +12,7 @@ IOS_APP_ID='<%= appId %>'
 IOS_TEAM_ID='<%= appleTeamId %>'
 IOS_USER_ID='<%= appleId %>'
 IOS_PLIST_PATH='<%= projectName %>/Info.plist'
-<% if (deploymentPlatform === 'appstore') { %>IOS_ITC_TEAM_NAME=''<% } %>
+<% if (deploymentPlatform === 'appstore') { %>IOS_ITC_TEAM_NAME='<%= itunesTeamName %>'<% } %>
 
 ### IOS MATCH ###
 MATCH_GIT_URL='<%= matchGit %>'
