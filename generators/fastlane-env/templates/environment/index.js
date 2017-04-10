@@ -1,3 +1,3 @@
 module.exports = {
-  ENV: '<% environmentName %>',
+  ENV: '<%= environmentName %>',
 };

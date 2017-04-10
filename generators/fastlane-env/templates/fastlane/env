@@ -34,7 +34,7 @@ ANDROID_APK_PATH='android/app/build/outputs/apk/app-release.apk'
 ANDROID_VERSION_CODE='1'
 ANDROID_VERSION_NAME='1.0.0'
 GRADLE_APP_IDENTIFIER='<%= appId %>'
-GRADLE_APP_NAME='<%= appName %> Staging'
+GRADLE_APP_NAME='<%= appName %>'
 GRADLE_KEYSTORE='<%= lowerCaseProjectName %>.<%= environmentName %>.keystore'
 GRADLE_KEYSTORE_ALIAS='<%= lowerCaseProjectName %>'
 
