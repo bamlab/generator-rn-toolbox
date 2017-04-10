@@ -83,8 +83,10 @@ workflows:
             ./$REACT_NATIVE_DIRECTORY/ios/Pods -> ./$REACT_NATIVE_DIRECTORY/ios/Podfile.lock
             jest/tmp
         - ignore_check_on_paths: |-
-            $HOME/.gradle/caches/*.lock
-            $HOME/.gradle/caches/*.bin
+            $HOME/.gradle/*.lock
+            $HOME/.gradle/*.bin
+            $HOME/.gradle/*.log
+
             ./$REACT_NATIVE_DIRECTORY/android/.gradle/*.lock
             ./$REACT_NATIVE_DIRECTORY/android/.gradle/*.bin
   Pre-production:
@@ -160,8 +162,10 @@ workflows:
             ./$REACT_NATIVE_DIRECTORY/ios/Pods -> ./$REACT_NATIVE_DIRECTORY/ios/Podfile.lock
             jest/tmp
         - ignore_check_on_paths: |-
-            $HOME/.gradle/caches/*.lock
-            $HOME/.gradle/caches/*.bin
+            $HOME/.gradle/*.lock
+            $HOME/.gradle/*.bin
+            $HOME/.gradle/*.log
+
             ./$REACT_NATIVE_DIRECTORY/android/.gradle/*.lock
             ./$REACT_NATIVE_DIRECTORY/android/.gradle/*.bin
   Test:
