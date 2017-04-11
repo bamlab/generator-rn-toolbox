@@ -1,5 +1,16 @@
 require 'dotenv'
 
+# Check Git Status
+
+lane :check_git_status do |options|
+  ensure_git_branch(
+    branch: "#{options[:name]}"
+  )
+  ensure_git_status_clean
+  git_pull
+
+end
+
 # JS Environments
 
 lane :set_js_env do |options|
@@ -94,6 +105,11 @@ platform :ios do
       )
     end
   end
+
+  lane :deploy_local do |options|
+    check_git_status(name: ENV['GITHUB_BRANCH'])
+    deploy
+  end
 end
 
 #  ANDROID
@@ -119,5 +135,10 @@ platform :android do
     if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
       deploy_hockey
     end
+  end
+
+  lane :deploy_local do |options|
+    check_git_status(name: ENV['GITHUB_BRANCH'])
+    deploy
   end
 end

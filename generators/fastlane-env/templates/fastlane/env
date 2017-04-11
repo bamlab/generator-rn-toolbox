@@ -1,6 +1,7 @@
 ### GLOBAL ###
 ENV='<%= environmentName %>'
 DEPLOYMENT_PLATFORM='<%= deploymentPlatform %>'
+GITHUB_BRANCH='<%= githubBranch %>'
 
 ### IOS ###
 IOS_PROJECT_PATH='ios'
@@ -37,4 +38,3 @@ GRADLE_APP_IDENTIFIER='<%= appId %>'
 GRADLE_APP_NAME='<%= appName %>'
 GRADLE_KEYSTORE='<%= lowerCaseProjectName %>.<%= environmentName %>.keystore'
 GRADLE_KEYSTORE_ALIAS='<%= lowerCaseProjectName %>'
-
