@@ -1,7 +1,7 @@
 ### GLOBAL ###
 ENV='<%= environmentName %>'
 DEPLOYMENT_PLATFORM='<%= deploymentPlatform %>'
-GITHUB_BRANCH='<%= githubBranch %>'
+REPO_GIT_BRANCH='<%= repoGitBranch %>'
 
 ### IOS ###
 IOS_PROJECT_PATH='ios'

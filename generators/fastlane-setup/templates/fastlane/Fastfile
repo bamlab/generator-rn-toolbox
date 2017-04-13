@@ -107,7 +107,7 @@ platform :ios do
   end
 
   lane :deploy_local do |options|
-    check_git_status(name: ENV['GITHUB_BRANCH'])
+    check_git_status(name: ENV['REPO_GIT_BRANCH'])
     deploy
   end
 end
@@ -138,7 +138,7 @@ platform :android do
   end
 
   lane :deploy_local do |options|
-    check_git_status(name: ENV['GITHUB_BRANCH'])
+    check_git_status(name: ENV['REPO_GIT_BRANCH'])
     deploy
   end
 end
