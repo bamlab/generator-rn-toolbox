@@ -20,7 +20,7 @@ class BaseGenerator extends Base {
   install() {
     this.yarnInstall([
       'babel-preset-react-native-stage-0',
-      'react-navigation',
+      'react-navigation@1.0.0-beta.8',
     ], { cwd: this.destinationRoot() });
   }
 
