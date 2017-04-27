@@ -3,7 +3,6 @@
   "version": "0.0.0-managed-by-semantic-release",
   "description": "React-Native generators to kickstart your project",
   "scripts": {
-    "test": "node test.js",
     "lint": "eslint .",
     "commitmsg": "validate-commit-msg",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
