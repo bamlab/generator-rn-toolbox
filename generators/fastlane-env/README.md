@@ -25,5 +25,22 @@ bundle exec fastlane ios deploy --env=<myenv>
 bundle exec fastlane android deploy --env=<myenv>
 ```
 
-## Centralizing environment variables
+## More
+
+### Centralizing environment variables
 You might want to share some environment variables accross multiple environments. In order to do so, simply create a `.env` file, remove the variable you want to share in all the environment files and add it in the `.env` one.
+
+Example:
+```
+// .env
+[Add] ANDROID_VERSION_NAME='1.0.0'
+
+// .env.staging
+[Remove] ANDROID_VERSION_NAME='1.0.0'
+
+// .env.prod
+[Remove] ANDROID_VERSION_NAME='1.0.0'
+```
+
+### Adding a new device to the iOS provisioning profiles
+The `ios setup --env=<myenv>` task mentionned above has been setup to allow you to regenerate your certificates in case you add a new device. Just run it again to include the new devices.
