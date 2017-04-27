@@ -19,7 +19,7 @@ const certificatesTypes = [{
 
 class FastlaneEnvGenerator extends Base {
   initializing() {
-    this.composeWith('rn-toolbox:checkversion');
+    // this.composeWith('rn-toolbox:checkversion');
     if (!this.config.get('fastlane')) {
       this.log.error('Running fastlane setup is required to use the environments. You can run it with yo rn-toolbox:fastlane-setup'.red.bold);
     }

@@ -36,7 +36,7 @@ class ResourcesGenerator extends Base {
   }
 
   initializing() {
-    this.composeWith('rn-toolbox:checkversion');
+    // this.composeWith('rn-toolbox:checkversion');
   }
 
   prompting() {

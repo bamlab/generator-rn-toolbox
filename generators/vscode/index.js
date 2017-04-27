@@ -3,7 +3,7 @@ const templateSettings = require('./templates/settings.json');
 
 class VSCodeGenerator extends Base {
   initializing() {
-    this.composeWith('rn-toolbox:checkversion');
+    // this.composeWith('rn-toolbox:checkversion');
   }
 
   prompting() {

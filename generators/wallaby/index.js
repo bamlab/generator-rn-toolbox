@@ -2,7 +2,7 @@ const Base = require('yeoman-generator');
 
 class WallabyGenerator extends Base {
   initializing() {
-    this.composeWith('rn-toolbox:checkversion');
+    // this.composeWith('rn-toolbox:checkversion');
   }
   install() {
     this.yarnInstall([
