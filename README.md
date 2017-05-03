@@ -26,7 +26,8 @@ In an existing React Native project, our generator contains sub-generators that 
 ## Requirements
 
 - [ ] You need `node 6` installed
-- [ ] Ruby > `2.2.3` (and < `2.4`*) with `bundler` installed
+- [ ] Ruby > `2.2.3` (and < `2.4`*)
+- [ ] Bundler installed (`gem install bundler`)
 - [ ] Yeoman installed (`npm i -g yo`)
 - [ ] Yarn installed (`npm i -g yarn`)
 
