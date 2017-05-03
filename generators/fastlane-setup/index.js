@@ -1,4 +1,5 @@
 const Base = require('yeoman-generator');
+require('colors');
 
 class FastlaneGenerator extends Base {
   initializing() {
@@ -46,8 +47,12 @@ class FastlaneGenerator extends Base {
   }
 
   install() {
-    this.spawnCommand('bundle', ['install'], {
+    const bundling = this.spawnCommand('bundle', ['install'], {
       cwd: this.destinationPath(),
+    });
+
+    bundling.on('error', () => {
+      this.log.error('Unable to run bundle install step. Please make sure you have bundler installed (gem install bundler)'.bgRed.white.bold);
     });
   }
 
