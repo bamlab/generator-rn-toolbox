@@ -99,6 +99,10 @@ class FastlaneEnvGenerator extends Base {
       name    : 'keystorePassword',
       message : 'Your keystore password',
       default : randomString.generate(),
+      validate: (input) => {
+        if (input.includes(' ')) return 'No whitespace allowed';
+        return true;
+      },
     }, {
       type    : 'input',
       name    : 'hockeyAppToken',
