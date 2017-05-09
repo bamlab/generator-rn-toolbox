@@ -66,7 +66,7 @@ const iosSplashSizes = [
 ];
 
 const itunesIconSize =
-  { name: 'itunes-icon.png', value: 500 }
+  { name: 'itunes-icon.png', value: 1024 }
 ;
 
 const playStoreIconSize =
