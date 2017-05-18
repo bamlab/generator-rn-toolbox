@@ -1,3 +1,5 @@
+// @flow
+
 import React, { PropTypes } from 'react';
 import { View, StyleSheet } from 'react-native';
 import appStyle from '<%= appName %>/src/appStyle';
