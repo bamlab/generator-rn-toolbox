@@ -47,4 +47,4 @@ The `ios setup --env=<myenv>` task mentionned above has been setup to allow you 
 
 ## Troubleshooting
 
-If 'Cloning GitHub repo' takes too long : the reason might be that you have never initiated connection with GitHub and it is not yet trusted. Enter git clone git@github.com:bamlab/certificates.git and type 'yes' when you are asked if you trust Github.com
+If 'Cloning GitHub repo' takes too long: the reason might be that you have never initiated connection with GitHub and it is not yet trusted. Enter `git clone git@github.com:bamlab/certificates.git` and type 'yes' when you are asked if you trust Github.com
