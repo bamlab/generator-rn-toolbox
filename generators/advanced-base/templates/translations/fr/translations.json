@@ -1,0 +1,30 @@
+{
+  "account": {
+    "logout": "Déconnexion",
+    "title": "Mon compte"
+  },
+  "home": {
+    "text": "Ceci est la page d'accueil",
+    "title": "Accueil"
+  },
+  "landing": {
+    "login": "Déjà un compte ?",
+    "register": "S'inscrire"
+  },
+  "login": {
+    "login": "Connexion",
+    "signup": "Pas encore de compte ?"
+  },
+  "signup": {
+    "signup": "S'inscrire",
+    "title": "Inscription"
+  },
+  "user": {
+    "form": {
+      "email": "Email",
+      "firstname": "Prénom",
+      "lastname": "Nom",
+      "password": "Mot de passe"
+    }
+  }
+}
