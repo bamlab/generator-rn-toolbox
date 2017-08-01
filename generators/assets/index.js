@@ -33,6 +33,11 @@ class ResourcesGenerator extends Base {
       type: asset => asset,
       desc: 'Name of your react-native project',
     });
+    this.option('assetsOutputPath', {
+      type: asset => asset,
+      desc: 'Name of your react-native project',
+      default: '.',
+    });
   }
 
   initializing() {
@@ -100,7 +105,7 @@ class ResourcesGenerator extends Base {
   _setupIosIcons() {
     if (!this.ios || !this.options.icon) return null;
 
-    const iosIconFolder = `ios/${this.projectName}/Images.xcassets/AppIcon.appiconset`;
+    const iosIconFolder = `${this.options.assetsOutputPath}/ios/${this.projectName}/Images.xcassets/AppIcon.appiconset`;
 
     this.fs.copyTpl(
       this.templatePath('ios/AppIconsetContents.json'),
@@ -112,20 +117,21 @@ class ResourcesGenerator extends Base {
 
   _setupAndroidIcons() {
     if (!this.android || !this.options.icon) return null;
-    return imageGenerator.generateAndroidIcons(this.options.icon);
+    return imageGenerator.generateAndroidIcons(this.options.icon, this.options.assetsOutputPath);
   }
 
   _setupAndroidNotificationIcons() {
     if (!this.options['android-notification-icon']) return null;
     return imageGenerator.generateAndroidNotificationIcons(
-      this.options['android-notification-icon']
+      this.options['android-notification-icon'],
+      this.options.assetsOutputPath
     );
   }
 
   _setupIosSplashScreen() {
     if (!this.ios || !this.options.splash) return null;
 
-    const iosSplashFolder = `ios/${this.projectName}/Images.xcassets/LaunchImage.launchimage`;
+    const iosSplashFolder = `${this.options.assetsOutputPath}/ios/${this.projectName}/Images.xcassets/LaunchImage.launchimage`;
 
     this.fs.copyTpl(this.templatePath('ios/LaunchImageLaunchimageContents.json'), `${iosSplashFolder}/Contents.json`);
 
@@ -161,20 +167,23 @@ class ResourcesGenerator extends Base {
     return getTopLeftPixelColor.then((splashBackgroundColor) => {
       this.fs.copyTpl(
         this.templatePath('android/colors.xml'),
-        'android/app/src/main/res/values/colors.xml',
+        `${this.options.assetsOutputPath}/android/app/src/main/res/values/colors.xml`,
         { splashBackgroundColor }
       );
       this.fs.copyTpl(
         this.templatePath('android/launch_screen_bitmap.xml'),
-        'android/app/src/main/res/drawable/launch_screen_bitmap.xml'
+        `${this.options.assetsOutputPath}/android/app/src/main/res/drawable/launch_screen_bitmap.xml`
       );
 
       this.fs.copyTpl(
         this.templatePath('android/styles.xml'),
-        'android/app/src/main/res/values/styles.xml'
+        `${this.options.assetsOutputPath}/android/app/src/main/res/values/styles.xml`
       );
 
-      return imageGenerator.generateAndroidSplashScreen(this.options.splash);
+      return imageGenerator.generateAndroidSplashScreen(
+        this.options.splash,
+        this.options.assetsOutputPath
+      );
     });
   }
 
