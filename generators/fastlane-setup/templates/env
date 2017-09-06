@@ -1,0 +1,16 @@
+# Build number is composed of :
+# 1+ digit for major version number
+# 2 digits for minor version number
+# 2 digits for patch version number
+# 2 digits for the release candidate
+# Example : Version 1.2.39 with build N°5 = Build 1023905
+
+# It is recommended to have
+# IOS_VERSION = ANDROID_VERSION_NAME
+# and
+# IOS_VERSION_BUILD_NUMBER = ANDROID_VERSION_CODE
+
+IOS_VERSION='1.0.0'
+ANDROID_VERSION_NAME='1.0.0'
+IOS_VERSION_BUILD_NUMBER='1000000'
+ANDROID_VERSION_CODE='1000000'

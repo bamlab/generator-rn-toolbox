@@ -30,6 +30,10 @@ class FastlaneGenerator extends Base {
       this.destinationPath('fastlane')
     );
     this.fs.copyTpl(
+      this.templatePath('env'),
+      this.destinationPath('fastlane/.env')
+    );
+    this.fs.copyTpl(
       this.templatePath('environment/*'),
       this.destinationPath('src/environment')
     );
