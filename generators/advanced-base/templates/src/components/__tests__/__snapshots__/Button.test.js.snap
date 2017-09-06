@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button should render the button 1`] = `
+<View
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  collapsable={undefined}
+  hitSlop={undefined}
+  isTVSelectable={true}
+  nativeID={undefined}
+  onLayout={undefined}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+  testID={undefined}
+  tvParallaxProperties={undefined}
+>
+  <View
+    style={
+      Array [
+        Object {
+          "opacity": 1,
+        },
+        Array [
+          Object {
+            "alignSelf": "stretch",
+            "backgroundColor": "#3f51b5",
+            "borderRadius": 5,
+            "height": 40,
+            "justifyContent": "center",
+            "marginVertical": 8,
+            "paddingHorizontal": 8,
+          },
+          undefined,
+        ],
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 14,
+            "fontWeight": "700",
+            "textAlign": "center",
+          },
+          undefined,
+        ]
+      }
+    >
+      HELLO
+    </Text>
+  </View>
+</View>
+`;

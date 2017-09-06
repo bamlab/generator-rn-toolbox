@@ -1,0 +1,30 @@
+{
+  "account": {
+    "logout": "Logout",
+    "title": "Account"
+  },
+  "home": {
+    "text": "This is the home page !",
+    "title": "Home"
+  },
+  "landing": {
+    "login": "Already have an account?",
+    "register": "Register"
+  },
+  "login": {
+    "login": "Login",
+    "signup": "I don't have an account"
+  },
+  "signup": {
+    "signup": "Signup",
+    "title": "Signup"
+  },
+  "user": {
+    "form": {
+      "email": "Email",
+      "firstname": "First name",
+      "lastname": "Last name",
+      "password": "Password"
+    }
+  }
+}
