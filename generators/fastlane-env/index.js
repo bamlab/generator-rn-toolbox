@@ -135,7 +135,7 @@ class FastlaneEnvGenerator extends Base {
     );
     this.fs.copyTpl(
       this.templatePath('environment/index.js'),
-      this.destinationPath(`environment/index.${this.answers.environmentName}.js`),
+      this.destinationPath(`src/environment/index.${this.answers.environmentName}.js`),
       this.answers
     );
   }

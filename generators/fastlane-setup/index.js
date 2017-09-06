@@ -31,7 +31,7 @@ class FastlaneGenerator extends Base {
     );
     this.fs.copyTpl(
       this.templatePath('environment/*'),
-      this.destinationPath('environment')
+      this.destinationPath('src/environment')
     );
     this.fs.copyTpl(
       this.templatePath('Gemfile'),
