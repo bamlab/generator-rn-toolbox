@@ -13,6 +13,7 @@ brew install imagemagick
 
 ## Generate icons
 You'll need a **square** image for your icon with a size of more than **192x192 px** (psd is supported).
+Starting with XCode 9, your Apple App Store icon is bundled with the app, so provide an icon with a size of more than **1024x1024 px** (psd is supported).
 
 Then run:
 ```
