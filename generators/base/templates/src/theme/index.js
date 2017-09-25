@@ -1,19 +1,19 @@
+// @flow
+
 const gridSize = 8;
 
 export default {
-  font: {
-    size: {
-      small: 11,
-      default: 13,
-      big: 15,
-      large: 17,
-      huge: 20,
+  fonts: {
+    header: {
+      fontSize: 20,
+      fontWeight: 'bold',
     },
+    default: {
+      fontSize: 16,
+    }
   },
   colors: {
-    primary: '#05A5D1',
-    lightText: '#FAFAFA',
-    background: '#F5FCFF',
+    oceanBlue: '#05A5D1',
     darkGray: '#333333',
   },
   grid: {

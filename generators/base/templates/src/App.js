@@ -1,14 +1,11 @@
-import { StackNavigator } from 'react-navigation';
+// @flow
 
-import * as Pages from '<%= appName %>/src/pages';
+import React, { Component } from 'react';
 
-export default StackNavigator({
-  home: {
-    screen: Pages.Home,
-  },
-  infos: {
-    screen: Pages.Infos,
-  },
-}, {
-  initialRouteName: 'home',
-});
+import RootNavigation from './RootNavigation';
+
+export default class App extends Component {
+  render() {
+    return (<RootNavigation />);
+  }
+}

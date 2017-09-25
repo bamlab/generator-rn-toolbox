@@ -2,7 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import { View, StyleSheet } from 'react-native';
-import appStyle from '<%= appName %>/src/appStyle';
+import theme from '<%= appName %>/src/theme';
 
 const styles = StyleSheet.create({
   page: {
@@ -12,11 +12,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const Page = props => (
+export default (props: PropsType) => (
   <View
     style={[styles.page, {
-      paddingTop: props.noNavBar ? 0 : appStyle.grid.x2,
-      paddingHorizontal: props.noMargin ? 0 : appStyle.grid.x3,
+      paddingTop: props.noNavBar ? 0 : theme.grid.x2,
+      paddingHorizontal: props.noMargin ? 0 : theme.grid.x3,
       backgroundColor: props.backgroundColor,
     }]}
   >
@@ -24,18 +24,9 @@ const Page = props => (
   </View>
 );
 
-Page.propTypes = {
-  children: PropTypes.node.isRequired,
-  noMargin: PropTypes.bool,
-  noNavBar: PropTypes.bool,
-  backgroundColor: PropTypes.string,
+type PropsType = {
+  children: React$Element<*> | React$Element<*>[],
+  noMargin: boolean,
+  noNavBar: boolean,
+  backgroundColor: string,
 };
-
-Page.defaultProps = {
-  children: null,
-  noMargin: false,
-  noNavBar: false,
-  backgroundColor: appStyle.colors.color,
-};
-
-export default Page;
