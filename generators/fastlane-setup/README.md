@@ -2,11 +2,11 @@
 
 *Fastlane is an amazing tool which allows you to easily build, sign and deploy both your iOS and Android applications.*
 
-***:warning: XCode 8 is required.***
-Run at least once:
-```
-xcode-select --install
-```
+> ***:warning: XCode 8 is required.***
+> Run at least once:
+> ```
+> xcode-select --install
+> ```
 
 **Features**
 - (Almost) No manual setup

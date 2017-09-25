@@ -15,7 +15,7 @@ end
 
 lane :set_js_env do |options|
   backup_file(path: 'environment/index.js')
-  sh "cp ../environment/index.#{ENV['ENV']}.js ../environment/index.js"
+  sh "cp ../src/environment/index.#{ENV['ENV']}.js ../src/environment/index.js"
 end
 
 before_all do |lane, options|
@@ -23,14 +23,14 @@ before_all do |lane, options|
 end
 
 after_all do |lane, options|
-  if File.exist?('../environment/index.js.back')
-    restore_file(path: 'environment/index.js')
+  if File.exist?('../src/environment/index.js.back')
+    restore_file(path: 'src/environment/index.js')
   end
 end
 
 error do |lane, exception, options|
-  if File.exist?('../environment/index.js.back')
-    restore_file(path: 'environment/index.js')
+  if File.exist?('../src/environment/index.js.back')
+    restore_file(path: 'src/environment/index.js')
   end
 end
 
@@ -52,10 +52,12 @@ platform :ios do
     match(
       type: 'development',
       shallow_clone: true,
+      clone_branch_directly: true,
       force_for_new_devices: true
     )
     match(
       shallow_clone: true,
+      clone_branch_directly: true,
       force_for_new_devices: true
     )
   end
@@ -102,7 +104,11 @@ platform :ios do
   end
 
   lane :deploy do |options|
-    setup
+    match(
+      shallow_clone: true,
+      clone_branch_directly: true,
+      readonly: true
+    )
     build
     if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
       deploy_hockey
