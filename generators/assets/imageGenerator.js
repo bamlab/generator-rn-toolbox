@@ -17,6 +17,7 @@ const iosIconSizes = [
   { size: 72,  multipliers: [1, 2] },
   { size: 76,  multipliers: [1, 2] },
   { size: 83.5, multipliers: [2] },
+  { size: 1024, multipliers: [1] },
 ];
 
 const androidIconSizes = [
