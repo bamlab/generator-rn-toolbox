@@ -5,7 +5,7 @@ branches:
   only:
     - master
 install:
-  # Install React Native, Yarn and Yoeman:
+  # Install React Native, Yarn and Yeoman:
   - npm install
   - npm install -g react-native-cli yo
   - npm link
