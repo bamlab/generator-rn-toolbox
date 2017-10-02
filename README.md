@@ -47,3 +47,7 @@ If starting from scratch, use the `react-native init <ProjectName> && cd <Projec
 It is recommended to initiate the git repository right after instantiating the app and to do you first commit.
 
 It is also recommended to do a separate commit after running each of these steps.
+
+## Contributing
+
+See [our contributing guidelines](https://bamlab.github.io/open-source/#contributing)

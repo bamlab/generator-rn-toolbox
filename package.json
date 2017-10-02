@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint .",
     "commitmsg": "validate-commit-msg",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "commit": "git-cz"
   },
   "keywords": [
     "yeoman-generator",
@@ -42,15 +43,22 @@
     "yeoman-generator": "^1.1.0"
   },
   "devDependencies": {
+    "commitizen": "^2.9.6",
     "cross-spawn": "^4.0.2",
+    "cz-conventional-changelog": "^2.0.0",
     "eslint": "^3.15.0",
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-import": "^2.2.0",
     "husky": "^0.13.2",
     "jest": "^18.1.0",
-    "validate-commit-msg": "^2.11.2",
+    "semantic-release": "^6.3.2",
+    "validate-commit-msg": "^2.14.0",
     "yeoman-environment": "^1.6.6",
-    "yeoman-test": "^1.6.0",
-    "semantic-release": "^6.3.2"
+    "yeoman-test": "^1.6.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
