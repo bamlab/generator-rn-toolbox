@@ -20,6 +20,7 @@ end
 
 before_all do |lane, options|
   Dotenv.load(".env.#{ENV['ENV']}.secret")
+  update_fastlane
 end
 
 after_all do |lane, options|
