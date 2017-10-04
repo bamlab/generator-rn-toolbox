@@ -1,4 +1,4 @@
-require 'dotenv'
+fastlane_require 'dotenv'
 
 # Check Git Status
 
