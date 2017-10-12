@@ -14,9 +14,9 @@ function createProject() {
   });
 }
 
-function installEslint() {
-  console.log('## Installing Eslint ##'.cyan);
-  return helpers.run(path.join(__dirname, 'generators/eslint'))
+function installLint() {
+  console.log('## Installing Lint ##'.cyan);
+  return helpers.run(path.join(__dirname, 'generators/lint'))
   .cd(path.join(__dirname, appName))
   .withOptions({ skipInstall: false })
   .toPromise();
@@ -83,7 +83,7 @@ function testProject() {
 }
 
 createProject();
-installEslint()
+installLint()
 .then(installBase)
 .then(installJest)
 .then(installFastlane)
