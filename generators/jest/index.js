@@ -24,7 +24,7 @@ class JestGenerator extends Base {
     this.fs.extendJSON('package.json', {
       scripts: {
         'test:unit': 'jest',
-        test: `${this.config.get('eslint') ? 'npm run test:lint && ' : ''}npm run test:unit`,
+        test: `${this.config.get('lint') ? 'npm run test:lint && ' : ''}npm run test:unit`,
       },
       jest: {
         moduleNameMapper: {

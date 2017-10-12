@@ -19,7 +19,6 @@ class BaseGenerator extends Base {
 
   install() {
     this.yarnInstall([
-      'babel-preset-react-native-stage-0',
       'react-navigation',
     ], { cwd: this.destinationRoot() });
   }
@@ -30,10 +29,6 @@ class BaseGenerator extends Base {
       this.templatePath('**/*.js'),
       this.destinationPath(''),
       this.answers
-    );
-    this.fs.copyTpl(
-      this.templatePath('babelrc'),
-      this.destinationPath('.babelrc')
     );
   }
 
