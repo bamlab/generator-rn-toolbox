@@ -1,23 +1,22 @@
 const Base = require('yeoman-generator');
 
-class ESLintGenerator extends Base {
+class LintGenerator extends Base {
   initializing() {
     this.composeWith('rn-toolbox:checkversion');
   }
 
   install() {
     this.yarnInstall([
-      'babel-core@6.23.1',
-      'babel-eslint@7.1.1',
-      'babel-preset-react-native@1.9.1',
-      'eslint@3.15.0',
-      'eslint-config-airbnb@14.1.0',
-      'eslint-plugin-import@2.2.0',
-      'eslint-plugin-jsx-a11y@3.0.2',
-      'eslint-plugin-react@6.10.0',
+      'prettier',
+      'eslint',
+      'eslint-config-universe',
     ], {
       dev: true,
       cwd: this.destinationRoot(),
+    });
+
+    this.spawnCommand('yarn', ['test:lint', '--', '--fix'], {
+      cwd: this.destinationPath(),
     });
   }
 
@@ -30,15 +29,19 @@ class ESLintGenerator extends Base {
       this.templatePath('eslintignore'),
       this.destinationPath('.eslintignore')
     );
+    this.fs.copyTpl(
+      this.templatePath('prettierrc'),
+      this.destinationPath('.prettierrc')
+    );
     this.fs.extendJSON('package.json', {
       scripts: { 'test:lint': 'eslint . --quiet' },
     }, null, 2);
   }
 
   end() {
-    this.config.set('eslint', true);
+    this.config.set('lint', true);
     this.config.save();
   }
 }
 
-module.exports = ESLintGenerator;
+module.exports = LintGenerator;

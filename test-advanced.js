@@ -15,10 +15,10 @@ function createProject() {
   });
 }
 
-function installEslint() {
-  console.log('## Installing Eslint ##'.cyan);
+function installLint() {
+  console.log('## Installing Linting ##'.cyan);
   return helpers
-    .run(path.join(__dirname, 'generators/eslint'))
+    .run(path.join(__dirname, 'generators/lint'))
     .cd(path.join(__dirname, appName))
     .withOptions({ skipInstall: false })
     .toPromise();

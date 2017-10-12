@@ -9,7 +9,7 @@ Yeoman generators to kickstart your react-native v0.38+ projects.
 In an existing React Native project, our generator contains sub-generators that will help you with:
 
 - Setup
-  - [Eslint](generators/eslint/README.md) -- `yo rn-toolbox:eslint`
+  - [Linting](generators/lint/README.md) -- `yo rn-toolbox:lint`
   - [Base project](generators/base/README.md) -- `yo rn-toolbox:base`
   - [Jest](generators/jest/README.md) -- `yo rn-toolbox:jest`
   - [Fastlane setup for multiple environments](generators/fastlane-setup/README.md) -- `yo rn-toolbox:fastlane-setup`
