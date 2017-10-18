@@ -8,6 +8,9 @@ const deploymentPlatforms = [{
 }, {
   name: 'AppStore',
   value: 'appstore',
+}, {
+  name: 'MobileCenter',
+  value: 'mobilecenter',
 }];
 const certificatesTypes = [{
   name: 'Adhoc',
@@ -67,7 +70,7 @@ class FastlaneEnvGenerator extends Base {
       name: 'certificateType',
       message: 'The type of certificate you will be using',
       choices: certificatesTypes,
-      when: answers => answers.deploymentPlatform === 'hockeyapp',
+      when: answers => ['hockeyapp', 'mobilecenter'].includes(answers.deploymentPlatform),
     }, {
       type    : 'input',
       name    : 'matchGit',
@@ -108,6 +111,16 @@ class FastlaneEnvGenerator extends Base {
       name    : 'hockeyAppToken',
       message : 'A valid HockeyApp token',
       when: answers => answers.deploymentPlatform === 'hockeyapp',
+    }, {
+      type    : 'input',
+      name    : 'mobileCenterToken',
+      message : 'A valid Mobile Center API token',
+      when: answers => answers.deploymentPlatform === 'mobilecenter',
+    }, {
+      type    : 'input',
+      name    : 'mobileCenterUserName',
+      message : 'A valid Mobile Center user name',
+      when: answers => answers.deploymentPlatform === 'mobilecenter',
     }]).then((answers) => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();

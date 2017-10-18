@@ -6,7 +6,8 @@
     "lint": "eslint .",
     "commitmsg": "validate-commit-msg",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "postinstall": "fastlane add_plugin mobile_center"
   },
   "keywords": [
     "yeoman-generator",
