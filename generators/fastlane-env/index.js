@@ -1,5 +1,6 @@
 const Base = require('yeoman-generator');
 const randomString = require('randomstring');
+const { exec } = require('child_process');
 require('colors');
 
 const deploymentPlatforms = [{
@@ -133,6 +134,23 @@ class FastlaneEnvGenerator extends Base {
 
   install() {
     this._createKeystore();
+    if (this.answers.deploymentPlatform === 'mobilecenter') {
+      // Install Mobile Center Fastlane Plugin
+      exec('fastlane add_plugin mobile_center', (err, stdout, stderr) => {
+        this.log(`stdout: ${stdout}`);
+        if (err) {
+          // Error while instaling the mobile center fastlane plugin
+          this.log(`stderr: ${stderr}`);
+          this.log.error(
+            'There was an error while installing the Mobile Center Fastlane plugin. Please install it manually with `fastlane add_plugin mobile_center`'
+          );
+        }
+      });
+      // Install Mobile Center npm libraries
+      this.yarnInstall(['mobile-center', 'mobile-center-analytics', 'mobile-center-crashes'], {
+        cwd: this.destinationRoot(),
+      });
+    }
   }
 
   writing() {
