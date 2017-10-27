@@ -51,3 +51,14 @@ It is also recommended to do a separate commit after running each of these steps
 ## Contributing
 
 See [our contributing guidelines](https://bamlab.github.io/open-source/#contributing)
+
+### Local development
+
+To run the generator with your local version:
+```shell
+git clone https://github.com/bamlab/generator-rn-toolbox.git
+cd generator-rn-toolbox
+npm link
+```
+
+When you're done, you can run `npm unlink` to stop using your local version.
