@@ -55,6 +55,8 @@ const androidNotificationIconSizes = [
 ];
 
 const iosSplashSizes = [
+  { name: "Default-Portrait-812h@3x", width: 1125, height: 2436 },
+  { name: "Default-Landscape-812h@3x", width: 2436, height: 1125 },
   { name: 'Default-568h@2x',           width: 640,   height: 1136 },
   { name: 'Default-667h@2x',           width: 750,   height: 1334 },
   { name: 'Default-Portrait-736h@3x',  width: 1242,  height: 2208 },
