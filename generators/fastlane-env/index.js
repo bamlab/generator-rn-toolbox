@@ -136,14 +136,12 @@ class FastlaneEnvGenerator extends Base {
     this._createKeystore();
     if (this.answers.deploymentPlatform === 'mobilecenter') {
       // Install Mobile Center Fastlane Plugin
-      exec('fastlane add_plugin mobile_center', (err, stdout, stderr) => {
-        this.log(`stdout: ${stdout}`);
+      const mobileCenter = this.spawnCommand('fastlane', ['add_plugin', 'mobile_center']);
+      mobileCenter.on('exit', (err) => {
         if (err) {
-          // Error while instaling the mobile center fastlane plugin
-          this.log(`stderr: ${stderr}`);
-          this.log.error(
-            'There was an error while installing the Mobile Center Fastlane plugin. Please install it manually with `fastlane add_plugin mobile_center`'
-          );
+          this.log.error('Configuration went well but there was an error while installing the Mobile Center Fastlane plugin. Please install it manually with `fastlane add_plugin mobile_center`');
+        } else {
+          this.emit('nextTask');
         }
       });
       // Install Mobile Center npm libraries
