@@ -1,6 +1,5 @@
 const Base = require('yeoman-generator');
 const randomString = require('randomstring');
-const { exec } = require('child_process');
 require('colors');
 
 const deploymentPlatforms = [{
@@ -54,7 +53,7 @@ class FastlaneEnvGenerator extends Base {
     }, {
       type: 'input',
       name: 'appName',
-      message: 'The app name for this environment',
+      message: 'The app name for this environment (no space if using MobileCenter)',
       default: 'My App',
     }, {
       type: 'input',
@@ -120,7 +119,7 @@ class FastlaneEnvGenerator extends Base {
     }, {
       type    : 'input',
       name    : 'mobileCenterUserName',
-      message : 'A valid Mobile Center user name',
+      message : 'A valid Mobile Center username',
       when: answers => answers.deploymentPlatform === 'mobilecenter',
     }]).then((answers) => {
       this.answers = answers;
@@ -135,6 +134,10 @@ class FastlaneEnvGenerator extends Base {
   install() {
     this._createKeystore();
     if (this.answers.deploymentPlatform === 'mobilecenter') {
+      // Install Mobile Center npm libraries
+      this.yarnInstall(['mobile-center', 'mobile-center-analytics', 'mobile-center-crashes'], {
+        cwd: this.destinationRoot(),
+      });
       // Install Mobile Center Fastlane Plugin
       const mobileCenter = this.spawnCommand('fastlane', ['add_plugin', 'mobile_center']);
       mobileCenter.on('exit', (err) => {
@@ -143,10 +146,6 @@ class FastlaneEnvGenerator extends Base {
         } else {
           this.emit('nextTask');
         }
-      });
-      // Install Mobile Center npm libraries
-      this.yarnInstall(['mobile-center', 'mobile-center-analytics', 'mobile-center-crashes'], {
-        cwd: this.destinationRoot(),
       });
     }
   }
