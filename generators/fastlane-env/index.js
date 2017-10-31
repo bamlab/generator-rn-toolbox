@@ -8,6 +8,9 @@ const deploymentPlatforms = [{
 }, {
   name: 'AppStore',
   value: 'appstore',
+}, {
+  name: 'MobileCenter',
+  value: 'mobilecenter',
 }];
 const certificatesTypes = [{
   name: 'Adhoc',
@@ -50,7 +53,7 @@ class FastlaneEnvGenerator extends Base {
     }, {
       type: 'input',
       name: 'appName',
-      message: 'The app name for this environment',
+      message: 'The app name for this environment (no space if using MobileCenter)',
       default: 'My App',
     }, {
       type: 'input',
@@ -67,7 +70,7 @@ class FastlaneEnvGenerator extends Base {
       name: 'certificateType',
       message: 'The type of certificate you will be using',
       choices: certificatesTypes,
-      when: answers => answers.deploymentPlatform === 'hockeyapp',
+      when: answers => ['hockeyapp', 'mobilecenter'].includes(answers.deploymentPlatform),
     }, {
       type    : 'input',
       name    : 'matchGit',
@@ -108,6 +111,16 @@ class FastlaneEnvGenerator extends Base {
       name    : 'hockeyAppToken',
       message : 'A valid HockeyApp token',
       when: answers => answers.deploymentPlatform === 'hockeyapp',
+    }, {
+      type    : 'input',
+      name    : 'mobileCenterToken',
+      message : 'A valid Mobile Center API token',
+      when: answers => answers.deploymentPlatform === 'mobilecenter',
+    }, {
+      type    : 'input',
+      name    : 'mobileCenterUserName',
+      message : 'A valid Mobile Center username',
+      when: answers => answers.deploymentPlatform === 'mobilecenter',
     }]).then((answers) => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
@@ -120,6 +133,21 @@ class FastlaneEnvGenerator extends Base {
 
   install() {
     this._createKeystore();
+    if (this.answers.deploymentPlatform === 'mobilecenter') {
+      // Install Mobile Center npm libraries
+      this.yarnInstall(['mobile-center', 'mobile-center-analytics', 'mobile-center-crashes'], {
+        cwd: this.destinationRoot(),
+      });
+      // Install Mobile Center Fastlane Plugin
+      const mobileCenter = this.spawnCommand('fastlane', ['add_plugin', 'mobile_center']);
+      mobileCenter.on('exit', (err) => {
+        if (err) {
+          this.log.error('Configuration went well but there was an error while installing the Mobile Center Fastlane plugin. Please install it manually with `fastlane add_plugin mobile_center`');
+        } else {
+          this.emit('nextTask');
+        }
+      });
+    }
   }
 
   writing() {

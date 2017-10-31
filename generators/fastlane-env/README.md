@@ -20,6 +20,15 @@ bundle exec fastlane ios setup --env=<myenv>
   - Head to [iTunes Connect](https://itunesconnect.apple.com/)
   - Create a new app using the app id you provided
 
+### 4. Visual Studio Mobile Center Setup (MobileCenter Deployment only)
+
+Mobile Center is the successor of HockeyApp.
+
+- Create an account on mobile.azure.com
+- Get your username at the bottom left of the welcome screen
+- Follow the steps to get a working [API Token](https://docs.microsoft.com/en-us/mobile-center/api-docs/)
+- Choose `MobileCenter` as deployment method in this generator
+
 ### 4. Deploy your app
 ***:warning: Automatic Play Store deployment is not yet available (PR welcome!)***
 ```

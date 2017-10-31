@@ -24,8 +24,9 @@ GYM_SCHEME='<%= projectName %>'
 GYM_OUTPUT_DIRECTORY='dist'
 GYM_OUTPUT_NAME='app.ipa'
 
-### IOS HOCKEY APP ###
+### IOS HOCKEY APP AND MOBILE CENTER ###
 IOS_IPA_PATH='./dist/app.ipa'
+<% if (deploymentPlatform === 'mobilecenter') { %>MOBILE_CENTER_USERNAME='<%= mobileCenterUserName %>'<% } %>
 
 ### ANDROID PROJECT ###
 ANDROID_PROJECT_DIR='android'
