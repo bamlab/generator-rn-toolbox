@@ -51,20 +51,33 @@ class FastlaneEnvGenerator extends Base {
       message: 'The name of the company which will be publishing this application',
       default: 'My Company',
     }, {
+      type: 'list',
+      name: 'deploymentPlatform',
+      message: 'Which platform will you use for deployment?',
+      choices: deploymentPlatforms,
+    }, {
       type: 'input',
       name: 'appName',
-      message: 'The app name for this environment (no space if using MobileCenter)',
+      message: 'The app name for this environment',
       default: 'My App',
+      when: answers => ['hockeyapp', 'appstore'].includes(answers.deploymentPlatform),
+    }, {
+      type: 'input',
+      name: 'appNameIOS',
+      message: 'The iOS app name for this environment. Name should be different from the Android app and not contain spaces',
+      default: 'MyApp-ios',
+      when: answers => answers.deploymentPlatform === 'mobilecenter',
+    }, {
+      type: 'input',
+      name: 'appNameAndroid',
+      message: 'The Android app name for this environment. Name should be different from the iOS app and not contain spaces',
+      default: 'MyApp-android',
+      when: answers => answers.deploymentPlatform === 'mobilecenter',
     }, {
       type: 'input',
       name: 'appId',
       message: 'The App Id for this environment',
       default: answers => `com.${answers.companyName.toLowerCase().replace(' ', '')}.${answers.projectName}.${answers.environmentName}`,
-    }, {
-      type: 'list',
-      name: 'deploymentPlatform',
-      message: 'Which platform will you use for deployment?',
-      choices: deploymentPlatforms,
     }, {
       type: 'list',
       name: 'certificateType',
