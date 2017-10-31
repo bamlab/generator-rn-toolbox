@@ -5,7 +5,8 @@ REPO_GIT_BRANCH='<%= repoGitBranch %>'
 
 ### IOS ###
 IOS_PROJECT_PATH='ios'
-IOS_APP_NAME='<%= appName %>'
+<% if (deploymentPlatform !== 'mobilecenter') { %>IOS_APP_NAME='<%= appName %>'<% } %>
+<% if (deploymentPlatform === 'mobilecenter') { %>IOS_APP_NAME='<%= appNameIOS %>'<% } %>
 IOS_PROJECT_NAME='<%= projectName %>'
 IOS_APP_ID='<%= appId %>'
 IOS_TEAM_ID='<%= appleTeamId %>'
@@ -32,6 +33,7 @@ IOS_IPA_PATH='./dist/app.ipa'
 ANDROID_PROJECT_DIR='android'
 ANDROID_APK_PATH='android/app/build/outputs/apk/app-release.apk'
 GRADLE_APP_IDENTIFIER='<%= appId %>'
-GRADLE_APP_NAME='<%= appName %>'
+<% if (deploymentPlatform !== 'mobilecenter') { %>GRADLE_APP_NAME='<%= appName %>'<% } %>
+<% if (deploymentPlatform === 'mobilecenter') { %>GRADLE_APP_NAME='<%= appNameAndroid %>'<% } %>
 GRADLE_KEYSTORE='<%= lowerCaseProjectName %>.<%= environmentName %>.keystore'
 GRADLE_KEYSTORE_ALIAS='<%= lowerCaseProjectName %>'
