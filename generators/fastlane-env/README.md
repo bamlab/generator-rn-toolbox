@@ -53,3 +53,9 @@ bundle exec fastlane android deploy --env=<myenv>
 > ### 'Cloning GitHub repo' takes too long:
 >
 > The reason might be that you have never initiated connection with GitHub and it is not yet trusted. Enter `git clone git@github.com:bamlab/certificates.git` and type 'yes' when you are asked if you trust Github.com
+
+> ### The provisioning profile doesn't match the bundle ID:
+>
+> If you did setup your environment using the correct provisioning profile but you have this error showing the wrong provisioning profile :
+> The reason might be that your xcode is opened and blocking the update of the provisioning profile in use. Try quitting xcode.
+> The reason might be that you have PRODUCT_BUNDLE_IDENTIFIER specified for release in your pbxproj and fastlane can't override it. Delete the line from your pbxproj
