@@ -19,7 +19,6 @@ In an existing React Native project, our generator contains sub-generators that 
   - [Visual Studio Code](generators/vscode/README.md) -- `yo rn-toolbox:vscode`
 - Continuous integration / deployment
   - [TravisCI](generators/travisci/README.md) -- `yo rn-toolbox:travisci`
-  - [CircleCI](generators/circleci/README.md) -- `yo rn-toolbox:circleci`
   - [Bitrise for continuous deployment](generators/bitrise/README.md) -- `yo rn-toolbox:bitrise`
 
 ## Requirements
