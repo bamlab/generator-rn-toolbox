@@ -1,6 +1,6 @@
 # React Native Toolbox [![Build Status](https://travis-ci.org/bamlab/generator-rn-toolbox.svg?branch=master)](https://travis-ci.org/bamlab/generator-rn-toolbox) [![NPM downloads](https://img.shields.io/npm/dm/generator-rn-toolbox.svg)](https://www.npmjs.com/package/generator-rn-toolbox) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
-Yeoman generators to kickstart your react-native v0.38+ projects.
+Yeoman generators to kickstart your react-native v0.48+ projects.
 
 *As of now, the way those generators are configured is heavily opinionated and based on our own company needs.*
 
@@ -17,10 +17,8 @@ In an existing React Native project, our generator contains sub-generators that 
   - [Icons and Splashscreen generation](generators/assets/README.md) -- `yo rn-toolbox:assets [--icon | --splash] <path>`
 - Environment
   - [Visual Studio Code](generators/vscode/README.md) -- `yo rn-toolbox:vscode`
-  - [Wallaby.js](generators/wallaby/README.md) -- `yo rn-toolbox:wallaby`
 - Continuous integration / deployment
   - [TravisCI](generators/travisci/README.md) -- `yo rn-toolbox:travisci`
-  - [CircleCI](generators/circleci/README.md) -- `yo rn-toolbox:circleci`
   - [Bitrise for continuous deployment](generators/bitrise/README.md) -- `yo rn-toolbox:bitrise`
 
 ## Requirements
@@ -29,7 +27,7 @@ In an existing React Native project, our generator contains sub-generators that 
 - [ ] Ruby > `2.2.3`
 - [ ] Bundler installed (`gem install bundler`)
 - [ ] Yeoman installed (`npm i -g yo`)
-- [ ] Yarn installed (`npm i -g yarn`)
+- [ ] Yarn installed (`brew install yarn`)
 
 ## Usage
 
