@@ -17,7 +17,6 @@ In an existing React Native project, our generator contains sub-generators that 
   - [Icons and Splashscreen generation](generators/assets/README.md) -- `yo rn-toolbox:assets [--icon | --splash] <path>`
 - Environment
   - [Visual Studio Code](generators/vscode/README.md) -- `yo rn-toolbox:vscode`
-  - [Wallaby.js](generators/wallaby/README.md) -- `yo rn-toolbox:wallaby`
 - Continuous integration / deployment
   - [TravisCI](generators/travisci/README.md) -- `yo rn-toolbox:travisci`
   - [CircleCI](generators/circleci/README.md) -- `yo rn-toolbox:circleci`
