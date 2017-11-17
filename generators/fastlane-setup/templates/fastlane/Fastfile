@@ -103,10 +103,10 @@ platform :ios do
     )
   end
 
-  lane :deploy_mobileCenter do |options|
-    mobile_center_upload(
-      api_token: ENV['FL_MOBILE_CENTER_API_TOKEN'],
-      owner_name: ENV['MOBILE_CENTER_USERNAME'],
+  lane :deploy_appCenter do |options|
+    appcenter_upload(
+      api_token: ENV['FL_APPCENTER_API_TOKEN'],
+      owner_name: ENV['APPCENTER_USERNAME'],
       app_name: ENV['IOS_APP_NAME'],
       ipa: ENV['IOS_IPA_PATH']
     )
@@ -121,8 +121,8 @@ platform :ios do
     build
     if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
       deploy_hockey
-    elsif ENV['DEPLOYMENT_PLATFORM'] === 'mobilecenter' then
-      deploy_mobileCenter
+    elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
+      deploy_appCenter
     else
       pilot(
         distribute_external: false,
@@ -155,10 +155,10 @@ platform :android do
     )
   end
 
-  lane :deploy_mobileCenter do |options|
-    mobile_center_upload(
-      api_token: ENV['FL_MOBILE_CENTER_API_TOKEN'],
-      owner_name: ENV['MOBILE_CENTER_USERNAME'],
+  lane :deploy_appCenter do |options|
+    appcenter_upload(
+      api_token: ENV['FL_APPCENTER_API_TOKEN'],
+      owner_name: ENV['APPCENTER_USERNAME'],
       app_name: ENV['GRADLE_APP_NAME'],
       apk: ENV['ANDROID_APK_PATH']
     )
@@ -168,8 +168,8 @@ platform :android do
     build
     if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
       deploy_hockey
-    elsif ENV['DEPLOYMENT_PLATFORM'] === 'mobilecenter' then
-      deploy_mobileCenter
+    elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
+      deploy_appCenter
     end
   end
 
