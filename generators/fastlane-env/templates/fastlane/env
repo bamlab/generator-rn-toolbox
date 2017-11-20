@@ -5,8 +5,8 @@ REPO_GIT_BRANCH='<%= repoGitBranch %>'
 
 ### IOS ###
 IOS_PROJECT_PATH='ios'
-<% if (deploymentPlatform !== 'mobilecenter') { %>IOS_APP_NAME='<%= appName %>'<% } %>
-<% if (deploymentPlatform === 'mobilecenter') { %>IOS_APP_NAME='<%= appNameIOS %>'<% } %>
+<% if (deploymentPlatform !== 'appcenter') { %>IOS_APP_NAME='<%= appName %>'<% } %>
+<% if (deploymentPlatform === 'appcenter') { %>IOS_APP_NAME='<%= appNameIOS %>'<% } %>
 IOS_PROJECT_NAME='<%= projectName %>'
 IOS_APP_ID='<%= appId %>'
 IOS_TEAM_ID='<%= appleTeamId %>'
@@ -25,15 +25,15 @@ GYM_SCHEME='<%= projectName %>'
 GYM_OUTPUT_DIRECTORY='dist'
 GYM_OUTPUT_NAME='app.ipa'
 
-### IOS HOCKEY APP AND MOBILE CENTER ###
+### IOS HOCKEY APP AND APP CENTER ###
 IOS_IPA_PATH='./dist/app.ipa'
-<% if (deploymentPlatform === 'mobilecenter') { %>MOBILE_CENTER_USERNAME='<%= mobileCenterUserName %>'<% } %>
+<% if (deploymentPlatform === 'appcenter') { %>APPCENTER_USERNAME='<%= appCenterUsername %>'<% } %>
 
 ### ANDROID PROJECT ###
 ANDROID_PROJECT_DIR='android'
 ANDROID_APK_PATH='android/app/build/outputs/apk/app-release.apk'
 GRADLE_APP_IDENTIFIER='<%= appId %>'
-<% if (deploymentPlatform !== 'mobilecenter') { %>GRADLE_APP_NAME='<%= appName %>'<% } %>
-<% if (deploymentPlatform === 'mobilecenter') { %>GRADLE_APP_NAME='<%= appNameAndroid %>'<% } %>
+<% if (deploymentPlatform !== 'appcenter') { %>GRADLE_APP_NAME='<%= appName %>'<% } %>
+<% if (deploymentPlatform === 'appcenter') { %>GRADLE_APP_NAME='<%= appNameAndroid %>'<% } %>
 GRADLE_KEYSTORE='<%= lowerCaseProjectName %>.<%= environmentName %>.keystore'
 GRADLE_KEYSTORE_ALIAS='<%= lowerCaseProjectName %>'

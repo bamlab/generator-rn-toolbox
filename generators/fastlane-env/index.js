@@ -9,8 +9,8 @@ const deploymentPlatforms = [{
   name: 'AppStore',
   value: 'appstore',
 }, {
-  name: 'MobileCenter',
-  value: 'mobilecenter',
+  name: 'AppCenter',
+  value: 'appcenter',
 }];
 const certificatesTypes = [{
   name: 'Adhoc',
@@ -66,13 +66,13 @@ class FastlaneEnvGenerator extends Base {
       name: 'appNameIOS',
       message: 'The iOS app name for this environment. Name should be different from the Android app and not contain spaces',
       default: 'MyApp-ios',
-      when: answers => answers.deploymentPlatform === 'mobilecenter',
+      when: answers => answers.deploymentPlatform === 'appcenter',
     }, {
       type: 'input',
       name: 'appNameAndroid',
       message: 'The Android app name for this environment. Name should be different from the iOS app and not contain spaces',
       default: 'MyApp-android',
-      when: answers => answers.deploymentPlatform === 'mobilecenter',
+      when: answers => answers.deploymentPlatform === 'appcenter',
     }, {
       type: 'input',
       name: 'appId',
@@ -83,7 +83,7 @@ class FastlaneEnvGenerator extends Base {
       name: 'certificateType',
       message: 'The type of certificate you will be using',
       choices: certificatesTypes,
-      when: answers => ['hockeyapp', 'mobilecenter'].includes(answers.deploymentPlatform),
+      when: answers => ['hockeyapp', 'appcenter'].includes(answers.deploymentPlatform),
     }, {
       type    : 'input',
       name    : 'matchGit',
@@ -126,14 +126,14 @@ class FastlaneEnvGenerator extends Base {
       when: answers => answers.deploymentPlatform === 'hockeyapp',
     }, {
       type    : 'input',
-      name    : 'mobileCenterToken',
-      message : 'A valid Mobile Center API token',
-      when: answers => answers.deploymentPlatform === 'mobilecenter',
+      name    : 'appCenterToken',
+      message : 'A valid App Center API token',
+      when: answers => answers.deploymentPlatform === 'appcenter',
     }, {
       type    : 'input',
-      name    : 'mobileCenterUserName',
-      message : 'A valid Mobile Center username',
-      when: answers => answers.deploymentPlatform === 'mobilecenter',
+      name    : 'appCenterUsername',
+      message : 'A valid App Center Username',
+      when: answers => answers.deploymentPlatform === 'appcenter',
     }]).then((answers) => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
@@ -146,16 +146,16 @@ class FastlaneEnvGenerator extends Base {
 
   install() {
     this._createKeystore();
-    if (this.answers.deploymentPlatform === 'mobilecenter') {
-      // Install Mobile Center npm libraries
-      this.yarnInstall(['mobile-center', 'mobile-center-analytics', 'mobile-center-crashes'], {
+    if (this.answers.deploymentPlatform === 'appcenter') {
+      // Install App Center npm libraries
+      this.yarnInstall(['appcenter', 'appcenter-analytics', 'appcenter-crashes'], {
         cwd: this.destinationRoot(),
       });
-      // Install Mobile Center Fastlane Plugin
-      const mobileCenter = this.spawnCommand('fastlane', ['add_plugin', 'mobile_center']);
-      mobileCenter.on('exit', (err) => {
+      // Install App Center Fastlane Plugin
+      const appCenter = this.spawnCommand('fastlane', ['add_plugin', 'appcenter']);
+      appCenter.on('exit', (err) => {
         if (err) {
-          this.log.error('Configuration went well but there was an error while installing the Mobile Center Fastlane plugin. Please install it manually with `fastlane add_plugin mobile_center`');
+          this.log.error('Configuration went well but there was an error while installing the App Center Fastlane plugin. Please install it manually with `fastlane add_plugin appcenter`');
         } else {
           this.emit('nextTask');
         }
