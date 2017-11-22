@@ -23,7 +23,7 @@ MATCH_TYPE='<%= certificateType %>'
 ### IOS GYM ###
 GYM_SCHEME='<%= projectName %>'
 GYM_OUTPUT_DIRECTORY='dist'
-GYM_OUTPUT_NAME='app.ipa'
+GYM_OUTPUT_NAME='app'
 
 ### IOS HOCKEY APP AND APP CENTER ###
 IOS_IPA_PATH='./dist/app.ipa'
