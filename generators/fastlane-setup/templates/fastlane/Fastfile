@@ -14,7 +14,7 @@ end
 # JS Environments
 
 lane :set_js_env do |options|
-  backup_file(path: 'environment/index.js')
+  backup_file(path: 'src/environment/index.js')
   sh "cp ../src/environment/index.#{ENV['ENV']}.js ../src/environment/index.js"
 end
 
