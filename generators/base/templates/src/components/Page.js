@@ -26,7 +26,7 @@ export default (props: PropsType) => (
 
 type PropsType = {
   children: React$Element<*> | React$Element<*>[],
-  noMargin: boolean,
-  noNavBar: boolean,
-  backgroundColor: string,
+  noMargin?: boolean,
+  noNavBar?: boolean,
+  backgroundColor?: string,
 };
