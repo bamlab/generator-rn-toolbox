@@ -1,6 +1,4 @@
-import { createStore } from 'redux'
+import { createStore } from 'redux';
 import reducers from '<%= appName %>/src/modules/reducers';
 
-export default () => {
-  return createStore(reducers)
-}
+export default () => createStore(reducers);
