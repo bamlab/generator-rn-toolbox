@@ -11,7 +11,8 @@ In an existing React Native project, our generator contains sub-generators that 
 - Setup
   - [Linting](generators/lint/README.md) -- `yo rn-toolbox:lint`
   - [Base project](generators/base/README.md) -- `yo rn-toolbox:base`
-  - [Jest](generators/jest/README.md) -- `yo rn-toolbox:jest`
+  - [Advanced project](generators/advanced-base/README.md) -- `yo rn-toolbox:advanced-base`
+  - [Jest](generators/jest/README.md) -- `yo rn-toolbox:jest`
   - [Fastlane setup for multiple environments](generators/fastlane-setup/README.md) -- `yo rn-toolbox:fastlane-setup`
   - [Fastlane environment instantiation](generators/fastlane-env/README.md) -- `yo rn-toolbox:fastlane-env`
   - [Icons and Splashscreen generation](generators/assets/README.md) -- `yo rn-toolbox:assets [--icon | --splash] <path>`
