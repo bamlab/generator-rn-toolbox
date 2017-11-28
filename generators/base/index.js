@@ -20,6 +20,8 @@ class BaseGenerator extends Base {
   install() {
     this.yarnInstall([
       'react-navigation',
+      'redux',
+      'react-redux',
     ], { cwd: this.destinationRoot() });
   }
 
