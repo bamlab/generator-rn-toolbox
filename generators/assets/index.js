@@ -38,6 +38,16 @@ class ResourcesGenerator extends Base {
       desc: 'Name of your react-native project',
       default: '.',
     });
+    this.option('androidSrcDirectory', {
+      type: asset => asset,
+      desc: 'The directory under `src` to save the assets',
+      default: 'main',
+    });
+    this.option('iosAssetName', {
+      type: asset => asset,
+      desc: 'The name of the asset',
+      default: 'AppIcon',
+    });
   }
 
   initializing() {
@@ -105,7 +115,7 @@ class ResourcesGenerator extends Base {
   _setupIosIcons() {
     if (!this.ios || !this.options.icon) return null;
 
-    const iosIconFolder = `${this.options.assetsOutputPath}/ios/${this.projectName}/Images.xcassets/AppIcon.appiconset`;
+    const iosIconFolder = `${this.options.assetsOutputPath}/ios/${this.projectName}/Images.xcassets/${this.options.iosAssetName}.appiconset`;
 
     this.fs.copyTpl(
       this.templatePath('ios/AppIconsetContents.json'),
@@ -117,7 +127,7 @@ class ResourcesGenerator extends Base {
 
   _setupAndroidIcons() {
     if (!this.android || !this.options.icon) return null;
-    return imageGenerator.generateAndroidIcons(this.options.icon, this.options.assetsOutputPath);
+    return imageGenerator.generateAndroidIcons(this.options.icon, this.options.assetsOutputPath, this.options.androidSrcDirectory);
   }
 
   _setupAndroidNotificationIcons() {
@@ -167,17 +177,17 @@ class ResourcesGenerator extends Base {
     return getTopLeftPixelColor.then((splashBackgroundColor) => {
       this.fs.copyTpl(
         this.templatePath('android/colors.xml'),
-        `${this.options.assetsOutputPath}/android/app/src/main/res/values/colors.xml`,
+        `${this.options.assetsOutputPath}/android/app/src/${this.options.androidSrcDirectory}/res/values/colors.xml`,
         { splashBackgroundColor }
       );
       this.fs.copyTpl(
         this.templatePath('android/launch_screen_bitmap.xml'),
-        `${this.options.assetsOutputPath}/android/app/src/main/res/drawable/launch_screen_bitmap.xml`
+        `${this.options.assetsOutputPath}/android/app/src/${this.options.androidSrcDirectory}/res/drawable/launch_screen_bitmap.xml`
       );
 
       this.fs.copyTpl(
         this.templatePath('android/styles.xml'),
-        `${this.options.assetsOutputPath}/android/app/src/main/res/values/styles.xml`
+        `${this.options.assetsOutputPath}/android/app/src/${this.options.androidSrcDirectory}/res/values/styles.xml`
       );
 
       return imageGenerator.generateAndroidSplashScreen(
