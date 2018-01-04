@@ -26,7 +26,7 @@ Icons have been generated in different sizes and integrated in your project.
 
 ## Generate splashscreens
 
-You'll need a **square** image for your splash with a size of more than **2208x2208 px** (psd is supported).
+You'll need a **square** image for your splash with a size of more than **2208x2208 px** (psd is supported). The image will be cropped, it should be the logo of the app inside a big square with a 30% margin.
 
 ### iOS
 
@@ -47,6 +47,8 @@ Run:
 ```
 yo rn-toolbox:assets --splash splash.psd --android
 ```
+
+In order to set the background color go in YOURPROJECT/android/app/src/main/res/values/colors.xml and put an hexacode instead of the `rgb(0,0,0)`.
 
 You're done! :dancer:
 
