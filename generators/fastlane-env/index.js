@@ -33,7 +33,7 @@ class FastlaneEnvGenerator extends Base {
     return this.prompt([{
       type: 'input',
       name: 'projectName',
-      message: 'Please confirm the project name',
+      message: 'Please confirm the react-native project name (as in react-native-init <PROJECT_NAME>)',
       default: config.name,
     }, {
       type: 'input',
@@ -48,7 +48,7 @@ class FastlaneEnvGenerator extends Base {
     }, {
       type: 'input',
       name: 'companyName',
-      message: 'The name of the company which will be publishing this application',
+      message: 'The name of the company which will be publishing this application (used to generate android Keytore)',
       default: 'My Company',
     }, {
       type: 'list',
