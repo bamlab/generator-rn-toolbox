@@ -192,7 +192,8 @@ class ResourcesGenerator extends Base {
 
       return imageGenerator.generateAndroidSplashScreen(
         this.options.splash,
-        this.options.assetsOutputPath
+        this.options.assetsOutputPath,
+        this.options.androidSrcDirectory
       );
     });
   }
