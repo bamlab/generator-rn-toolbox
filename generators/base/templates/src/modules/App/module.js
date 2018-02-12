@@ -1,3 +1,5 @@
+// @flow
+
 const initialState = {};
 
 // ACTION TYPES

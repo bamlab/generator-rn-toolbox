@@ -7,22 +7,28 @@ class BaseGenerator extends Base {
 
   prompting() {
     const config = this.fs.readJSON(this.destinationPath('package.json'));
-    return this.prompt([{
-      type    : 'input',
-      name    : 'appName',
-      message : 'Your react native app directory name',
-      default : config.name,
-    }]).then((answers) => {
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'appName',
+        message: 'Your react native app directory name',
+        default: config.name
+      }
+    ]).then(answers => {
       this.answers = answers;
     });
   }
 
   install() {
-    this.yarnInstall([
-      'react-navigation',
-      'redux',
-      'react-redux',
-    ], { cwd: this.destinationRoot() });
+    this.yarnInstall(
+      [
+        'react-navigation',
+        'react-navigation-redux-helpers',
+        'redux',
+        'react-redux'
+      ],
+      { cwd: this.destinationRoot() }
+    );
   }
 
   writing() {

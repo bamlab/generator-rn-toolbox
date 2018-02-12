@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { StackNavigator, addNavigationHelpers } from 'react-navigation';
 
 import * as Pages from '<%= appName %>/src/pages';
+import { navListener } from '<%= appName %>/src/modules/Nav/module';
 
 export const AppNavigator = StackNavigator({
   home: {
@@ -20,6 +21,7 @@ class App extends React.Component {
         navigation={addNavigationHelpers({
           dispatch: this.props.dispatch,
           state: this.props.nav,
+          addListener: navListener,
         })}
       />
     );
