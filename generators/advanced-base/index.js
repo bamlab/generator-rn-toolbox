@@ -27,20 +27,26 @@ class BaseGenerator extends Base {
         'react-native-vector-icons',
         'react-native-i18n',
       ],
-      { cwd: this.destinationRoot() },
-      () => {
-        this.spawnCommand('react-native', ['link']);
-      }
-    );
+      { cwd: this.destinationRoot() }
+    ).then(() => {
+      this.spawnCommand('react-native', ['link']);
+    });
   }
 
   writing() {
     this.fs.delete(this.destinationPath('__tests__'));
-    this.fs.copyTpl(this.templatePath('**/*.js'), this.destinationPath(''), this.answers);
+    this.fs.copyTpl(
+      this.templatePath('**/*.js'),
+      this.destinationPath(''),
+      this.answers
+    );
     this.fs.copy(this.templatePath('**/*.json'), this.destinationPath(''));
     this.fs.copy(this.templatePath('**/*.png'), this.destinationPath(''));
     this.fs.copy(this.templatePath('**/*.jpg'), this.destinationPath(''));
-    this.fs.copyTpl(this.templatePath('babelrc'), this.destinationPath('.babelrc'));
+    this.fs.copyTpl(
+      this.templatePath('babelrc'),
+      this.destinationPath('.babelrc')
+    );
   }
 
   end() {
