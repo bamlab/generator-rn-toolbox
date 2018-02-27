@@ -39,7 +39,7 @@ npm install -g yo generator-rn-toolbox
 
 Then follow the docs for any sub-generator listed above in the [features](https://github.com/bamlab/generator-rn-toolbox#features).
 
-If starting from scratch, use the `react-native init <ProjectName> && cd <ProjectName>` command to instantiate your React Native Project (for more [go see the official React Native getting started](https://facebook.github.io/react-native/docs/getting-started.html)).
+If starting from scratch, use the `create-react-native-app <ProjectName> && cd <ProjectName>` command to instantiate your React Native Project (for more [go see the official React Native getting started](https://facebook.github.io/react-native/docs/getting-started.html)).
 
 It is recommended to initiate the git repository right after instantiating the app and to do you first commit.
 
