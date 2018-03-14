@@ -134,7 +134,8 @@ class ResourcesGenerator extends Base {
     if (!this.options['android-notification-icon']) return null;
     return imageGenerator.generateAndroidNotificationIcons(
       this.options['android-notification-icon'],
-      this.options.assetsOutputPath
+      this.options.assetsOutputPath,
+      this.options.androidSrcDirectory
     );
   }
 
