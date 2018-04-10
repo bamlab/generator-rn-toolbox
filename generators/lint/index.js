@@ -6,11 +6,11 @@ class LintGenerator extends Base {
   }
 
   install() {
-    this.yarnInstall(['prettier', 'eslint', 'eslint-config-universe'], {
+    this.yarnInstall(['prettier', 'eslint', 'eslint-config-universe-error'], {
       dev: true,
       cwd: this.destinationRoot(),
     }).then(() => {
-      this.spawnCommand('yarn', ['test:lint', '--', '--fix'], {
+      this.spawnCommand('yarn', ['lint', '--', '--fix'], {
         cwd: this.destinationPath(),
       });
     });
@@ -32,7 +32,7 @@ class LintGenerator extends Base {
     this.fs.extendJSON(
       'package.json',
       {
-        scripts: { 'test:lint': 'eslint . --quiet' },
+        scripts: { lint: 'eslint . --quiet' },
       },
       null,
       2
