@@ -2,37 +2,38 @@
 
 Yeoman generators to kickstart your react-native v0.48+ projects.
 
-*As of now, the way those generators are configured is heavily opinionated and based on our own company needs.*
+_As of now, the way those generators are configured is heavily opinionated and based on our own company needs._
 
 ## Features
 
 In an existing React Native project, our generator contains sub-generators that will help you with:
 
-- Setup
-  - [Linting](generators/lint/README.md) -- `yo rn-toolbox:lint`
-  - [Base project](generators/base/README.md) -- `yo rn-toolbox:base`
-  - [Advanced project](generators/advanced-base/README.md) -- `yo rn-toolbox:advanced-base`
-  - [Jest](generators/jest/README.md) -- `yo rn-toolbox:jest`
-  - [Fastlane setup for multiple environments](generators/fastlane-setup/README.md) -- `yo rn-toolbox:fastlane-setup`
-  - [Fastlane environment instantiation](generators/fastlane-env/README.md) -- `yo rn-toolbox:fastlane-env`
-  - [Icons and Splashscreen generation](generators/assets/README.md) -- `yo rn-toolbox:assets [--icon | --splash] <path>`
-- Environment
-  - [Visual Studio Code](generators/vscode/README.md) -- `yo rn-toolbox:vscode`
-- Continuous integration / deployment
-  - [TravisCI](generators/travisci/README.md) -- `yo rn-toolbox:travisci`
-  - [Bitrise for continuous deployment](generators/bitrise/README.md) -- `yo rn-toolbox:bitrise`
+* Setup
+  * [Linting](generators/lint/README.md) -- `yo rn-toolbox:lint`
+  * [Base project](generators/base/README.md) -- `yo rn-toolbox:base`
+  * [Advanced project](generators/advanced-base/README.md) -- `yo rn-toolbox:advanced-base`
+  * [Jest](generators/jest/README.md) -- `yo rn-toolbox:jest`
+  * [Fastlane setup for multiple environments](generators/fastlane-setup/README.md) -- `yo rn-toolbox:fastlane-setup`
+  * [Fastlane environment instantiation](generators/fastlane-env/README.md) -- `yo rn-toolbox:fastlane-env`
+  * [Icons and Splashscreen generation](generators/assets/README.md) -- `yo rn-toolbox:assets [--icon | --splash] <path>`
+* Environment
+  * [Visual Studio Code](generators/vscode/README.md) -- `yo rn-toolbox:vscode`
+* Continuous integration / deployment
+  * [TravisCI](generators/travisci/README.md) -- `yo rn-toolbox:travisci`
+  * [Bitrise for continuous deployment](generators/bitrise/README.md) -- `yo rn-toolbox:bitrise`
 
 ## Requirements
 
-- [ ] You need `node > 6` installed
-- [ ] Ruby > `2.2.3`
-- [ ] Bundler installed (`gem install bundler`)
-- [ ] Yeoman installed (`npm i -g yo`)
-- [ ] Yarn installed (`brew install yarn`)
+* [ ] You need `node > 6` installed
+* [ ] Ruby > `2.2.3`
+* [ ] Bundler installed (`gem install bundler`)
+* [ ] Yeoman installed (`npm i -g yo`)
+* [ ] Yarn installed (`brew install yarn`)
 
 ## Usage
 
 Install the main `yeoman` generator:
+
 ```
 npm install -g yo generator-rn-toolbox
 ```
@@ -52,6 +53,7 @@ See [our contributing guidelines](https://bamlab.github.io/open-source/#contribu
 ### Local development
 
 To run the generator with your local version:
+
 ```shell
 git clone https://github.com/bamlab/generator-rn-toolbox.git
 cd generator-rn-toolbox
