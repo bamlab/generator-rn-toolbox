@@ -89,4 +89,6 @@ function testProject() {
 }
 
 createProject();
-installBase().then(installJest).then(testProject);
+installBase()
+  .then(installJest)
+  .then(testProject);

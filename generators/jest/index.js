@@ -21,17 +21,25 @@ class JestGenerator extends Base {
         this.destinationPath('__tests__/firstTest.js')
       );
     }
-    this.fs.extendJSON('package.json', {
-      scripts: {
-        'test:unit': 'jest',
-        test: `${this.config.get('lint') ? 'npm run test:lint && ' : ''}npm run test:unit`,
-      },
-      jest: {
-        moduleNameMapper: {
-          '^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$': '<rootDir>/jest/FileStub.js',
+    this.fs.extendJSON(
+      'package.json',
+      {
+        scripts: {
+          'test:unit': 'jest',
+          test: `${
+            this.config.get('lint') ? 'npm run test:lint && ' : ''
+          }npm run test:unit`,
+        },
+        jest: {
+          moduleNameMapper: {
+            '^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$':
+              '<rootDir>/jest/FileStub.js',
+          },
         },
       },
-    }, null, 2);
+      null,
+      2
+    );
   }
 
   end() {

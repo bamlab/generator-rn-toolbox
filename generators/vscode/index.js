@@ -8,12 +8,14 @@ class VSCodeGenerator extends Base {
 
   prompting() {
     const config = this.fs.readJSON(this.destinationPath('package.json'));
-    return this.prompt([{
-      type    : 'input',
-      name    : 'appName',
-      message : 'Your react native app directory name',
-      default : config.name,
-    }]).then((answers) => {
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'appName',
+        message: 'Your react native app directory name',
+        default: config.name,
+      },
+    ]).then(answers => {
       this.answers = answers;
     });
   }
@@ -23,7 +25,10 @@ class VSCodeGenerator extends Base {
       this.destinationPath('jsconfig.json'),
       this.answers
     );
-    this.fs.extendJSON(this.destinationPath('.vscode/settings.json'), templateSettings);
+    this.fs.extendJSON(
+      this.destinationPath('.vscode/settings.json'),
+      templateSettings
+    );
   }
 
   end() {
