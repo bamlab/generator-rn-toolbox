@@ -3,17 +3,11 @@
     "describe": true,
     "it": true
   },
-  "extends": "airbnb-base",
+  "extends": "universe/node",
   "rules": {
     "class-methods-use-this": 0,
     "key-spacing": 0,
     "no-underscore-dangle": 0,
-    "no-console": 0,
-    "comma-dangle": ["error", {
-      "arrays": "always-multiline",
-      "objects": "always-multiline",
-      "imports": "always-multiline",
-      "functions": "never"
-    }]
+    "no-console": 0
   }
 }

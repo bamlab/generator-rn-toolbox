@@ -12,8 +12,8 @@ class BaseGenerator extends Base {
         type: 'input',
         name: 'appName',
         message: 'Your react native app directory name',
-        default: config.name
-      }
+        default: config.name,
+      },
     ]).then(answers => {
       this.answers = answers;
     });
@@ -25,7 +25,7 @@ class BaseGenerator extends Base {
         'react-navigation',
         'react-navigation-redux-helpers',
         'redux',
-        'react-redux'
+        'react-redux',
       ],
       { cwd: this.destinationRoot() }
     );

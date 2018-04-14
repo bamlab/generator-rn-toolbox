@@ -8,17 +8,20 @@ class FastlaneGenerator extends Base {
 
   prompting() {
     const config = this.fs.readJSON(this.destinationPath('package.json'));
-    return this.prompt([{
-      type: 'input',
-      name: 'projectName',
-      message: 'Please confirm the project name',
-      default: config.name,
-    }, {
-      type    : 'confirm',
-      name    : 'commitKeystore',
-      message : 'Commit keystore files?',
-      default : true,
-    }]).then((answers) => {
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'projectName',
+        message: 'Please confirm the project name',
+        default: config.name,
+      },
+      {
+        type: 'confirm',
+        name: 'commitKeystore',
+        message: 'Commit keystore files?',
+        default: true,
+      },
+    ]).then(answers => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
     });
@@ -56,7 +59,10 @@ class FastlaneGenerator extends Base {
     });
 
     bundling.on('error', () => {
-      this.log.error('Unable to run bundle install step. Please make sure you have bundler installed (gem install bundler)'.bgRed.white.bold);
+      this.log.error(
+        'Unable to run bundle install step. Please make sure you have bundler installed (gem install bundler)'
+          .bgRed.white.bold
+      );
     });
   }
 
@@ -81,7 +87,9 @@ class FastlaneGenerator extends Base {
       '$1\n            signingConfig signingConfigs.release$2'
     );
     // Add the signingConfig
-    const gradleSigningTemplate = this.fs.read(this.templatePath('gradleSigning'));
+    const gradleSigningTemplate = this.fs.read(
+      this.templatePath('gradleSigning')
+    );
     config = config.replace(
       /(})(\n\s*buildTypes)/m,
       `$1\n${gradleSigningTemplate}$2`
@@ -97,26 +105,28 @@ class FastlaneGenerator extends Base {
       'applicationId _applicationId'
     );
     // Replace the versionCode
-    config = config.replace(
-      /versionCode .*/,
-      'versionCode _versionCode'
-    );
+    config = config.replace(/versionCode .*/, 'versionCode _versionCode');
     // Replace the versionName
-    config = config.replace(
-      /versionName .*/,
-      'versionName _versionName'
-    );
+    config = config.replace(/versionName .*/, 'versionName _versionName');
     // Add the default params
     config = config.replace(
       /\nandroid {\n/m,
-      `\ndef _applicationId = System.getenv("GRADLE_APP_IDENTIFIER") ?: 'com.${this.answers.lowerCaseProjectName}.debug'\ndef appName = System.getenv("GRADLE_APP_NAME") ?: '${this.answers.projectName} debug'\ndef _versionCode = (System.getenv("ANDROID_VERSION_CODE") ?: "1") as Integer\ndef _versionName = System.getenv("ANDROID_VERSION_NAME") ?: "1.0.0"\n\nandroid {\n`
+      `\ndef _applicationId = System.getenv("GRADLE_APP_IDENTIFIER") ?: 'com.${
+        this.answers.lowerCaseProjectName
+      }.debug'\ndef appName = System.getenv("GRADLE_APP_NAME") ?: '${
+        this.answers.projectName
+      } debug'\ndef _versionCode = (System.getenv("ANDROID_VERSION_CODE") ?: "1") as Integer\ndef _versionName = System.getenv("ANDROID_VERSION_NAME") ?: "1.0.0"\n\nandroid {\n`
     );
     // Output the file
     this.fs.write(this.destinationPath('android/app/build.gradle'), config);
   }
 
   _activateManualSigning() {
-    let config = this.fs.read(this.destinationPath(`ios/${this.answers.projectName}.xcodeproj/project.pbxproj`));
+    let config = this.fs.read(
+      this.destinationPath(
+        `ios/${this.answers.projectName}.xcodeproj/project.pbxproj`
+      )
+    );
 
     // Manual signing
     config = config.replace(
@@ -140,7 +150,12 @@ class FastlaneGenerator extends Base {
       '$1\n        CODE_SIGN_IDENTITY = "iPhone Developer";\n        "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";\n        DEVELOPMENT_TEAM = "";'
     );
 
-    this.fs.write(this.destinationPath(`ios/${this.answers.projectName}.xcodeproj/project.pbxproj`), config);
+    this.fs.write(
+      this.destinationPath(
+        `ios/${this.answers.projectName}.xcodeproj/project.pbxproj`
+      ),
+      config
+    );
   }
 
   end() {

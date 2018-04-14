@@ -63,17 +63,22 @@ class ResourcesGenerator extends Base {
     const config = this.fs.readJSON(this.destinationPath('package.json'));
 
     if (!config) {
-      this.log.error('Could not read \'package.json\' from current directory. Are you inside a React Native project?'.red);
+      this.log.error(
+        "Could not read 'package.json' from current directory. Are you inside a React Native project?"
+          .red
+      );
       process.exit(1);
     }
 
-    return this.prompt([{
-      type: 'input',
-      name: 'projectName',
-      message: 'Name of your react-native project',
-      required: true,
-      default: config.name,
-    }]).then((answers) => {
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'projectName',
+        message: 'Name of your react-native project',
+        required: true,
+        default: config.name,
+      },
+    ]).then(answers => {
       this.projectName = answers.projectName;
     });
   }
@@ -115,7 +120,9 @@ class ResourcesGenerator extends Base {
   _setupIosIcons() {
     if (!this.ios || !this.options.icon) return null;
 
-    const iosIconFolder = `${this.options.assetsOutputPath}/ios/${this.projectName}/Images.xcassets/${this.options.iosAssetName}.appiconset`;
+    const iosIconFolder = `${this.options.assetsOutputPath}/ios/${
+      this.projectName
+    }/Images.xcassets/${this.options.iosAssetName}.appiconset`;
 
     this.fs.copyTpl(
       this.templatePath('ios/AppIconsetContents.json'),
@@ -127,7 +134,11 @@ class ResourcesGenerator extends Base {
 
   _setupAndroidIcons() {
     if (!this.android || !this.options.icon) return null;
-    return imageGenerator.generateAndroidIcons(this.options.icon, this.options.assetsOutputPath, this.options.androidSrcDirectory);
+    return imageGenerator.generateAndroidIcons(
+      this.options.icon,
+      this.options.assetsOutputPath,
+      this.options.androidSrcDirectory
+    );
   }
 
   _setupAndroidNotificationIcons() {
@@ -142,9 +153,14 @@ class ResourcesGenerator extends Base {
   _setupIosSplashScreen() {
     if (!this.ios || !this.options.splash) return null;
 
-    const iosSplashFolder = `${this.options.assetsOutputPath}/ios/${this.projectName}/Images.xcassets/LaunchImage.launchimage`;
+    const iosSplashFolder = `${this.options.assetsOutputPath}/ios/${
+      this.projectName
+    }/Images.xcassets/LaunchImage.launchimage`;
 
-    this.fs.copyTpl(this.templatePath('ios/LaunchImageLaunchimageContents.json'), `${iosSplashFolder}/Contents.json`);
+    this.fs.copyTpl(
+      this.templatePath('ios/LaunchImageLaunchimageContents.json'),
+      `${iosSplashFolder}/Contents.json`
+    );
 
     const pbxprojPath = this.destinationPath(
       `ios/${this.projectName}.xcodeproj/project.pbxproj`
@@ -158,7 +174,9 @@ class ResourcesGenerator extends Base {
       )
     );
 
-    const plistPath = this.destinationPath(`ios/${this.projectName}/Info.plist`);
+    const plistPath = this.destinationPath(
+      `ios/${this.projectName}/Info.plist`
+    );
     this.fs.write(
       plistPath,
       this.fs
@@ -167,7 +185,10 @@ class ResourcesGenerator extends Base {
         .replace('<string>LaunchScreen</string>', '')
     );
 
-    return imageGenerator.generateIosSplashScreen(this.options.splash, iosSplashFolder);
+    return imageGenerator.generateIosSplashScreen(
+      this.options.splash,
+      iosSplashFolder
+    );
   }
 
   _setupAndroidSplashScreen() {
@@ -175,20 +196,26 @@ class ResourcesGenerator extends Base {
 
     const getTopLeftPixelColor = getPixelColor(this.options.splash, 1, 1);
 
-    return getTopLeftPixelColor.then((splashBackgroundColor) => {
+    return getTopLeftPixelColor.then(splashBackgroundColor => {
       this.fs.copyTpl(
         this.templatePath('android/colors.xml'),
-        `${this.options.assetsOutputPath}/android/app/src/${this.options.androidSrcDirectory}/res/values/colors.xml`,
+        `${this.options.assetsOutputPath}/android/app/src/${
+          this.options.androidSrcDirectory
+        }/res/values/colors.xml`,
         { splashBackgroundColor }
       );
       this.fs.copyTpl(
         this.templatePath('android/launch_screen_bitmap.xml'),
-        `${this.options.assetsOutputPath}/android/app/src/${this.options.androidSrcDirectory}/res/drawable/launch_screen_bitmap.xml`
+        `${this.options.assetsOutputPath}/android/app/src/${
+          this.options.androidSrcDirectory
+        }/res/drawable/launch_screen_bitmap.xml`
       );
 
       this.fs.copyTpl(
         this.templatePath('android/styles.xml'),
-        `${this.options.assetsOutputPath}/android/app/src/${this.options.androidSrcDirectory}/res/values/styles.xml`
+        `${this.options.assetsOutputPath}/android/app/src/${
+          this.options.androidSrcDirectory
+        }/res/values/styles.xml`
       );
 
       return imageGenerator.generateAndroidSplashScreen(
@@ -205,13 +232,17 @@ class ResourcesGenerator extends Base {
     const resizePromises = [];
 
     if (this.android && this.options.icon) {
-      resizePromises.push(imageGenerator.generatePlayStoreIcon(this.options.icon));
+      resizePromises.push(
+        imageGenerator.generatePlayStoreIcon(this.options.icon)
+      );
     }
     if (this.ios && this.options.icon) {
       resizePromises.push(imageGenerator.generateItunesIcon(this.options.icon));
     }
     if (this.android && this.options.splash) {
-      resizePromises.push(imageGenerator.generatePlayStoreImage(this.options.splash));
+      resizePromises.push(
+        imageGenerator.generatePlayStoreImage(this.options.splash)
+      );
     }
 
     return Promise.all(resizePromises);
