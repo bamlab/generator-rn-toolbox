@@ -7,15 +7,6 @@ branches:
 install:
   # Install React Native, Yarn and Yeoman:
   - npm install
-  - npm install -g react-native-cli yo
-  - npm link
-  # Create a new project and apply generators:
-  - react-native init GeneratorTest
-  - cd GeneratorTest
-  - echo y | yo rn-toolbox:lint
-  - echo y | yo rn-toolbox:jest
-  - echo GeneratorTest | yo rn-toolbox:base --force
-  - cd ..
 before_script:
   - npm prune
 after_success:
