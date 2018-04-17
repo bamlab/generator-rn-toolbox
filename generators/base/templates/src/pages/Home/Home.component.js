@@ -1,11 +1,18 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 
 import { Page } from '<%= appName %>/src/components';
 
 import styles from './Home.style';
+
+const instructions = Platform.select({
+  ios: 'Press Cmd+R to reload,\n' +
+    'Cmd+D or shake for dev menu',
+  android: 'Double tap R on your keyboard to reload,\n' +
+    'Shake or press menu button for dev menu',
+});
 
 export default class Home extends Component {
   static navigationOptions = {
@@ -24,8 +31,7 @@ export default class Home extends Component {
             This is the Home page
           </Text>
           <Text style={styles.instructions}>
-            Double tap R on your keyboard to reload,{'\n'}
-            Shake or press menu button for dev menu
+            {instructions}
           </Text>
         </View>
       </Page>
