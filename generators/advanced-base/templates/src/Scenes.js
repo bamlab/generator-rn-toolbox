@@ -1,6 +1,10 @@
 // @flow
 import React from 'react';
-import { StackNavigator, TabNavigator, HeaderBackButton } from 'react-navigation';
+import {
+  createStackNavigator,
+  createTabNavigator,
+  HeaderBackButton,
+} from 'react-navigation';
 
 import * as Pages from './pages';
 import theme from 'theme';
@@ -9,7 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const TabIcon = props => <Icon color={props.tintColor} size={30} {...props} />;
 
-const LandingStack = StackNavigator(
+const LandingStack = createStackNavigator(
   {
     landing: {
       screen: Pages.Landing,
@@ -28,7 +32,7 @@ const LandingStack = StackNavigator(
   }
 );
 
-const SignUpStack = StackNavigator(
+const SignUpStack = createStackNavigator(
   {
     signup: {
       screen: Pages.Signup,
@@ -56,7 +60,7 @@ const SignUpStack = StackNavigator(
   }
 );
 
-const DashboardTab = TabNavigator(
+const DashboardTab = createTabNavigator(
   {
     home: {
       screen: Pages.Home,
@@ -92,7 +96,7 @@ const DashboardTab = TabNavigator(
   }
 );
 
-const DashboardStack = StackNavigator(
+const DashboardStack = createStackNavigator(
   {
     dashboardTabs: {
       screen: DashboardTab,
@@ -116,7 +120,7 @@ const DashboardStack = StackNavigator(
   }
 );
 
-export const RootNavigator = StackNavigator(
+export const RootNavigator = createStackNavigator(
   {
     landing: {
       screen: LandingStack,
