@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { StackNavigator, addNavigationHelpers } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 
 import * as Pages from '<%= appName %>/src/pages';
 import { navListener } from '<%= appName %>/src/modules/Nav/module';
@@ -18,11 +18,11 @@ class App extends React.Component {
   render() {
     return (
       <AppNavigator
-        navigation={addNavigationHelpers({
+        navigation={{
           dispatch: this.props.dispatch,
           state: this.props.nav,
           addListener: navListener,
-        })}
+        }}
       />
     );
   }
