@@ -198,13 +198,13 @@ class ResourcesGenerator extends Base {
     const getTopLeftPixelColor = getPixelColor(this.options.splash, 1, 1);
 
     return getTopLeftPixelColor.then(splashBackgroundColor => {
-      // this.fs.copyTpl(
-      //   this.templatePath('android/colors.xml'),
-      //   `${this.options.assetsOutputPath}/android/app/src/${
-      //     this.options.androidSrcDirectory
-      //   }/res/values/colors.xml`,
-      //   { splashBackgroundColor }
-      // );
+      this.fs.copyTpl(
+        this.templatePath('android/colors.xml'),
+        `${this.options.assetsOutputPath}/android/app/src/${
+          this.options.androidSrcDirectory
+        }/res/values/colors.xml`,
+        { splashBackgroundColor }
+      );
       this.fs.copyTpl(
         this.templatePath('android/launch_screen_bitmap.xml'),
         `${this.options.assetsOutputPath}/android/app/src/${
