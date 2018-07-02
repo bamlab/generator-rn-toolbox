@@ -167,11 +167,12 @@ class ResourcesGenerator extends Base {
     );
     this.fs.write(
       pbxprojPath,
-      this.fs.read(pbxprojPath).replace(
-        /ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;/g,
-        `ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-        ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;`
-      )
+      this.fs
+        .read(pbxprojPath)
+        .replace(
+          /(\s*)?ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;(?:(\s*)(ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;)?)*/g,
+          `$1ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;$1ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;$1`
+        )
     );
 
     const plistPath = this.destinationPath(
@@ -197,13 +198,13 @@ class ResourcesGenerator extends Base {
     const getTopLeftPixelColor = getPixelColor(this.options.splash, 1, 1);
 
     return getTopLeftPixelColor.then(splashBackgroundColor => {
-      this.fs.copyTpl(
-        this.templatePath('android/colors.xml'),
-        `${this.options.assetsOutputPath}/android/app/src/${
-          this.options.androidSrcDirectory
-        }/res/values/colors.xml`,
-        { splashBackgroundColor }
-      );
+      // this.fs.copyTpl(
+      //   this.templatePath('android/colors.xml'),
+      //   `${this.options.assetsOutputPath}/android/app/src/${
+      //     this.options.androidSrcDirectory
+      //   }/res/values/colors.xml`,
+      //   { splashBackgroundColor }
+      // );
       this.fs.copyTpl(
         this.templatePath('android/launch_screen_bitmap.xml'),
         `${this.options.assetsOutputPath}/android/app/src/${
