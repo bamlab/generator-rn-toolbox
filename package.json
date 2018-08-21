@@ -6,8 +6,9 @@
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 0",
     "commitmsg": "validate-commit-msg",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "commit": "git-cz"
+    "semantic-release": "semantic-release",
+    "commit": "git-cz",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "keywords": [
     "yeoman-generator",
@@ -52,10 +53,11 @@
     "husky": "^0.14.3",
     "jest": "^21.2.1",
     "prettier": "^1.11.1",
-    "semantic-release": "^8.2.0",
+    "semantic-release": "^15.9.9",
     "validate-commit-msg": "^2.14.0",
     "yeoman-environment": "^2.0.5",
-    "yeoman-test": "^1.7.0"
+    "yeoman-test": "^1.7.0",
+    "travis-deploy-once": "^5.0.2"
   },
   "config": {
     "commitizen": {
