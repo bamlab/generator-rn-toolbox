@@ -107,7 +107,7 @@ platform :ios do
     appcenter_upload(
       api_token: ENV['FL_APPCENTER_API_TOKEN'],
       owner_name: ENV['APPCENTER_USERNAME'],
-      app_name: ENV['IOS_APP_NAME'],
+      app_name: ENV['IOS_APPCENTER_APP_ID'],
       ipa: ENV['IOS_IPA_PATH']
     )
   end
@@ -159,7 +159,7 @@ platform :android do
     appcenter_upload(
       api_token: ENV['FL_APPCENTER_API_TOKEN'],
       owner_name: ENV['APPCENTER_USERNAME'],
-      app_name: ENV['GRADLE_APP_NAME'],
+      app_name: ENV['ANDROID_APPCENTER_APP_ID'],
       apk: ENV['ANDROID_APK_PATH']
     )
   end

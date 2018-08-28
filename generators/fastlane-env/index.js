@@ -79,22 +79,20 @@ class FastlaneEnvGenerator extends Base {
         name: 'appName',
         message: 'The app name for this environment',
         default: 'My App',
-        when: answers =>
-          ['hockeyapp', 'appstore'].includes(answers.deploymentPlatform),
       },
       {
         type: 'input',
-        name: 'appNameIOS',
+        name: 'iosAppCenterId',
         message:
-          'The iOS app name for this environment. Name should be different from the Android app and not contain spaces',
+          'The iOS project id on AppCenter, should be different than Android and not contain spaces',
         default: 'MyApp-ios',
         when: answers => answers.deploymentPlatform === 'appcenter',
       },
       {
         type: 'input',
-        name: 'appNameAndroid',
+        name: 'androidAppCenterId',
         message:
-          'The Android app name for this environment. Name should be different from the iOS app and not contain spaces',
+          'The Android project id on AppCenter, should be different than iOS and not contain spaces',
         default: 'MyApp-android',
         when: answers => answers.deploymentPlatform === 'appcenter',
       },
