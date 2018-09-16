@@ -1,4 +1,5 @@
 fastlane_require 'dotenv'
+release_notes_command = "git log HEAD --pretty=format:\"%s\" -1"
 
 # Check Git Status
 
@@ -108,7 +109,8 @@ platform :ios do
       api_token: ENV['FL_APPCENTER_API_TOKEN'],
       owner_name: ENV['APPCENTER_USERNAME'],
       app_name: ENV['IOS_APPCENTER_APP_ID'],
-      ipa: ENV['IOS_IPA_PATH']
+      ipa: ENV['IOS_IPA_PATH'],
+      release_notes: %x[#{release_notes_command}]
     )
   end
 
@@ -160,7 +162,8 @@ platform :android do
       api_token: ENV['FL_APPCENTER_API_TOKEN'],
       owner_name: ENV['APPCENTER_USERNAME'],
       app_name: ENV['ANDROID_APPCENTER_APP_ID'],
-      apk: ENV['ANDROID_APK_PATH']
+      apk: ENV['ANDROID_APK_PATH'],
+      release_notes: %x[#{release_notes_command}]
     )
   end
 
