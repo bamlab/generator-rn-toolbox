@@ -13,6 +13,8 @@ brew install imagemagick
 
 ## Generate icons
 You'll need a **square** image for your icon with a size of more than **192x192 px** (psd is supported).
+
+### iOS
 Starting with XCode 9, your Apple App Store icon is bundled with the app, so provide an icon with a size of more than **1024x1024 px** (psd is supported).
 
 Then run:
@@ -23,6 +25,14 @@ Answer yes when asked about overwriting.
 
 That's it! :balloon:
 Icons have been generated in different sizes and integrated in your project.
+
+
+### Android
+- Open your project in Android Studio
+- Right click on the `app` folder, then click on `New` and then click on `Image Asset`
+- In the `Icon Type` field select `Launcher Icons (Adaptative and Legacy)`
+- In the `path`field, select your image file
+- Once done, click on the `Next`button and then on the finish `button`
 
 ## Generate splashscreens
 

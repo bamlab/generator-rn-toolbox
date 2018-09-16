@@ -35,6 +35,7 @@ class BaseGenerator extends Base {
 
   writing() {
     this.fs.delete(this.destinationPath('__tests__'));
+    this.fs.delete(this.destinationPath('App.js'));
     this.fs.copyTpl(
       this.templatePath('**/*.js'),
       this.destinationPath(''),
