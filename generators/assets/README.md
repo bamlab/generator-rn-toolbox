@@ -38,6 +38,7 @@ Icons have been generated in different sizes and integrated in your project.
 
 You'll need a **square** image for your splash with a size of more than **2208x2208 px** (psd is supported). The image will be cropped, it should be the logo of the app inside a big square with a 30% margin.
 
+
 ### iOS
 
 Run:
@@ -48,6 +49,17 @@ yo rn-toolbox:assets --splash splash.psd --ios
 You're all set! :dancer:
 
 ***IMPORTANT:*** You will need to uninstall the app from device/emulator first before seeing the changes.
+
+
+If you want to adjust the margin of your image, you can run this command in your terminal :
+```
+convert <splash_screen_path> -background <backgroun_color> -gravity center -extent <new_size> <new_image_name>
+```
+For instance :
+```
+convert ./splashcreen.png -background 'white' -gravity center -extent 3200x3200 splash.png
+```
+will generate a new image (splash.png) with a size of 3200x3200 and will place the old image (splashcreen.png) in the center, surrounded by white color
 
 ### Android
 
