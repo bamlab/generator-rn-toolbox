@@ -39,9 +39,13 @@ end
 
 platform :ios do
   error do |lane, exception, options|
-    path = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}"
-    if File.exist?("../#{path}.back")
-      restore_file(path: path)
+    plist_path = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}"
+    if File.exist?("../#{plist_path}.back")
+      restore_file(path: plist_path)
+    end
+    pbxproj_path="#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcodeproj/project.pbxproj"
+    if File.exist?("../#{pbxproj_path}.back")
+      restore_file(path: pbxproj_path)
     end
   end
 
@@ -73,16 +77,22 @@ platform :ios do
     backup_file(path: plist_full_path)
     xcodeproj = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcodeproj"
     xcworkspace = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcworkspace"
+    pbxproj_full_path="#{xcodeproj}/project.pbxproj"
+    backup_file(path: pbxproj_full_path)
     update_info_plist(
       xcodeproj: xcodeproj,
       plist_path: ENV['IOS_PLIST_PATH'],
       block: lambda { |plist|
-        plist['CFBundleIdentifier'] = ENV['IOS_APP_ID']
         plist['CFBundleName'] = ENV['IOS_APP_NAME']
         plist['CFBundleDisplayName'] = ENV['IOS_APP_NAME']
         plist['CFBundleShortVersionString'] = ENV['IOS_VERSION']
         plist['CFBundleVersion'] = ENV['IOS_VERSION_BUILD_NUMBER']
       },
+    )
+    update_app_identifier(
+      xcodeproj: xcodeproj,
+      plist_path: ENV['IOS_PLIST_PATH'],
+      app_identifier: ENV['IOS_APP_ID']
     )
     profile_env_name = "sigh_#{ENV['IOS_APP_ID']}_#{ENV['MATCH_TYPE']}_profile-name"
     gymOptions = ({
@@ -95,6 +105,7 @@ platform :ios do
     )
     gym(gymOptions)
     restore_file(path: plist_full_path)
+    restore_file(path: pbxproj_full_path)
   end
 
   lane :deploy_hockey do |options|
