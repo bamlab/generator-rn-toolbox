@@ -41,7 +41,9 @@
     "download-file-sync": "^1.0.4",
     "fs-extra": "^4.0.2",
     "gm": "^1.23.0",
+    "plist": "^3.0.1",
     "randomstring": "^1.1.5",
+    "xml2js": "^0.4.19",
     "yeoman-generator": "^2.0.1"
   },
   "devDependencies": {
