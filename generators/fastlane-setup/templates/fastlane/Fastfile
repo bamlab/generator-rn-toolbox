@@ -148,6 +148,23 @@ platform :ios do
     check_git_status(name: ENV['REPO_GIT_BRANCH'])
     deploy
   end
+
+  lane :add_devices do |options|
+    if ['development','adhoc'].include?(ENV['MATCH_TYPE']) then
+      register_devices(
+        team_id: ENV['IOS_TEAM_ID'],
+        devices_file: "./fastlane/ios_devices.txt"
+      )
+      match(
+        shallow_clone: true,
+        clone_branch_directly: true,
+        force_for_new_devices: true
+      )
+    else
+      puts 'Environment not associated to an ad-hoc or development app'
+    end
+  end
+
 end
 
 #  ANDROID

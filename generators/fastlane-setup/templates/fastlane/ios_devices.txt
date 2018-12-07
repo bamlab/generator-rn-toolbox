@@ -1,0 +1,5 @@
+Device ID	Device Name
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx	Tom Example1 - iPhone X
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx	Sarah Example2 - iPhone 6 Plus
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx	Rob Example3 - iPhone 7
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx	Bob Example4 - iPhone 6s
