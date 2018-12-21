@@ -38,7 +38,7 @@ end
 # IOS
 
 platform :ios do
-  error do |lane, exception, options|
+  lane :restore_files do |options|
     plist_path = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}"
     if File.exist?("../#{plist_path}.back")
       restore_file(path: plist_path)
@@ -47,6 +47,14 @@ platform :ios do
     if File.exist?("../#{pbxproj_path}.back")
       restore_file(path: pbxproj_path)
     end
+    appcenter_plist_path="#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}/AppCenter-Config.plist"
+    if File.exist?("../#{appcenter_plist_path}.back")
+      restore_file(path: appcenter_plist_path)
+    end
+  end
+
+  error do |lane, exception, options|
+    restore_files
   end
 
   lane :setup do |options|
@@ -89,6 +97,14 @@ platform :ios do
         plist['CFBundleVersion'] = ENV['IOS_VERSION_BUILD_NUMBER']
       },
     )
+    if ENV['IOS_CODEPUSH_DEPLOYMENT_KEY'] then
+      set_info_plist_value(path: plist_full_path, key:'CodePushDeploymentKey', value: ENV['IOS_CODEPUSH_DEPLOYMENT_KEY'])
+    end
+    if ENV['IOS_APPCENTER_APP_SECRET'] then
+      appcenter_plist_full_path = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}/AppCenter-Config.plist"
+      backup_file(path: appcenter_plist_full_path)
+      set_info_plist_value(path: appcenter_plist_full_path, key:'AppSecret', value: ENV['IOS_APPCENTER_APP_SECRET'])
+    end
     update_app_identifier(
       xcodeproj: xcodeproj,
       plist_path: ENV['IOS_PLIST_PATH'],
@@ -104,8 +120,7 @@ platform :ios do
         {project: xcodeproj}
     )
     gym(gymOptions)
-    restore_file(path: plist_full_path)
-    restore_file(path: pbxproj_full_path)
+    restore_files
   end
 
   lane :deploy_hockey do |options|
@@ -170,12 +185,48 @@ end
 #  ANDROID
 
 platform :android do
+  lane :restore_files do |options|
+    appcenter_config_path = "#{ENV['ANDROID_PROJECT_DIR']}/app/src/main/assets/appcenter-config.json"
+    if File.exist?("../#{appcenter_config_path}.back")
+      restore_file(path: appcenter_config_path)
+    end
+    android_strings_path = "#{ENV['ANDROID_PROJECT_DIR']}/app/src/main/res/values/strings.xml"
+    if File.exist?("../#{android_strings_path}.back")
+      restore_file(path: android_strings_path)
+    end
+  end
+
+  error do |lane, exception, options|
+    restore_files
+  end
+
+  lane :set_keys do |options|
+    if ENV['ANDROID_APPCENTER_APP_SECRET'] then
+      appcenter_config_path = "#{ENV['ANDROID_PROJECT_DIR']}/app/src/main/assets/appcenter-config.json"
+      backup_file(path: appcenter_config_path)
+      appcenter_config = load_json(json_path: appcenter_config_path)
+      appcenter_config['app_secret'] = ENV['ANDROID_APPCENTER_APP_SECRET']
+      File.open("../#{appcenter_config_path}","w") do |f|
+        f.write(appcenter_config.to_json)
+      end
+    end
+    if ENV['ANDROID_CODEPUSH_DEPLOYMENT_KEY'] then
+      android_strings_path = "#{ENV['ANDROID_PROJECT_DIR']}/app/src/main/res/values/strings.xml"
+      backup_file(path: android_strings_path)
+      xml = Nokogiri::XML(File.open("../#{android_strings_path}"))
+      xml.at("//string[@name=\"reactNativeCodePush_androidDeploymentKey\"]").content = ENV['ANDROID_CODEPUSH_DEPLOYMENT_KEY']
+      File.write("../#{android_strings_path}", xml.to_xml)
+    end
+  end
+
   lane :build do |options|
     set_js_env
+    set_keys
     gradle(
       task: "assembleRelease",
       project_dir: ENV['ANDROID_PROJECT_DIR']
     )
+    restore_files
   end
 
   lane :deploy_hockey do |options|
