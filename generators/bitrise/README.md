@@ -1,6 +1,6 @@
 # Bitrise setup for continuous deployment
 
-:warning: ***Having set up Fastlane with `yo rn-toolbox:fastlane` is a requirement***
+:warning: ***Having set up Fastlane with `yo rn-toolbox:fastlane-setup` is a requirement***
 
 This will:
 * upload your app to HockeyApp on every push to the `staging` branch
