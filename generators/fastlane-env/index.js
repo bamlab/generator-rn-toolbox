@@ -3,28 +3,34 @@ const randomString = require('randomstring');
 require('colors');
 
 const deploymentPlatforms = [
-  {
-    name: 'HockeyApp',
-    value: 'hockeyapp',
-  },
-  {
-    name: 'AppStore',
-    value: 'appstore',
-  },
-  {
-    name: 'AppCenter',
-    value: 'appcenter',
-  },
+  { name: 'AppCenter', value: 'appcenter' },
+  { name: 'AppStore', value: 'appstore' },
+  { name: 'HockeyApp (deprecated)', value: 'hockeyapp' },
 ];
 const certificatesTypes = [
-  {
-    name: 'Adhoc',
-    value: 'adhoc',
-  },
-  {
-    name: 'In House (Enterprise only)',
-    value: 'enterprise',
-  },
+  { name: 'Adhoc', value: 'adhoc' },
+  { name: 'In House (Enterprise only)', value: 'enterprise' },
+];
+const cocoaPodsInstallCommands = [
+  { commandName: 'sudo', args: ['gem', 'install', 'cocoapods'] },
+  { commandName: 'pod', args: ['repo', 'update'], options: { cwd: 'ios' } },
+];
+const reactNativeLinkAppcenterCommands = [
+  { commandName: 'react-native', args: ['link', 'appcenter'] },
+  { commandName: 'react-native', args: ['link', 'appcenter-analytics'] },
+  { commandName: 'react-native', args: ['link', 'appcenter-crashes'] },
+];
+const reactNativeLinkCodepushCommands = [
+  { commandName: 'react-native', args: ['link', 'react-native-code-push'] },
+];
+const installAppCenterFastlanePluginCommands = [
+  { commandName: 'fastlane', args: ['add_plugin', 'appcenter'] },
+];
+const installLoadJsonFastlanePluginCommands = [
+  { commandName: 'fastlane', args: ['add_plugin', 'load_json'] },
+];
+const installNokogiriCommands = [
+  { commandName: 'bundle', args: ['add', 'nokogiri'] },
 ];
 
 class FastlaneEnvGenerator extends Base {
@@ -84,8 +90,9 @@ class FastlaneEnvGenerator extends Base {
         type: 'input',
         name: 'iosAppCenterId',
         message:
-          'The iOS project id on AppCenter, should be different than Android and not contain spaces',
-        default: 'MyApp-ios',
+          'The iOS project id on AppCenter for this environment, should be different than Android and not contain spaces',
+        default: answers =>
+          `${answers.appName.replace(/ /g, '')}-ios-${answers.environmentName}`,
         when: answers => answers.deploymentPlatform === 'appcenter',
       },
       {
@@ -93,7 +100,10 @@ class FastlaneEnvGenerator extends Base {
         name: 'androidAppCenterId',
         message:
           'The Android project id on AppCenter, should be different than iOS and not contain spaces',
-        default: 'MyApp-android',
+        default: answers =>
+          `${answers.appName.replace(/ /g, '')}-android-${
+            answers.environmentName
+          }`,
         when: answers => answers.deploymentPlatform === 'appcenter',
       },
       {
@@ -172,6 +182,45 @@ class FastlaneEnvGenerator extends Base {
         message: 'A valid App Center Username',
         when: answers => answers.deploymentPlatform === 'appcenter',
       },
+      {
+        type: 'confirm',
+        name: 'useAppcenterSDK',
+        message:
+          'Will you be using Appcenter Analytics and Crash reporting on this environment?',
+      },
+      {
+        type: 'input',
+        name: 'iosAppcenterAppSecret',
+        message:
+          "Your AppCenter app secret for the ios App (can be entered later in fastlane/env.<environment> if the App doesn't exist yet in Appcenter)",
+        when: answers => answers.useAppcenterSDK,
+      },
+      {
+        type: 'input',
+        name: 'androidAppcenterAppSecret',
+        message:
+          "Your AppCenter app secret for the Android App (can be entered later in fastlane/env.<environment> if the app doesn't exist yet in Appcenter)",
+        when: answers => answers.useAppcenterSDK,
+      },
+      {
+        type: 'confirm',
+        name: 'useCodePush',
+        message: 'Will you deploy with Appcenter CodePush on this environment?',
+      },
+      {
+        type: 'input',
+        name: 'iosCodePushDeploymentKey',
+        message:
+          "Your iOS CodePush deployment key (can be entered later in fastlane/env.<environment> if the App and Deployments don't exist yet in Appcenter)",
+        when: answers => answers.useCodePush,
+      },
+      {
+        type: 'input',
+        name: 'androidCodePushDeploymentKey',
+        message:
+          "Your Android CodePush deployment key (can be entered later in fastlane/env.<environment> if the App and Deployments don't exist yet in Appcenter)",
+        when: answers => answers.useCodePush,
+      },
     ]).then(answers => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
@@ -180,33 +229,6 @@ class FastlaneEnvGenerator extends Base {
         this.answers.certificateType = 'appstore';
       }
     });
-  }
-
-  install() {
-    this._createKeystore();
-    if (this.answers.deploymentPlatform === 'appcenter') {
-      // Install App Center npm libraries
-      this.yarnInstall(
-        ['appcenter', 'appcenter-analytics', 'appcenter-crashes'],
-        {
-          cwd: this.destinationRoot(),
-        }
-      );
-      // Install App Center Fastlane Plugin
-      const appCenter = this.spawnCommand('fastlane', [
-        'add_plugin',
-        'appcenter',
-      ]);
-      appCenter.on('exit', err => {
-        if (err) {
-          this.log.error(
-            'Configuration went well but there was an error while installing the App Center Fastlane plugin. Please install it manually with `fastlane add_plugin appcenter`'
-          );
-        } else {
-          this.emit('nextTask');
-        }
-      });
-    }
   }
 
   writing() {
@@ -229,6 +251,122 @@ class FastlaneEnvGenerator extends Base {
       ),
       this.answers
     );
+  }
+
+  install() {
+    // Create Keystore file
+    this._createKeystore();
+
+    // Install AppCenter Fastlane Plugin
+    if (this.answers.deploymentPlatform === 'appcenter') {
+      this._runInstallCommandsWithErrorMessages(
+        installAppCenterFastlanePluginCommands,
+        'the App Center Fastlane plugin',
+        'fastlane add_plugin appcenter'
+      );
+    }
+
+    // Install App Center npm libraries
+    if (this.answers.useAppcenterSDK) {
+      this.yarnInstall(
+        ['appcenter', 'appcenter-analytics', 'appcenter-crashes'],
+        { cwd: this.destinationRoot() }
+      );
+      this._runInstallCommandsWithErrorMessages(
+        installLoadJsonFastlanePluginCommands,
+        'the load_json Fastlane plugin',
+        'fastlane add_plugin load_json'
+      );
+      this.log(
+        'Appcenter Analytics and Crash reporting were added to your project with the correct keys configuration.'
+      );
+    }
+
+    // Install CodePush npm library
+    if (this.answers.useCodePush) {
+      this.yarnInstall(['react-native-code-push'], {
+        cwd: this.destinationRoot(),
+      });
+      this._runInstallCommandsWithErrorMessages(
+        installNokogiriCommands,
+        'Nokogiri (xml manipulation)',
+        'bundle add nokogiri'
+      );
+      this.log(
+        'Appcenter CodePush was added to your project with the correct keys configuration.'
+      );
+    }
+  }
+
+  end() {
+    this._reactNativeLinkDependencies();
+    this.log('Environment has been created, please run'.green);
+    this.log(
+      `bundle exec fastlane ios setup --env=${this.answers.environmentName}`
+        .green.bold
+    );
+    this.log('to create the provisioning profiles'.green);
+  }
+
+  _reactNativeLinkDependencies() {
+    if (this.answers.useCodePush || this.answers.useAppcenterSDK) {
+      this.log('Instaling CocoaPods (please provide sudo password)...');
+      this._runInstallCommandsWithErrorMessages(
+        cocoaPodsInstallCommands,
+        'CocoaPods',
+        'sudo gem install cocoapods && cd ios && pod init && pod repo update.'
+      );
+    }
+
+    // Link AppCenter SDK
+    if (this.answers.useAppcenterSDK) {
+      this.log(
+        'Linking AppCenter SDK for you...\nPLEASE LEAVE THE "SECRETS" FIELDS BLANK.'
+          .blue.bold
+      );
+      this._runInstallCommandsWithErrorMessages(
+        reactNativeLinkAppcenterCommands,
+        'AppCenter SDK libraries',
+        'react-native link appcenter && react-native link appcenter-analytics && react-native link appcenter-crashes'
+      );
+    }
+
+    // Link AppCenter CodePush
+    if (this.answers.useCodePush) {
+      this.log(
+        'Linking AppCenter CodePush for you...\nPLEASE LEAVE THE KEY FIELDS BLANK.'
+          .blue.bold
+      );
+      this._runInstallCommandsWithErrorMessages(
+        reactNativeLinkCodepushCommands,
+        'AppCenter CodePush',
+        'react-native link react-native-code-push'
+      );
+    }
+  }
+
+  _runInstallCommandsWithErrorMessages(
+    commands,
+    library,
+    manualInstallationCommand
+  ) {
+    const results = commands.map(command =>
+      this.spawnCommandSync(
+        command.commandName,
+        command.args || [],
+        command.options || {}
+      )
+    );
+    for (let i = 0; i < results.length; i += 1) {
+      if (results[i].error) {
+        this.log(
+          `Configuration went well but there was an error while installing ${library}. Please install it manually with \`${manualInstallationCommand}\`. Then rerun the generator.`
+            .red.bold
+        );
+        throw results[i].error;
+      }
+      break;
+    }
   }
 
   _createKeystore() {
@@ -259,15 +397,6 @@ class FastlaneEnvGenerator extends Base {
     } else {
       this.log('Keystore already exists, skipping...'.yellow);
     }
-  }
-
-  end() {
-    this.log('Environment has been created, please run'.green);
-    this.log(
-      `bundle exec fastlane ios setup --env=${this.answers.environmentName}`
-        .green.bold
-    );
-    this.log('to create the provisioning profiles'.green);
   }
 }
 
