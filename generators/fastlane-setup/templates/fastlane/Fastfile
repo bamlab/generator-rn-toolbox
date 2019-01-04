@@ -212,7 +212,7 @@ platform :android do
     end
     if ENV['ANDROID_CODEPUSH_DEPLOYMENT_KEY'] then
       android_strings_path = "#{ENV['ANDROID_PROJECT_DIR']}/app/src/main/res/values/strings.xml"
-      backup_file(path: android_strings_path)
+      # backup_file(path: android_strings_path) We can't backup this way because android can't build if there is a non-xml file in values folder. Solution to be found.
       xml = Nokogiri::XML(File.open("../#{android_strings_path}"))
       xml.at("//string[@name=\"reactNativeCodePush_androidDeploymentKey\"]").content = ENV['ANDROID_CODEPUSH_DEPLOYMENT_KEY']
       File.write("../#{android_strings_path}", xml.to_xml)
