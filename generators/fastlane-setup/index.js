@@ -21,6 +21,17 @@ class FastlaneGenerator extends Base {
         message: 'Commit keystore files?',
         default: true,
       },
+      {
+        type: 'confirm',
+        name: 'useSecretsArchive',
+        message:
+          'Would you like to use an encrypted archive to store secret files and keys?',
+      },
+      {
+        type: 'confirm',
+        name: 'useDeploymentScript',
+        message: 'Would you like to use a deployment script?',
+      },
     ]).then(answers => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
@@ -48,6 +59,27 @@ class FastlaneGenerator extends Base {
       this.templatePath('strings.xml'),
       this.destinationPath('android/app/src/main/res/values/strings.xml')
     );
+
+    if (this.answers.useSecretsArchive) {
+      this.fs.copyTpl(
+        this.templatePath('secrets-scripts/pack-secrets.sh'),
+        this.destinationPath(`secrets-scripts/pack-secrets.sh`),
+        this.answers
+      );
+      this.fs.copyTpl(
+        this.templatePath('secrets-scripts/unpack-secrets.sh'),
+        this.destinationPath(`secrets-scripts/unpack-secrets.sh`),
+        this.answers
+      );
+    }
+
+    if (this.answers.useDeploymentScript) {
+      this.fs.copyTpl(
+        this.templatePath('deploy.sh'),
+        this.destinationPath('deploy.sh')
+      );
+    }
+
     this._extendGitignore();
     this._extendGradle();
     this._activateManualSigning();
