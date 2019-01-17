@@ -149,11 +149,13 @@ class ResourcesGenerator extends Base {
   }
 
   _setupIosIcons() {
+    let assetName = this.options.assetName ? this.options.assetName : 'AppIcon'
+
     if (!this.ios || !this.options.icon) return null;
 
     const iosIconFolder = `${this.options.assetsOutputPath}/ios/${
       this.projectName
-    }/Images.xcassets/${this.options.assetName}.appiconset`;
+    }/Images.xcassets/${assetName}.appiconset`;
 
     this.fs.copyTpl(
       this.templatePath('ios/AppIconsetContents.json'),
