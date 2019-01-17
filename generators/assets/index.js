@@ -150,16 +150,19 @@ class ResourcesGenerator extends Base {
 
   _setupIosIcons() {
     if (!this.ios || !this.options.icon) return null;
-    const iosIconFolder = `${this.options.assetsOutputPath}/ios/${this.projectName}/Images.xcassets/${this.options.assetName?this.options.assetName:"AppIcon"}.appiconset`;
+
+    const iosIconFolder = `${this.options.assetsOutputPath}/ios/${
+      this.projectName
+    }/Images.xcassets/${this.options.assetName}.appiconset`;
+
     this.fs.copyTpl(
       this.templatePath('ios/AppIconsetContents.json'),
       this.destinationPath(`${iosIconFolder}/Contents.json`)
     );
-    return imageGenerator.generateIosIcons(
-      this.options.icon,
-      iosIconFolder
-    );
+
+    return imageGenerator.generateIosIcons(this.options.icon, iosIconFolder);
   }
+
   _setupIosAlternativeIcons() {
     if (!this.ios || !this.options.alternativeIcon) return null;
     const iosFolder = `${this.options.assetsOutputPath}/ios`;
@@ -179,6 +182,7 @@ class ResourcesGenerator extends Base {
       this.options.assetName
     );
   }
+
   _setupAndroidIcons() {
     if (!this.android || !this.options.icon) return null;
     return imageGenerator.generateAndroidIcons(
@@ -239,7 +243,7 @@ class ResourcesGenerator extends Base {
         .replace(
           /(\s*)?ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;(?:(\s*)(ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;)?)*/g,
           `$1ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;$1ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;$1`
-      )
+        )
     );
 
     const plistPath = this.destinationPath(
@@ -270,9 +274,7 @@ class ResourcesGenerator extends Base {
         `${this.options.assetsOutputPath}/android/app/src/${
           this.options.androidSrcDirectory
         }/res/values/colors.xml`,
-        {
-          splashBackgroundColor
-        }
+        { splashBackgroundColor }
       );
       this.fs.copyTpl(
         this.templatePath('android/launch_screen_bitmap.xml'),
