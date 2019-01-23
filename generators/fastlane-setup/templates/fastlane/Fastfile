@@ -81,6 +81,8 @@ platform :ios do
     Spaceship.select_team
     keyName = "Push JWT #{ENV['IOS_APP_NAME']} #{ENV['ENV']}".gsub!(/[^0-9A-Za-z ]/, '')
     key = Spaceship::Portal::Key.create(name: keyName, apns: true)
+    puts "Key ID is"
+    puts key.id
     File.write("#{keyName}.p8", key.download)
   end
 
