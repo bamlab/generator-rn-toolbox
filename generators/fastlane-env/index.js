@@ -66,7 +66,7 @@ class FastlaneEnvGenerator extends Base {
         name: 'repoGitBranch',
         message:
           'The name of your repository Git branch for the environment just set',
-        default: 'staging',
+        default: answers => answers.environmentName,
       },
       {
         type: 'input',
@@ -328,11 +328,11 @@ class FastlaneEnvGenerator extends Base {
     if (this.answers.useCodePush) {
       this.log(
         'CodePush has been linked but you might need to remove it from PodFile and link the binary manually in Xcode for it to work properly on iOS (see CodePush docs).'
-          .bold.orange
+          .magenta.bold
       );
       this.log(
         'CodePush config has been added but you still need to wrap your js entry point with the library + config (see CodePush docs).'
-          .bold.green
+          .green.bold
       );
     }
     this.log('Environment has been created, please run'.green);
@@ -348,7 +348,7 @@ class FastlaneEnvGenerator extends Base {
     if (this.answers.useCodePush) {
       this.log(
         'Linking AppCenter CodePush for you...\nPLEASE LEAVE THE KEY FIELDS BLANK.'
-          .blue.bold
+          .magenta.bold
       );
       this._runInstallCommandsWithErrorMessages(
         reactNativeLinkCodepushCommands,
@@ -358,7 +358,7 @@ class FastlaneEnvGenerator extends Base {
     }
 
     if (this.answers.useAppcenterSDK) {
-      this.log('Instaling CocoaPods (please provide sudo password)...');
+      this.log('Installing CocoaPods (please provide sudo password)...');
       this._runInstallCommandsWithErrorMessages(
         cocoaPodsInstallCommands,
         'CocoaPods',
@@ -370,7 +370,7 @@ class FastlaneEnvGenerator extends Base {
     if (this.answers.useAppcenterSDK) {
       this.log(
         'Linking AppCenter SDK for you...\nPLEASE LEAVE THE "SECRETS" FIELDS BLANK.'
-          .blue.bold
+          .magenta.bold
       );
       this._runInstallCommandsWithErrorMessages(
         reactNativeLinkAppcenterCommands,

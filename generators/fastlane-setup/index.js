@@ -26,11 +26,13 @@ class FastlaneGenerator extends Base {
         name: 'useSecretsArchive',
         message:
           'Would you like to use an encrypted archive to store secret files and keys?',
+        default: true,
       },
       {
         type: 'confirm',
         name: 'useDeploymentScript',
         message: 'Would you like to use a deployment script?',
+        default: true,
       },
     ]).then(answers => {
       this.answers = answers;
