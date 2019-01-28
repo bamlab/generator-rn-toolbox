@@ -1,4 +1,5 @@
 fastlane_require 'dotenv'
+fastlane_require 'spaceship'
 release_notes_command = "git log HEAD --pretty=format:\"%s\" -1"
 
 # Check Git Status
@@ -76,7 +77,13 @@ platform :ios do
   end
 
   lane :setup_push do
-    pem
+    Spaceship.login
+    Spaceship.select_team
+    keyName = "Push JWT #{ENV['IOS_APP_NAME']} #{ENV['ENV']}".gsub!(/[^0-9A-Za-z ]/, '')
+    key = Spaceship::Portal::Key.create(name: keyName, apns: true)
+    puts "Key ID is"
+    puts key.id
+    File.write("#{keyName}.p8", key.download)
   end
 
   lane :build do |options|
