@@ -37,7 +37,7 @@ Icons have been generated in different sizes and integrated in your project.
 ## Generate splashscreens
 
 You'll need a **square** image for your splash with a size of more than **2208x2208 px** (psd is supported). The image will be cropped, it should be the logo of the app inside a big square with a 30% margin.
-
+Be aware that content located on the edges of the picture might get cut (see [example with bottom content](./doc/splashscreen-with-bottom-content.png) and [example with right side content](./doc/splashscreen-with-right-side-content.png) where the logo is cut).
 
 ### iOS
 
