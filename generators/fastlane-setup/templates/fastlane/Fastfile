@@ -150,7 +150,7 @@ platform :ios do
     set_js_env
     if options[:codepush] then
       release_notes = %x[#{release_notes_command}]
-      sh "cd .. && appcenter codepush release-react -d #{ENV['IOS_CODEPUSH_DEPLOYMENT_NAME']} -a #{ENV['APPCENTER_USERNAME']}/#{ENV['IOS_APPCENTER_APP_ID']} --target-binary-version \">=#{ENV['IOS_MINIMUM_CODEPUSH_VERSION']}\" --description \"#{release_notes}\" --disable-duplicate-release-error"
+      sh "cd .. && appcenter codepush release-react -d #{ENV['IOS_CODEPUSH_DEPLOYMENT_NAME']} -a #{ENV['APPCENTER_USERNAME']}/#{ENV['IOS_APPCENTER_APP_ID']} --target-binary-version \"#{ENV['IOS_VERSION']}\" --description \"#{release_notes}\" --disable-duplicate-release-error"
     else
       match(
         shallow_clone: true,
@@ -261,7 +261,7 @@ platform :android do
     set_js_env
     if options[:codepush] then
       release_notes = %x[#{release_notes_command}]
-      sh "cd .. && appcenter codepush release-react -d #{ENV['ANDROID_CODEPUSH_DEPLOYMENT_NAME']} -a #{ENV['APPCENTER_USERNAME']}/#{ENV['ANDROID_APPCENTER_APP_ID']} --target-binary-version \">=#{ENV['ANDROID_MINIMUM_CODEPUSH_VERSION']}\" --description \"#{release_notes}\" --disable-duplicate-release-error"
+      sh "cd .. && appcenter codepush release-react -d #{ENV['ANDROID_CODEPUSH_DEPLOYMENT_NAME']} -a #{ENV['APPCENTER_USERNAME']}/#{ENV['ANDROID_APPCENTER_APP_ID']} --target-binary-version \"#{ENV['ANDROID_VERSION_NAME']}\" --description \"#{release_notes}\" --disable-duplicate-release-error"
     else
       build
       if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
