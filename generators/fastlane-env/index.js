@@ -32,6 +32,7 @@ const installLoadJsonFastlanePluginCommands = [
 const installNokogiriCommands = [
   { commandName: 'bundle', args: ['add', 'nokogiri'] },
 ];
+const installGpgCommands = [{ commandName: 'brew', args: ['install', 'gpg'] }];
 
 class FastlaneEnvGenerator extends Base {
   initializing() {
@@ -65,7 +66,7 @@ class FastlaneEnvGenerator extends Base {
         name: 'repoGitBranch',
         message:
           'The name of your repository Git branch for the environment just set',
-        default: 'staging',
+        default: answers => answers.environmentName,
       },
       {
         type: 'input',
@@ -184,6 +185,39 @@ class FastlaneEnvGenerator extends Base {
       },
       {
         type: 'confirm',
+        name: 'useCodePush',
+        message: 'Will you deploy with Appcenter CodePush on this environment?',
+      },
+      {
+        type: 'input',
+        name: 'iosCodePushDeploymentKey',
+        message:
+          "Your iOS CodePush deployment key (can be entered later in fastlane/env.<environment>.secret if the App and Deployments don't exist yet in Appcenter)",
+        when: answers => answers.useCodePush,
+      },
+      {
+        type: 'input',
+        name: 'androidCodePushDeploymentKey',
+        message:
+          "Your Android CodePush deployment key (can be entered later in fastlane/env.<environment>.secret if the App and Deployments don't exist yet in Appcenter)",
+        when: answers => answers.useCodePush,
+      },
+      {
+        type: 'input',
+        name: 'iosCodePushDeploymentName',
+        message:
+          "Your iOS CodePush deployment name (can be entered later in fastlane/env.<environment> if the App and Deployments don't exist yet in Appcenter)",
+        when: answers => answers.useCodePush,
+      },
+      {
+        type: 'input',
+        name: 'androidCodePushDeploymentName',
+        message:
+          "Your Android CodePush deployment name (can be entered later in fastlane/env.<environment> if the App and Deployments don't exist yet in Appcenter)",
+        when: answers => answers.useCodePush,
+      },
+      {
+        type: 'confirm',
         name: 'useAppcenterSDK',
         message:
           'Will you be using Appcenter Analytics and Crash reporting on this environment?',
@@ -201,25 +235,6 @@ class FastlaneEnvGenerator extends Base {
         message:
           "Your AppCenter app secret for the Android App (can be entered later in fastlane/env.<environment> if the app doesn't exist yet in Appcenter)",
         when: answers => answers.useAppcenterSDK,
-      },
-      {
-        type: 'confirm',
-        name: 'useCodePush',
-        message: 'Will you deploy with Appcenter CodePush on this environment?',
-      },
-      {
-        type: 'input',
-        name: 'iosCodePushDeploymentKey',
-        message:
-          "Your iOS CodePush deployment key (can be entered later in fastlane/env.<environment> if the App and Deployments don't exist yet in Appcenter)",
-        when: answers => answers.useCodePush,
-      },
-      {
-        type: 'input',
-        name: 'androidCodePushDeploymentKey',
-        message:
-          "Your Android CodePush deployment key (can be entered later in fastlane/env.<environment> if the App and Deployments don't exist yet in Appcenter)",
-        when: answers => answers.useCodePush,
       },
     ]).then(answers => {
       this.answers = answers;
@@ -266,6 +281,21 @@ class FastlaneEnvGenerator extends Base {
       );
     }
 
+    // Install CodePush npm library
+    if (this.answers.useCodePush) {
+      this.yarnInstall(['react-native-code-push'], {
+        cwd: this.destinationRoot(),
+      });
+      this._runInstallCommandsWithErrorMessages(
+        installNokogiriCommands,
+        'Nokogiri (xml manipulation)',
+        'bundle add nokogiri'
+      );
+      this.log(
+        'Appcenter CodePush configuration was added to your project for this environment.'
+      );
+    }
+
     // Install App Center npm libraries
     if (this.answers.useAppcenterSDK) {
       this.yarnInstall(
@@ -278,28 +308,33 @@ class FastlaneEnvGenerator extends Base {
         'fastlane add_plugin load_json'
       );
       this.log(
-        'Appcenter Analytics and Crash reporting were added to your project with the correct keys configuration.'
+        'Appcenter Analytics and Crash reporting configuration were added to your project for this environment.'
       );
     }
 
-    // Install CodePush npm library
-    if (this.answers.useCodePush) {
-      this.yarnInstall(['react-native-code-push'], {
-        cwd: this.destinationRoot(),
-      });
+    // Install gpg if secrets archive is needed
+    if (this.answers.useSecretsArchive) {
       this._runInstallCommandsWithErrorMessages(
-        installNokogiriCommands,
-        'Nokogiri (xml manipulation)',
-        'bundle add nokogiri'
+        installGpgCommands,
+        'gpg',
+        'brew install gpg'
       );
-      this.log(
-        'Appcenter CodePush was added to your project with the correct keys configuration.'
-      );
+      this.log('GPG was added in order to encrypt the secrets archive.');
     }
   }
 
   end() {
     this._reactNativeLinkDependencies();
+    if (this.answers.useCodePush) {
+      this.log(
+        'CodePush has been linked but you might need to remove it from PodFile and link the binary manually in Xcode for it to work properly on iOS (see CodePush docs).'
+          .magenta.bold
+      );
+      this.log(
+        'CodePush config has been added but you still need to wrap your js entry point with the library + config (see CodePush docs).'
+          .green.bold
+      );
+    }
     this.log('Environment has been created, please run'.green);
     this.log(
       `bundle exec fastlane ios setup --env=${this.answers.environmentName}`
@@ -309,8 +344,21 @@ class FastlaneEnvGenerator extends Base {
   }
 
   _reactNativeLinkDependencies() {
-    if (this.answers.useCodePush || this.answers.useAppcenterSDK) {
-      this.log('Instaling CocoaPods (please provide sudo password)...');
+    // Link AppCenter CodePush
+    if (this.answers.useCodePush) {
+      this.log(
+        'Linking AppCenter CodePush for you...\nPLEASE LEAVE THE KEY FIELDS BLANK.'
+          .magenta.bold
+      );
+      this._runInstallCommandsWithErrorMessages(
+        reactNativeLinkCodepushCommands,
+        'AppCenter CodePush',
+        'react-native link react-native-code-push'
+      );
+    }
+
+    if (this.answers.useAppcenterSDK) {
+      this.log('Installing CocoaPods (please provide sudo password)...');
       this._runInstallCommandsWithErrorMessages(
         cocoaPodsInstallCommands,
         'CocoaPods',
@@ -322,25 +370,12 @@ class FastlaneEnvGenerator extends Base {
     if (this.answers.useAppcenterSDK) {
       this.log(
         'Linking AppCenter SDK for you...\nPLEASE LEAVE THE "SECRETS" FIELDS BLANK.'
-          .blue.bold
+          .magenta.bold
       );
       this._runInstallCommandsWithErrorMessages(
         reactNativeLinkAppcenterCommands,
         'AppCenter SDK libraries',
         'react-native link appcenter && react-native link appcenter-analytics && react-native link appcenter-crashes'
-      );
-    }
-
-    // Link AppCenter CodePush
-    if (this.answers.useCodePush) {
-      this.log(
-        'Linking AppCenter CodePush for you...\nPLEASE LEAVE THE KEY FIELDS BLANK.'
-          .blue.bold
-      );
-      this._runInstallCommandsWithErrorMessages(
-        reactNativeLinkCodepushCommands,
-        'AppCenter CodePush',
-        'react-native link react-native-code-push'
       );
     }
   }

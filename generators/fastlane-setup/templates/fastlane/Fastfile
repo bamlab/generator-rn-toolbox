@@ -88,7 +88,6 @@ platform :ios do
 
   lane :build do |options|
     plist_full_path = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PLIST_PATH']}"
-    set_js_env
     backup_file(path: plist_full_path)
     xcodeproj = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcodeproj"
     xcworkspace = "#{ENV['IOS_PROJECT_PATH']}/#{ENV['IOS_PROJECT_NAME']}.xcworkspace"
@@ -148,21 +147,27 @@ platform :ios do
   end
 
   lane :deploy do |options|
-    match(
-      shallow_clone: true,
-      clone_branch_directly: true,
-      readonly: true
-    )
-    build
-    if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
-      deploy_hockey
-    elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
-      deploy_appCenter
+    set_js_env
+    if options[:codepush] then
+      release_notes = %x[#{release_notes_command}]
+      sh "cd .. && appcenter codepush release-react -d #{ENV['IOS_CODEPUSH_DEPLOYMENT_NAME']} -a #{ENV['APPCENTER_USERNAME']}/#{ENV['IOS_APPCENTER_APP_ID']} --target-binary-version \"#{ENV['IOS_VERSION']}\" --description \"#{release_notes}\" --disable-duplicate-release-error"
     else
-      pilot(
-        distribute_external: false,
-        skip_waiting_for_build_processing: true
+      match(
+        shallow_clone: true,
+        clone_branch_directly: true,
+        readonly: true
       )
+      build
+      if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
+        deploy_hockey
+      elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
+        deploy_appCenter
+      else
+        pilot(
+          distribute_external: false,
+          skip_waiting_for_build_processing: true
+        )
+      end
     end
   end
 
@@ -227,7 +232,6 @@ platform :android do
   end
 
   lane :build do |options|
-    set_js_env
     set_keys
     gradle(
       task: "assembleRelease",
@@ -254,11 +258,17 @@ platform :android do
   end
 
   lane :deploy do |options|
-    build
-    if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
-      deploy_hockey
-    elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
-      deploy_appCenter
+    set_js_env
+    if options[:codepush] then
+      release_notes = %x[#{release_notes_command}]
+      sh "cd .. && appcenter codepush release-react -d #{ENV['ANDROID_CODEPUSH_DEPLOYMENT_NAME']} -a #{ENV['APPCENTER_USERNAME']}/#{ENV['ANDROID_APPCENTER_APP_ID']} --target-binary-version \"#{ENV['ANDROID_VERSION_NAME']}\" --description \"#{release_notes}\" --disable-duplicate-release-error"
+    else
+      build
+      if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
+        deploy_hockey
+      elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
+        deploy_appCenter
+      end
     end
   end
 

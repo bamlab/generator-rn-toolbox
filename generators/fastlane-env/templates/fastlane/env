@@ -37,3 +37,7 @@ GRADLE_APP_NAME='<%= appName %>'
 <% if (deploymentPlatform === 'appcenter') { %>ANDROID_APPCENTER_APP_ID='<%= androidAppCenterId %>'<% } %>
 GRADLE_KEYSTORE='<%= lowerCaseProjectName %>.<%= environmentName %>.keystore'
 GRADLE_KEYSTORE_ALIAS='<%= lowerCaseProjectName %>'
+
+### CODEPUSH ###
+<% if (useCodePush) { %>IOS_CODEPUSH_DEPLOYMENT_NAME='<%= iosCodePushDeploymentName %>'<% } %>
+<% if (useCodePush) { %>ANDROID_CODEPUSH_DEPLOYMENT_NAME='<%= androidCodePushDeploymentName %>'<% } %>
