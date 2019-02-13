@@ -1,3 +1,9 @@
+<p align="center">
+<img align="center" src="./assets/logo_bam.webp" width="200" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img align="center" src="./assets/logo_theodo.svg" width="200" ></p>
+<br />
+
+
+
 # React Native Toolbox [![Build Status](https://travis-ci.org/bamlab/generator-rn-toolbox.svg?branch=master)](https://travis-ci.org/bamlab/generator-rn-toolbox) [![NPM downloads](https://img.shields.io/npm/dm/generator-rn-toolbox.svg)](https://www.npmjs.com/package/generator-rn-toolbox) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
 Yeoman generators to kickstart your react-native v0.48+ projects.
@@ -8,27 +14,27 @@ _As of now, the way those generators are configured is heavily opinionated and b
 
 In an existing React Native project, our generator contains sub-generators that will help you with:
 
-* Setup
-  * [Linting](generators/lint/README.md) -- `yo rn-toolbox:lint`
-  * [Base project](generators/base/README.md) -- `yo rn-toolbox:base`
-  * [Advanced project](generators/advanced-base/README.md) -- `yo rn-toolbox:advanced-base`
-  * [Jest](generators/jest/README.md) -- `yo rn-toolbox:jest`
-  * [Fastlane setup for multiple environments](generators/fastlane-setup/README.md) -- `yo rn-toolbox:fastlane-setup`
-  * [Fastlane environment instantiation](generators/fastlane-env/README.md) -- `yo rn-toolbox:fastlane-env`
-  * [Icons and Splashscreen generation](generators/assets/README.md) -- `yo rn-toolbox:assets [--icon | --splash] <path>`
-* Environment
-  * [Visual Studio Code](generators/vscode/README.md) -- `yo rn-toolbox:vscode`
-* Continuous integration / deployment
-  * [TravisCI](generators/travisci/README.md) -- `yo rn-toolbox:travisci`
-  * [Bitrise for continuous deployment](generators/bitrise/README.md) -- `yo rn-toolbox:bitrise`
+- Setup
+  - [Linting](generators/lint/README.md) -- `yo rn-toolbox:lint`
+  - [Base project](generators/base/README.md) -- `yo rn-toolbox:base`
+  - [Advanced project](generators/advanced-base/README.md) -- `yo rn-toolbox:advanced-base`
+  - [Jest](generators/jest/README.md) -- `yo rn-toolbox:jest`
+  - [Fastlane setup for multiple environments](generators/fastlane-setup/README.md) -- `yo rn-toolbox:fastlane-setup`
+  - [Fastlane environment instantiation](generators/fastlane-env/README.md) -- `yo rn-toolbox:fastlane-env`
+  - [Icons and Splashscreen generation](generators/assets/README.md) -- `yo rn-toolbox:assets [--icon | --splash] <path>`
+- Environment
+  - [Visual Studio Code](generators/vscode/README.md) -- `yo rn-toolbox:vscode`
+- Continuous integration / deployment
+  - [TravisCI](generators/travisci/README.md) -- `yo rn-toolbox:travisci`
+  - [Bitrise for continuous deployment](generators/bitrise/README.md) -- `yo rn-toolbox:bitrise`
 
 ## Requirements
 
-* [ ] You need `node > 6` installed
-* [ ] Ruby > `2.2.3`
-* [ ] Bundler installed (`gem install bundler`)
-* [ ] Yeoman installed (`npm i -g yo`)
-* [ ] Yarn installed (`brew install yarn`)
+- [ ] You need `node > 6` installed
+- [ ] Ruby > `2.2.3`
+- [ ] Bundler installed (`gem install bundler`)
+- [ ] Yeoman installed (`npm i -g yo`)
+- [ ] Yarn installed (`brew install yarn`)
 
 ## Usage
 
