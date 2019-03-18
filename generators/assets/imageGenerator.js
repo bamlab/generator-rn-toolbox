@@ -127,6 +127,62 @@ const generateResizedAssets = (
   );
 };
 
+const generateResizedRoundAssets = (
+  sourcePath,
+  destinationPath,
+  width,
+  givenHeight
+) => {
+  const height = givenHeight || width;
+
+  const directory = path.dirname(destinationPath);
+  if (!fs.existsSync(directory)) {
+    fs.mkdirpSync(directory);
+  }
+
+  const psdSafeSourcePath = `${sourcePath}${
+    sourcePath.split('.').pop() === 'psd' ? '[0]' : ''
+  }`;
+  const maxSize = Math.max(width, height);
+  // percent margin
+  const marginPercent = 90 / 100;
+
+  // create mask
+  gm(maxSize, maxSize, 'none')
+    .drawCircle(
+      maxSize / 2,
+      maxSize / 2,
+      maxSize / 2,
+      (maxSize * (1 - marginPercent)) / 2
+    )
+    .gravity('Center')
+    .writeAsync(path.normalize(destinationPath + '.mask.png'))
+    .then(() => {
+      console.log(`Wrote ${destinationPath + '.mask.png'}`);
+    });
+
+  gm(path.normalize(psdSafeSourcePath))
+    .resize(maxSize * marginPercent, maxSize * marginPercent)
+    .gravity('Center')
+    .extent(maxSize, maxSize)
+    .write(path.normalize(destinationPath), function(err, value) {
+      if (!err) {
+        gm()
+          .compose('copyopacity')
+          .in(path.normalize(destinationPath))
+          .in(path.normalize(destinationPath + '.mask.png'))
+          .out('-composite')
+          .write(path.normalize(destinationPath), function(err) {
+            if (!err) {
+              console.log(`Wrote ${destinationPath}`);
+              // delete the mask
+              fs.unlink(path.normalize(destinationPath + '.mask.png'));
+            }
+          });
+      }
+    });
+};
+
 const generateIosIcons = (iconSource, iosIconFolder) =>
   Promise.all(
     iosIconSizes.map(size =>
@@ -148,15 +204,22 @@ const generateAndroidIcons = (
   androidSrcDirectory
 ) =>
   Promise.all(
-    androidIconSizes.map(size =>
+    androidIconSizes.map(size => {
       generateResizedAssets(
         iconSource,
         `${assetsOutputPath}/android/app/src/${androidSrcDirectory}/res/mipmap-${
           size.density
         }/ic_launcher.png`,
         size.value
-      )
-    )
+      );
+      generateResizedRoundAssets(
+        iconSource,
+        `${assetsOutputPath}/android/app/src/${androidSrcDirectory}/res/mipmap-${
+          size.density
+        }/ic_launcher_round.png`,
+        size.value
+      );
+    })
   );
 
 const generateIosSplashScreen = (splashSource, iosSplashFolder) =>
