@@ -28,11 +28,8 @@ Icons have been generated in different sizes and integrated in your project.
 
 
 ### Android
-- Open your project in Android Studio
-- Right click on the `app` folder, then click on `New` and then click on `Image Asset`
-- In the `Icon Type` field select `Launcher Icons (Adaptative and Legacy)`
-- In the `path`field, select your image file
-- Once done, click on the `Next`button and then on the finish `button`
+
+follow the official documentation : https://developer.android.com/studio/write/image-asset-studio
 
 ## Generate splashscreens
 
