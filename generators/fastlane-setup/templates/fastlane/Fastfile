@@ -151,9 +151,8 @@ platform :ios do
       username: ENV['IOS_APPSTORECONNECT_USER_ID'],
       app_identifier: ENV['IOS_APP_ID'],
       ipa: ENV['IOS_IPA_PATH'],
-      distribute_external: true,
-      reject_build_waiting_for_review: true,
-      changelog: 'New features and bug fixes.'
+      distribute_external: false,
+      skip_waiting_for_build_processing: true
     )
   end
 
@@ -173,13 +172,7 @@ platform :ios do
         deploy_hockey
       elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
         upload_to_appcenter
-      else
-        pilot(
-          distribute_external: false,
-          skip_waiting_for_build_processing: true
-        )
-      end
-      if ENV['IOS_APPSTORECONNECT_USER_ID'] then
+      elsif ENV['DEPLOYMENT_PLATFORM'] === 'appstore'
         upload_to_testflight
       end
     end
@@ -271,10 +264,10 @@ platform :android do
     )
   end
 
-  lane :upload_to_playstore_alpha do |options|
+  lane :upload_to_playstore do |options|
     supply(
       package_name: ENV['GRADLE_APP_IDENTIFIER'],
-      track: 'alpha',
+      track: 'internal',
       apk: ENV['ANDROID_APK_PATH'],
       json_key: ENV['ANDROID_PLAYSTORE_JSON_KEY_PATH'],
     )
@@ -291,9 +284,8 @@ platform :android do
         deploy_hockey
       elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
         upload_to_appcenter
-      end
-      if ENV['ANDROID_PLAYSTORE_JSON_KEY_PATH'] then
-        upload_to_playstore_alpha
+      elsif ENV['DEPLOYMENT_PLATFORM'] === 'appstore' then
+        upload_to_playstore
       end
     end
   end

@@ -184,23 +184,18 @@ class FastlaneEnvGenerator extends Base {
         when: answers => answers.deploymentPlatform === 'appcenter',
       },
       {
-        type: 'confirm',
-        name: 'deployToProduction',
-        message: 'Will this environment deploy to production?',
-      },
-      {
         type: 'input',
         name: 'appstoreConnectAppleId',
         message:
           'An AppstoreConnect Apple Id (make sure the ID has "developer" acces - only allowed to upload builds). Can be entered later in fastlane/env.<environment>',
-        when: answers => answers.deployToProduction,
+        when: answers => answers.appstore,
       },
       {
         type: 'input',
         name: 'androidPlayStoreJsonKeyPath',
         message:
           'A Google Play JSON Key relative path. Can be entered later in fastlane/env.<environment>',
-        when: answers => answers.deployToProduction,
+        when: answers => answers.appstore,
       },
       {
         type: 'confirm',
