@@ -24,6 +24,7 @@
     "circleci",
     "bitrise",
     "travisci",
+    "circleci",
     "ci",
     "wallabyjs",
     "visual studio code",

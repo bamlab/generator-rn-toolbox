@@ -37,10 +37,15 @@ class FastlaneGenerator extends Base {
     ]).then(answers => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
+      if (answers.useSecretsArchive && answers.useDeploymentScript) {
+        this.config.set('circleci-ready', true);
+        this.config.save();
+      }
     });
   }
 
   writing() {
+    const config = this.fs.readJSON(this.destinationPath('package.json'));
     this.fs.copyTpl(
       this.templatePath('fastlane/*'),
       this.destinationPath('fastlane')
@@ -73,6 +78,8 @@ class FastlaneGenerator extends Base {
         this.destinationPath(`secrets-scripts/unpack-secrets.sh`),
         this.answers
       );
+      config.scripts['pack-secrets'] = './secrets-scripts/pack-secrets.sh';
+      config.scripts['unpack-secrets'] = './secrets-scripts/unpack-secrets.sh';
     }
 
     if (this.answers.useDeploymentScript) {
@@ -80,7 +87,10 @@ class FastlaneGenerator extends Base {
         this.templatePath('deploy.sh'),
         this.destinationPath('deploy.sh')
       );
+      config.scripts.deploy = './deploy.sh';
     }
+
+    this.fs.writeJSON(this.destinationPath('package.json'), config, 'utf-8');
 
     this._extendGitignore();
     this._extendGradle();

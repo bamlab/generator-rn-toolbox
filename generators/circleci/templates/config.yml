@@ -1,0 +1,204 @@
+# prettier: disable
+
+version: 2
+jobs:
+  node:
+    working_directory: ~/<%= projectName %>
+    docker:
+      - image: circleci/android:api-28-node
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: yarn-v1-{{ checksum "<%= prefixRN('yarn.lock') %>" }}-{{ arch }}
+
+      - restore_cache:
+          key: node-v1-{{ checksum "<%= prefixRN('package.json') %>" }}-{{ arch }}
+
+      - run:
+          name: yarn install
+          command: |
+            cd <%= prefixRN() %>
+            yarn
+
+      - run:
+          name: jest tests
+          command: |
+            cd <%= prefixRN() %>
+            mkdir -p test-results/jest
+            yarn test --maxWorkers=2
+          environment:
+            JEST_JUNIT_OUTPUT: <%= prefixRN('test-results/jest/junit.xml') %>
+
+      - run:
+          name: Unpack secrets
+          command: |
+            cd <%= prefixRN() %>
+            <%- unpackSecretsCommand %>
+
+      - restore_cache:
+          key: bundle-v1-{{ checksum "<%= prefixRN('Gemfile.lock') %>" }}-{{ arch }}
+
+      - run: cd <%= prefixRN() %> && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+
+      - deploy:
+          name: Deploy with CodePush
+          command: |
+            cd <%= prefixRN() %>
+            <%- installAppcenterCommand %>
+            <%- codepushCommand %>
+
+      - save_cache:
+          key: bundle-v1-{{ checksum "<%= prefixRN('Gemfile.lock') %>" }}-{{ arch }}
+          paths:
+            - ~/.bundle/
+            - vendor/bundle
+
+      - save_cache:
+          key: yarn-v1-{{ checksum "<%= prefixRN('yarn.lock') %>" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          key: node-v1-{{ checksum "<%= prefixRN('package.json') %>" }}-{{ arch }}
+          paths:
+            - <%= prefixRN('node_modules') %>
+
+      - persist_to_workspace:
+          root: ~/<%= projectName %>
+          paths:
+            - <%= prefixRN('node_modules') %>
+            - vendor/bundle
+
+      - store_test_results:
+          path: <%= prefixRN('test-results') %>
+
+      - store_artifacts:
+          path: <%= prefixRN('test-results') %>
+
+  android:
+    working_directory: ~/<%= projectName %>
+    docker:
+      - image: circleci/android:api-28-node
+    steps:
+      - checkout:
+          path: ~/<%= projectName %>
+
+      - attach_workspace:
+          at: ~/<%= projectName %>
+
+      - run:
+          name: Unpack secrets
+          command: |
+            cd <%= prefixRN() %>
+            <%- unpackSecretsCommand %>
+
+      - run: cd <%= prefixRN() %> && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+
+      - run:
+          name: yarn install
+          command: |
+            cd <%= prefixRN() %>
+            yarn
+
+      - deploy:
+          name: Build, Sign & Deploy
+          command: |
+            cd <%= prefixRN() %>
+            <%- androidHardDeployCommand %>
+
+      - store_test_results:
+          path: <%= prefixRN('test-results') %>
+
+      - store_artifacts:
+          path: <%= prefixRN('test-results') %>
+
+  ios:
+    macos:
+      xcode: '10.1.0'
+    environment:
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+    working_directory: ~/<%= projectName %>
+
+    # use a --login shell so our "set Ruby version" command gets picked up for later steps
+    shell: /bin/bash --login -o pipefail
+
+    steps:
+      - checkout
+
+      - run:
+          name: set Ruby version
+          command: echo "ruby-2.4" > ~/.ruby-version
+
+      - run:
+          name: Install brew dependencies
+          command: HOMEBREW_NO_AUTO_UPDATE=1 brew install gpg
+
+      - run:
+          name: Unpack secrets
+          command: |
+            cd <%= prefixRN() %>
+            <%- unpackSecretsCommand %>
+
+      - restore_cache:
+          key: yarn-v1-{{ checksum "<%= prefixRN('yarn.lock') %>" }}-{{ arch }}
+
+      - restore_cache:
+          key: node-v1-{{ checksum "<%= prefixRN('package.json') %>" }}-{{ arch }}
+
+      # not using a workspace here as Node and Yarn versions
+      # differ between the macOS executor image and the Docker containers above
+      - run:
+          name: yarn install
+          command: |
+            cd <%= prefixRN() %>
+            yarn
+
+      - save_cache:
+          key: yarn-v1-{{ checksum "<%= prefixRN('yarn.lock') %>" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          key: node-v1-{{ checksum "<%= prefixRN('package.json') %>" }}-{{ arch }}
+          paths:
+            - <%= prefixRN('node_modules') %>
+
+      - restore_cache:
+          key: bundle-v2-{{ checksum "<%= prefixRN('Gemfile.lock') %>" }}-{{ arch }}
+
+      - run:
+          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+
+      - save_cache:
+          key: bundle-v2-{{ checksum "<%= prefixRN('Gemfile.lock') %>" }}-{{ arch }}
+          paths:
+            - ~/.bundle/
+            - /Users/distiller/.gem/ruby/2.4.5/
+            - vendor/bundle
+
+      - deploy:
+          name: Match, Build, Sign & Deploy
+          command: |
+            cd <%= prefixRN() %>
+            sudo xcode-select -s /Applications/Xcode-10.1.app
+            <%- iosHardDeployCommand %>
+
+workflows:
+  version: 2
+  node-android-ios:
+    jobs:
+      - node
+      - ios:
+          requires:
+            - node
+          filters:
+            branches:
+              only: <%- branchesOnlyCommand %>
+      - android:
+          requires:
+            - node
+          filters:
+            branches:
+              only: <%- branchesOnlyCommand %>
