@@ -184,6 +184,20 @@ class FastlaneEnvGenerator extends Base {
         when: answers => answers.deploymentPlatform === 'appcenter',
       },
       {
+        type: 'input',
+        name: 'appstoreConnectAppleId',
+        message:
+          'An AppstoreConnect Apple Id (make sure the ID has "developer" acces - only allowed to upload builds). Can be entered later in fastlane/env.<environment>',
+        when: answers => answers.appstore,
+      },
+      {
+        type: 'input',
+        name: 'androidPlayStoreJsonKeyPath',
+        message:
+          'A Google Play JSON Key relative path. Can be entered later in fastlane/env.<environment>',
+        when: answers => answers.appstore,
+      },
+      {
         type: 'confirm',
         name: 'useCodePush',
         message: 'Will you deploy with Appcenter CodePush on this environment?',

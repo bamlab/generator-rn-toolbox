@@ -136,13 +136,23 @@ platform :ios do
     )
   end
 
-  lane :deploy_appCenter do |options|
+  lane :upload_to_appcenter do |options|
     appcenter_upload(
       api_token: ENV['FL_APPCENTER_API_TOKEN'],
       owner_name: ENV['APPCENTER_USERNAME'],
       app_name: ENV['IOS_APPCENTER_APP_ID'],
       ipa: ENV['IOS_IPA_PATH'],
       release_notes: %x[#{release_notes_command}]
+    )
+  end
+
+  lane :upload_to_testflight do |options|
+    pilot(
+      username: ENV['IOS_APPSTORECONNECT_USER_ID'],
+      app_identifier: ENV['IOS_APP_ID'],
+      ipa: ENV['IOS_IPA_PATH'],
+      distribute_external: false,
+      skip_waiting_for_build_processing: true
     )
   end
 
@@ -161,12 +171,9 @@ platform :ios do
       if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
         deploy_hockey
       elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
-        deploy_appCenter
-      else
-        pilot(
-          distribute_external: false,
-          skip_waiting_for_build_processing: true
-        )
+        upload_to_appcenter
+      elsif ENV['DEPLOYMENT_PLATFORM'] === 'appstore'
+        upload_to_testflight
       end
     end
   end
@@ -247,13 +254,22 @@ platform :android do
     )
   end
 
-  lane :deploy_appCenter do |options|
+  lane :upload_to_appcenter do |options|
     appcenter_upload(
       api_token: ENV['FL_APPCENTER_API_TOKEN'],
       owner_name: ENV['APPCENTER_USERNAME'],
       app_name: ENV['ANDROID_APPCENTER_APP_ID'],
       apk: ENV['ANDROID_APK_PATH'],
       release_notes: %x[#{release_notes_command}]
+    )
+  end
+
+  lane :upload_to_playstore do |options|
+    supply(
+      package_name: ENV['GRADLE_APP_IDENTIFIER'],
+      track: 'internal',
+      apk: ENV['ANDROID_APK_PATH'],
+      json_key: ENV['ANDROID_PLAYSTORE_JSON_KEY_PATH'],
     )
   end
 
@@ -267,7 +283,9 @@ platform :android do
       if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
         deploy_hockey
       elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
-        deploy_appCenter
+        upload_to_appcenter
+      elsif ENV['DEPLOYMENT_PLATFORM'] === 'appstore' then
+        upload_to_playstore
       end
     end
   end
@@ -276,4 +294,5 @@ platform :android do
     check_git_status(name: ENV['REPO_GIT_BRANCH'])
     deploy
   end
+
 end
