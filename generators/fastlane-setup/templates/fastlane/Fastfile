@@ -13,6 +13,14 @@ lane :check_git_status do |options|
 
 end
 
+lane :set_build_numbers_to_current_timestamp do |options|
+  incremented_build_number = Time.now.to_i.to_s
+  `sed -i -e "s#.*IOS_VERSION_BUILD_NUMBER=.*#IOS_VERSION_BUILD_NUMBER='#{incremented_build_number}'#g" .env`
+  `sed -i -e "s#.*ANDROID_VERSION_CODE=.*#ANDROID_VERSION_CODE='#{incremented_build_number}'#g" .env`
+  ENV['IOS_VERSION_BUILD_NUMBER'] = incremented_build_number
+  ENV['ANDROID_VERSION_CODE'] = incremented_build_number
+end
+
 # JS Environments
 
 lane :set_js_env do |options|

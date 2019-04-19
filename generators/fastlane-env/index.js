@@ -72,7 +72,7 @@ class FastlaneEnvGenerator extends Base {
         type: 'input',
         name: 'companyName',
         message:
-          'The name of the company which will be publishing this application (used to generate android Keytore)',
+          'The name of the company which will be publishing this application (used to generate android Keystore)',
         default: 'My Company',
       },
       {
@@ -86,26 +86,6 @@ class FastlaneEnvGenerator extends Base {
         name: 'appName',
         message: 'The app name for this environment',
         default: 'My App',
-      },
-      {
-        type: 'input',
-        name: 'iosAppCenterId',
-        message:
-          'The iOS project id on AppCenter for this environment, should be different than Android and not contain spaces',
-        default: answers =>
-          `${answers.appName.replace(/ /g, '')}-ios-${answers.environmentName}`,
-        when: answers => answers.deploymentPlatform === 'appcenter',
-      },
-      {
-        type: 'input',
-        name: 'androidAppCenterId',
-        message:
-          'The Android project id on AppCenter, should be different than iOS and not contain spaces',
-        default: answers =>
-          `${answers.appName.replace(/ /g, '')}-android-${
-            answers.environmentName
-          }`,
-        when: answers => answers.deploymentPlatform === 'appcenter',
       },
       {
         type: 'input',
@@ -171,36 +151,61 @@ class FastlaneEnvGenerator extends Base {
         message: 'A valid HockeyApp token',
         when: answers => answers.deploymentPlatform === 'hockeyapp',
       },
-      {
-        type: 'input',
-        name: 'appCenterToken',
-        message: 'A valid App Center API token',
-        when: answers => answers.deploymentPlatform === 'appcenter',
-      },
-      {
-        type: 'input',
-        name: 'appCenterUsername',
-        message: 'A valid App Center Username',
-        when: answers => answers.deploymentPlatform === 'appcenter',
-      },
+
       {
         type: 'input',
         name: 'appstoreConnectAppleId',
         message:
           'An AppstoreConnect Apple Id (make sure the ID has "developer" acces - only allowed to upload builds). Can be entered later in fastlane/env.<environment>',
-        when: answers => answers.appstore,
+        when: answers => answers.deploymentPlatform === 'appstore',
       },
       {
         type: 'input',
         name: 'androidPlayStoreJsonKeyPath',
         message:
           'A Google Play JSON Key relative path. Can be entered later in fastlane/env.<environment>',
-        when: answers => answers.appstore,
+        when: answers => answers.deploymentPlatform === 'appstore',
       },
       {
         type: 'confirm',
         name: 'useCodePush',
         message: 'Will you deploy with Appcenter CodePush on this environment?',
+      },
+      {
+        type: 'input',
+        name: 'appCenterUsername',
+        message: 'A valid App Center Username',
+        when: answers =>
+          answers.deploymentPlatform === 'appcenter' || answers.useCodePush,
+      },
+      {
+        type: 'input',
+        name: 'appCenterToken',
+        message: 'A valid App Center API token',
+        when: answers =>
+          answers.deploymentPlatform === 'appcenter' || answers.useCodePush,
+      },
+      {
+        type: 'input',
+        name: 'iosAppCenterId',
+        message:
+          'The iOS project id on AppCenter for this environment, should be different than Android and not contain spaces',
+        default: answers =>
+          `${answers.appName.replace(/ /g, '')}-ios-${answers.environmentName}`,
+        when: answers =>
+          answers.deploymentPlatform === 'appcenter' || answers.useCodePush,
+      },
+      {
+        type: 'input',
+        name: 'androidAppCenterId',
+        message:
+          'The Android project id on AppCenter, should be different than iOS and not contain spaces',
+        default: answers =>
+          `${answers.appName.replace(/ /g, '')}-android-${
+            answers.environmentName
+          }`,
+        when: answers =>
+          answers.deploymentPlatform === 'appcenter' || answers.useCodePush,
       },
       {
         type: 'input',

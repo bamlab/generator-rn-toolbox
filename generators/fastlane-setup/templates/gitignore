@@ -4,3 +4,5 @@ dist
 fastlane/report.xml
 fastlane/.env.*.secret
 *.back
+.bundle
+vendor/bundle

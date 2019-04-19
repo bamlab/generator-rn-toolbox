@@ -9,7 +9,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NO_COLOR='\033[0m'
 
-APP_ENV="test"
+APP_ENV="staging"
 APP_OS="ios and android"
 DEPLOY_TYPE="soft"
 
@@ -30,9 +30,9 @@ warn(){
 check_environment(){
   CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
 
-  if [ "$CURRENT_BRANCH" != "$APP_ENV" ]
+  if [ "$CURRENT_BRANCH" != "$REPO_GIT_BRANCH" ]
   then
-    warn "Wrong branch, checkout $APP_ENV to deploy to $APP_ENV."
+    warn "Wrong branch, checkout $REPO_GIT_BRANCH to deploy to $APP_ENV."
   else
     success "Deploying to $APP_ENV."
   fi
@@ -56,12 +56,16 @@ done
 
 [[ -z $(git status -s) ]] || warn 'Please make sure you deploy with no changes or untracked files. You can run *git stash --include-untracked*.'
 
+source fastlane/.env.$APP_ENV
+
 check_environment $APP_ENV
 
 if [ $DEPLOY_TYPE == "hard" ]; then
   echo -e "${BLUE}* * * * *"
   echo -e "👷  Hard-Deploy"
   echo -e "* * * * *${NO_COLOR}"
+  bundle exec fastlane set_build_numbers_to_current_timestamp
+
   if [[ $APP_OS != "android" ]]; then
     echo -e "${GREEN}- - - - -"
     echo -e "Fastlane 🍎  iOS $APP_ENV"
