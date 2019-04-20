@@ -52,7 +52,7 @@ jobs:
           key: bundle-v1-{{ checksum "<%= prefixRN('Gemfile.lock') %>" }}-{{ arch }}
           paths:
             - ~/.bundle/
-            - vendor/bundle
+            - <%= prefixRN('vendor/bundle') %>
 
       - save_cache:
           key: yarn-v1-{{ checksum "<%= prefixRN('yarn.lock') %>" }}-{{ arch }}
@@ -68,7 +68,7 @@ jobs:
           root: ~/<%= projectName %>
           paths:
             - <%= prefixRN('node_modules') %>
-            - vendor/bundle
+            - <%= prefixRN('vendor/bundle') %>
 
       - store_test_results:
           path: <%= prefixRN('test-results') %>
@@ -176,7 +176,7 @@ jobs:
           paths:
             - ~/.bundle/
             - /Users/distiller/.gem/ruby/2.4.5/
-            - vendor/bundle
+            - <%= prefixRN('vendor/bundle') %>
 
       - deploy:
           name: Match, Build, Sign & Deploy
