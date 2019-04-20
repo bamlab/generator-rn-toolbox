@@ -125,14 +125,22 @@ class FastlaneEnvGenerator extends Base {
       {
         type: 'input',
         name: 'itunesTeamName',
-        message: 'The itunesconnect.apple.com team name',
+        message: 'The appstoreconnect.apple.com team name',
         default: 'MyCompany',
         when: answers => answers.deploymentPlatform === 'appstore',
       },
       {
         type: 'input',
+        name: 'appstoreConnectAppleId',
+        message:
+          'An AppstoreConnect Apple Id (good practice: ID should have "developer" access - only allowed to upload builds). Can be entered later in fastlane/env.<environment>',
+        when: answers => answers.deploymentPlatform === 'appstore',
+      },
+      {
+        type: 'input',
         name: 'appleId',
-        message: 'Your apple id',
+        message:
+          'Your apple id (should be admin on the Apple Developer Portal)',
         default: 'dev@mycompany.com',
       },
       {
@@ -152,13 +160,6 @@ class FastlaneEnvGenerator extends Base {
         when: answers => answers.deploymentPlatform === 'hockeyapp',
       },
 
-      {
-        type: 'input',
-        name: 'appstoreConnectAppleId',
-        message:
-          'An AppstoreConnect Apple Id (make sure the ID has "developer" acces - only allowed to upload builds). Can be entered later in fastlane/env.<environment>',
-        when: answers => answers.deploymentPlatform === 'appstore',
-      },
       {
         type: 'input',
         name: 'androidPlayStoreJsonKeyPath',
