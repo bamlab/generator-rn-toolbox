@@ -144,7 +144,7 @@ platform :ios do
     )
   end
 
-  lane :upload_to_appcenter do |options|
+  lane :deploy_to_appcenter do |options|
     appcenter_upload(
       api_token: ENV['FL_APPCENTER_API_TOKEN'],
       owner_name: ENV['APPCENTER_USERNAME'],
@@ -154,7 +154,7 @@ platform :ios do
     )
   end
 
-  lane :upload_to_testflight do |options|
+  lane :deploy_to_testflight do |options|
     pilot(
       username: ENV['IOS_APPSTORECONNECT_USER_ID'],
       app_identifier: ENV['IOS_APP_ID'],
@@ -179,9 +179,9 @@ platform :ios do
       if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
         deploy_hockey
       elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
-        upload_to_appcenter
+        deploy_to_appcenter
       elsif ENV['DEPLOYMENT_PLATFORM'] === 'appstore'
-        upload_to_testflight
+        deploy_to_testflight
       end
     end
   end
@@ -262,7 +262,7 @@ platform :android do
     )
   end
 
-  lane :upload_to_appcenter do |options|
+  lane :deploy_to_appcenter do |options|
     appcenter_upload(
       api_token: ENV['FL_APPCENTER_API_TOKEN'],
       owner_name: ENV['APPCENTER_USERNAME'],
@@ -272,7 +272,7 @@ platform :android do
     )
   end
 
-  lane :upload_to_playstore do |options|
+  lane :deploy_to_playstore do |options|
     supply(
       package_name: ENV['GRADLE_APP_IDENTIFIER'],
       track: 'internal',
@@ -291,9 +291,9 @@ platform :android do
       if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
         deploy_hockey
       elsif ENV['DEPLOYMENT_PLATFORM'] === 'appcenter' then
-        upload_to_appcenter
+        deploy_to_appcenter
       elsif ENV['DEPLOYMENT_PLATFORM'] === 'appstore' then
-        upload_to_playstore
+        deploy_to_playstore
       end
     end
   end
