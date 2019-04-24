@@ -158,11 +158,19 @@ class CircleGenerator extends Base {
         .green.bold
     );
     this.log(
+      `Please make sure that CircleCI has access to your MATCH repo using 'Checkout ssh Keys' section in settings. Good practice: Github account should have readonly access and only to this repo.`
+        .magenta.bold
+    );
+    this.log(
       `Please make sure that all of the following environment variables have been added in the Circle-CI console's Environment Variables section:`
         .magenta.bold
     );
     this.log(
-      ['FL_APPCENTER_API_TOKEN', 'MATCH_PASSWORD']
+      [
+        'FL_APPCENTER_API_TOKEN',
+        'MATCH_PASSWORD',
+        'FASTLANE_PASSWORD (<- password of AppstoreConnect Apple ID)',
+      ]
         .concat(this.environments.map(getPassphraseAliasForEnvironment))
         .join(', ').magenta.bold
     );

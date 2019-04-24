@@ -6,3 +6,5 @@ fastlane/.env.*.secret
 *.back
 .bundle
 vendor/bundle
+*._api-*.json
+*api-*.json

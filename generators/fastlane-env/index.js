@@ -200,7 +200,7 @@ class FastlaneEnvGenerator extends Base {
         type: 'input',
         name: 'androidAppCenterId',
         message:
-          'The Android project id on AppCenter, should be different than iOS and not contain spaces',
+          'The Android project id on AppCenter for this environment, should be different than iOS and not contain spaces',
         default: answers =>
           `${answers.appName.replace(/ /g, '')}-android-${
             answers.environmentName
