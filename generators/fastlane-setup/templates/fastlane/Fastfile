@@ -170,6 +170,7 @@ platform :ios do
       release_notes = %x[#{release_notes_command}]
       sh "cd .. && appcenter codepush release-react -d #{ENV['IOS_CODEPUSH_DEPLOYMENT_NAME']} -a #{ENV['APPCENTER_USERNAME']}/#{ENV['IOS_APPCENTER_APP_ID']} --target-binary-version \"#{ENV['IOS_VERSION']}\" --description \"#{release_notes}\" --disable-duplicate-release-error"
     else
+      setup_circle_ci
       match(
         shallow_clone: true,
         clone_branch_directly: true,
