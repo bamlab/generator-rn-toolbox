@@ -208,6 +208,20 @@ platform :ios do
     end
   end
 
+  lane :get_certificates_and_profiles do |options|
+    match(
+      type: 'development',
+      shallow_clone: true,
+      clone_branch_directly: true,
+      readonly: true
+    )
+    match(
+      shallow_clone: true,
+      clone_branch_directly: true,
+      readonly: true
+    )
+  end
+
 end
 
 #  ANDROID
