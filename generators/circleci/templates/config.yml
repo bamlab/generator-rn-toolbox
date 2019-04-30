@@ -39,7 +39,7 @@ jobs:
       - restore_cache:
           key: bundle-v1-{{ checksum "<%= prefixRN('Gemfile.lock') %>" }}-{{ arch }}
 
-      - run: cd <%= prefixRN() %> && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - run: cd <%= prefixRN() %> && sudo gem install bundler && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
 
       - deploy:
           name: Deploy with CodePush
@@ -93,7 +93,7 @@ jobs:
             cd <%= prefixRN() %>
             <%- unpackSecretsCommand %>
 
-      - run: cd <%= prefixRN() %> && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - run: cd <%= prefixRN() %> && sudo gem install bundler && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
 
       - run:
           name: yarn install
@@ -169,7 +169,7 @@ jobs:
           key: bundle-v2-{{ checksum "<%= prefixRN('Gemfile.lock') %>" }}-{{ arch }}
 
       - run:
-          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+          command: cd <%= prefixRN() %> && sudo gem install bundler && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
 
       - save_cache:
           key: bundle-v2-{{ checksum "<%= prefixRN('Gemfile.lock') %>" }}-{{ arch }}
