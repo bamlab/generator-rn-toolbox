@@ -29,7 +29,7 @@ App Center is the successor of HockeyApp.
 - Follow the steps to get a working [API Token](https://docs.microsoft.com/en-us/appcenter/api-docs/)
 - Choose `AppCenter` as deployment method in this generator
 
-### 4. Deploy your app
+### 5. Deploy your app
 ***:warning: Automatic Play Store deployment is not yet available (PR welcome!)***
 ```
 bundle exec fastlane ios deploy --env=<myenv>
