@@ -29,7 +29,7 @@ Icons have been generated in different sizes and integrated in your project.
 
 ### Android
 - Open your project in Android Studio
-- Right click on the `app` folder, then click on `New` and then click on `Image Asset`
+- Right click on the `app` folder, then click on `New` and then click on `Image Asset`. If you don't see this menu, be sure that you got the latest gradle version (should work with gradle >=3.4.2)
 - In the `Icon Type` field select `Launcher Icons (Adaptative and Legacy)`
 - In the `path`field, select your image file
 - Once done, click on the `Next`button and then on the finish `button`
