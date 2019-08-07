@@ -4,6 +4,10 @@
 
 # React Native Toolbox [![Build Status](https://travis-ci.org/bamlab/generator-rn-toolbox.svg?branch=master)](https://travis-ci.org/bamlab/generator-rn-toolbox) [![NPM downloads](https://img.shields.io/npm/dm/generator-rn-toolbox.svg)](https://www.npmjs.com/package/generator-rn-toolbox) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
+> ‼️ **Dear user**, we are working on a complete rewrite of this project and are aiming for a september release.
+>
+> In the meantime we would like to get your feedback through [this very short form](https://forms.gle/dqAn41iBmeQowTf96)
+
 Yeoman generators to kickstart your react-native v0.48+ projects.
 
 _As of now, the way those generators are configured is heavily opinionated and based on our own company needs._
