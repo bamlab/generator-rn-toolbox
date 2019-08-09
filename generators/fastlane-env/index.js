@@ -1,5 +1,6 @@
 const Base = require('yeoman-generator');
 const randomString = require('randomstring');
+const analytics = require('../../analytics');
 require('colors');
 
 const deploymentPlatforms = [
@@ -36,6 +37,7 @@ const installGpgCommands = [{ commandName: 'brew', args: ['install', 'gpg'] }];
 
 class FastlaneEnvGenerator extends Base {
   initializing() {
+    analytics.pageview('/fastlane-env').send();
     this.composeWith('rn-toolbox:checkversion');
     if (!this.config.get('fastlane')) {
       this.log.error(

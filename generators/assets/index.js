@@ -2,6 +2,8 @@ const fs = require('fs');
 const Base = require('yeoman-generator');
 const imageGenerator = require('./imageGenerator');
 const getPixelColor = require('./getPixelColor');
+const analytics = require('../../analytics');
+
 require('colors');
 
 class ResourcesGenerator extends Base {
@@ -52,6 +54,7 @@ class ResourcesGenerator extends Base {
 
   initializing() {
     this.composeWith('rn-toolbox:checkversion');
+    analytics.pageview('/assets').send();
   }
 
   prompting() {

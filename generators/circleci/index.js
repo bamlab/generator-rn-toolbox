@@ -1,6 +1,7 @@
 const Base = require('yeoman-generator');
 require('colors');
 const glob = require('glob');
+const analytics = require('../../analytics');
 
 // Command creators
 const getPassphraseAliasForEnvironment = environment =>
@@ -18,6 +19,7 @@ const getIosHardDeployCommandForEnvironment = environment =>
 
 class CircleGenerator extends Base {
   initializing() {
+    analytics.pageview('/circleci').send();
     this.composeWith('rn-toolbox:checkversion');
     if (!this.config.get('fastlane'))
       this.log.error(
