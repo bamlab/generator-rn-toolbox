@@ -1,7 +1,9 @@
 const Base = require('yeoman-generator');
+const analytics = require('../../analytics');
 
 class CircleGenerator extends Base {
   initializing() {
+    analytics.pageview('/travisci').send();
     this.composeWith('rn-toolbox:checkversion');
   }
 

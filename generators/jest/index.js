@@ -1,7 +1,9 @@
 const Base = require('yeoman-generator');
+const analytics = require('../../analytics');
 
 class JestGenerator extends Base {
   initializing() {
+    analytics.pageview('/jest').send();
     this.composeWith('rn-toolbox:checkversion');
   }
 

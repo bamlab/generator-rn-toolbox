@@ -1,8 +1,10 @@
 const Base = require('yeoman-generator');
 require('colors');
+const analytics = require('../../analytics');
 
 class FastlaneGenerator extends Base {
   initializing() {
+    analytics.pageview('/fastlane-setup').send();
     this.composeWith('rn-toolbox:checkversion');
   }
 

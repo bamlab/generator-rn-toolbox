@@ -1,7 +1,9 @@
 const Base = require('yeoman-generator');
+const analytics = require('../../analytics');
 
 class LintGenerator extends Base {
   initializing() {
+    analytics.pageview('/lint').send();
     this.composeWith('rn-toolbox:checkversion');
   }
 

@@ -70,3 +70,7 @@ npm link
 ```
 
 When you're done, you can run `npm unlink` to stop using your local version.
+
+### Disclaimer
+
+_To better understand your usage of this tool, basic analytics have been enabled. It only records generators usage as anonymous page views and does not track any user information_

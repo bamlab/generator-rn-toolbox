@@ -1,8 +1,10 @@
 const Base = require('yeoman-generator');
 const templateSettings = require('./templates/settings.json');
+const analytics = require('../../analytics');
 
 class VSCodeGenerator extends Base {
   initializing() {
+    analytics.pageview('/vscode').send();
     this.composeWith('rn-toolbox:checkversion');
   }
 
