@@ -7,8 +7,12 @@ class CheckVersionGenerator extends Base {
     return checkVersion()
       .then(isUpdated => {
         this.log(
-          '😁 We are looking for feedback on how to improve rn-toolbox, please take 2 minutes to answer this form: '
-            .yellow + 'https://forms.gle/dqAn41iBmeQowTf96'.bold.yellow
+          '🌟🌟🌟 ️ ' +
+            'Deprecation Notice'.bold.bgYellow.black +
+            ' 🌟🌟🌟\n' +
+            'generator-rn-toolbox is being deprecated in favor of @bam.tech/react-native-make.\nYou can find out more here: '
+              .yellow +
+            'https://github.com/bamlab/react-native-make'.bold.yellow
         );
         if (!isUpdated)
           this.log.error(

@@ -4,13 +4,18 @@
 
 # React Native Toolbox [![Build Status](https://travis-ci.org/bamlab/generator-rn-toolbox.svg?branch=master)](https://travis-ci.org/bamlab/generator-rn-toolbox) [![NPM downloads](https://img.shields.io/npm/dm/generator-rn-toolbox.svg)](https://www.npmjs.com/package/generator-rn-toolbox) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
-> ‼️ **Dear user**, we are working on a complete rewrite of this project and are aiming for a september release.
->
-> In the meantime we would like to get your feedback through [this very short form](https://forms.gle/dqAn41iBmeQowTf96)
-
 Yeoman generators to kickstart your react-native v0.48+ projects.
 
-_As of now, the way those generators are configured is heavily opinionated and based on our own company needs._
+## ⚠️ Deprecation notice ⚠️
+
+> **Dear user**, we are working on a complete rewrite of generator-rn-toolbox
+>
+> We are be deprecating this repo and migrating its features to [react-native-make](https://github.com/bamlab/react-native-make)
+>
+> Already available:
+>
+> - Updated Icons generation with [Android adaptive icons](https://medium.com/google-design/designing-adaptive-icons-515af294c783)
+> - Updated SplashScreen generation with iOS _.xib_ files and ready for [react-native-splashscreen](https://github.com/crazycodeboy/react-native-splash-screen)
 
 ## Features
 
