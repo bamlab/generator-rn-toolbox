@@ -166,7 +166,7 @@ class ResourcesGenerator extends Base {
     );
 
     const pbxprojPath = this.destinationPath(
-      `ios/${this.projectName}.xcodeproj/project.pbxproj`
+      `${this.options.assetsOutputPath}/ios/${this.projectName}.xcodeproj/project.pbxproj`
     );
     this.fs.write(
       pbxprojPath,
@@ -179,7 +179,7 @@ class ResourcesGenerator extends Base {
     );
 
     const plistPath = this.destinationPath(
-      `ios/${this.projectName}/Info.plist`
+      `${this.options.assetsOutputPath}/ios/${this.projectName}/Info.plist`
     );
     this.fs.write(
       plistPath,
