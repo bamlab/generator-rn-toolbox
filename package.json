@@ -55,7 +55,7 @@
     "husky": "^0.14.3",
     "jest": "^21.2.1",
     "prettier": "^1.11.1",
-    "semantic-release": "^15.9.9",
+    "semantic-release": "^17.2.3",
     "travis-deploy-once": "^5.0.2",
     "validate-commit-msg": "^2.14.0",
     "yeoman-environment": "^2.0.5",
